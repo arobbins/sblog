@@ -1,0 +1,102 @@
+// Font fallbacks
+$font-primary-fallbacks: cursive, helvetica, sans-serif;
+$font-secondary-fallbacks: arial, helvetica, sans-serif;
+
+// Font families
+$font-primary: 'Lato', $font-primary-fallbacks;
+$font-secondary: 'Merriweather', $font-secondary-fallbacks;
+
+// Font sizes
+$font-xxxs:   13px;
+$font-xxs:    14px;
+$font-xs:     16px;
+$font-s:      18px;
+$font-m:      20px;
+$font-l:      24px;
+$font-xl:     34px;
+$font-xxl:    44px;
+$font-xxxl:   55px;
+
+$heading1:    46px;
+$heading2:    38px;
+$heading3:    32px;
+$heading4:    28px;
+$heading5:    22px;
+$heading6:    18px;
+
+$button: 16px;
+$button-s: 14px;
+$button-l: 18px;
+
+$label: 18px;
+
+@font-face {
+  font-family: 'icons';
+  src:url('assets/fonts/icons.eot?-ad5nap');
+  src:url('assets/fonts/icons.eot?#iefix-ad5nap') format('embedded-opentype'),
+    url('assets/fonts/icons.ttf?-ad5nap') format('truetype'),
+    url('assets/fonts/icons.woff?-ad5nap') format('woff'),
+    url('assets/fonts/icons.svg?-ad5nap#icons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"]:before, [class*=" icon-"]:before {
+  font-family: 'icons';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-chat:before {
+  content: "\e600";
+}
+.icon-coffee:before {
+  content: "\e601";
+}
+.icon-envelope:before {
+  content: "\e602";
+}
+.icon-facebook:before {
+  content: "\e603";
+}
+.icon-googleplus:before {
+  content: "\e604";
+}
+.icon-lightbulb:before {
+  content: "\e605";
+}
+.icon-linkedin:before {
+  content: "\e606";
+}
+.icon-twitter:before {
+  content: "\e607";
+}
+.icon-shuttle:before {
+  content: "\e608";
+}
+.icon-location:before {
+  content: "\e609";
+}
+.icon-calendar:before {
+  content: "\e60a";
+}
+.icon-search:before {
+  content: "\e60b";
+}
+.icon-arrow-down:before {
+  content: "\e60c";
+}
+.icon-arrow-left:before {
+  content: "\e60d";
+}
+.icon-arrow-right:before {
+  content: "\e60e";
+}

@@ -1,0 +1,57 @@
+.article {
+  padding-bottom: $space-xl;
+  margin-bottom: $space-xl;
+  border-bottom: 1px solid color(misc, accent);
+
+  &:first-child {
+    margin-top: $space-xs;
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.article-footer {
+  -webkit-flex: 0 0 auto;
+}
+
+.article-date {
+  margin-right: 10px;
+}
+
+.article-byline {
+  margin-bottom: 10px;
+}
+
+.article-heading {
+  color: color(slate, dark);
+}
+
+.article-heading-link {
+  text-decoration: none;
+  color: color(slate, dark);
+}
+
+.posts-navigation {
+  margin-bottom: rem($space-xl*2);
+
+  @include respond-to(800) {
+    margin-bottom: rem($space-xl);
+  }
+}
+
+.nav-previous {
+  float: left;
+}
+
+.nav-next {
+  float: right;
+}
+
+.entry-content {
+  figure {
+    max-width: 100%;
+    margin: 0;
+  }
+}

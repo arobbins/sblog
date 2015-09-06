@@ -1,0 +1,70 @@
+.quotes {}
+.quote {}
+.quote-heading {
+  font-size: rem($font-l);
+  color: color(slate, dark);
+  line-height: 1.6;
+
+  @include respond-to(700) {
+    font-size: rem($font-m);
+  }
+
+}
+
+.quote-author {}
+
+.quote-content {
+  width: 65%;
+
+  @include respond-to(700) {
+    width: 80%;
+  }
+
+  @include respond-to(500) {
+    width: 100%;
+  }
+
+}
+
+.quote-wrapper {
+  height: 200px !important; // TODO: Remove important, needed because of carousel inline styles
+
+  @include respond-to(700) {
+    height: 245px !important;
+  }
+}
+
+.module-quotes {
+
+  .slick-slider {
+    display: block;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .slick-prev {
+    left: 0;
+  }
+
+  .slick-next {
+    right: 0;
+  }
+
+  .slick-prev:focus,
+  .slick-next:focus,
+  .slick-prev,
+  .slick-next {
+    background-color: rgba(0,0,0,0.1);
+    top: 10%;
+
+    &:before {
+      color: white;
+    }
+
+    &:hover {
+      opacity: 0.8;
+      background-color: rgba(0,0,0,0.1);
+    }
+  }
+}

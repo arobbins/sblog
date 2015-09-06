@@ -1,0 +1,12 @@
+.alert {
+  width: 100%;
+  color: white;
+  padding: 1em;
+  margin: 3em 0;
+  text-align: center;
+  font-size: $font-s;
+}
+
+.alert-warning {
+  background-color: color(red);
+}

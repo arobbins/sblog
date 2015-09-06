@@ -1,0 +1,22 @@
+.about-heading {
+  color: white;
+  font-size: $font-xxl;
+
+  @include respond-to(700) {
+    font-size: $font-xl;
+  }
+}
+
+.about-copy {
+  font-size: $font-l;
+
+  @include respond-to(700) {
+    font-size: $font-m;
+  }
+}
+
+.about-content {
+  max-width: 600px;
+  text-align: center;
+  color: white;
+}

@@ -1,0 +1,153 @@
+.locations {
+  list-style: none;
+  margin: 0;
+
+  @include respond-to(500) {
+    flex-direction: column;
+  }
+}
+
+.location {
+  @include respond-to(500) {
+    margin-bottom: $space-l*2;
+  }
+
+  &:last-child {
+    @include respond-to(500) {
+      margin-bottom: $space-l;
+    }
+  }
+}
+
+.location-about {
+  font-size: rem($font-m);
+
+  p {
+    margin-top: 0;
+  }
+}
+
+.locations-heading {
+  text-align: center;
+}
+
+.locations-related-heading {
+  font-size: $heading3;
+}
+
+.locations-heading-city {
+  font-family: $font-secondary;
+  color: color(green, dark);
+  font-size: $font-m;
+  margin-bottom: $space-s;
+  text-transform: uppercase;
+}
+
+.locations-heading-state {
+  font-size: $font-xl;
+  color: color(slate, dark);
+}
+
+.locations-related {
+  margin-top: $space-l;
+}
+
+.locations-related-state {
+  font-size: $font-l;
+  color: color(slate, dark);
+  font-family: $font-primary;
+}
+
+.locations-related-city {
+  font-size: $font-xs;
+  color: color(green, dark);
+  font-family: $font-secondary;
+  text-transform: uppercase;
+}
+
+.locations-related-link {
+  text-decoration: none;
+}
+
+.location-heading {
+  font-size: rem($heading3);
+  color: color(slate, dark);
+}
+
+.locations-related-list,
+.locations-related-city {
+  margin: 0;
+}
+
+.location-hosts,
+.location-usersguide {
+  margin-top: rem($space-m);
+
+  a {
+    @include transition-fast();
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
+
+.location-hosts {
+  margin-top: rem($space-xxs);
+}
+
+.location-contact-wrapper {
+  margin-top: $space-s;
+}
+
+.location-social,
+.location-contact,
+.location-address {
+  margin: 0;
+  text-align: right;
+
+}
+
+.location-address,
+.location-email {
+  padding-right: $space-s;
+  position: relative;
+
+  &:before {
+    position: absolute;
+    right: 0;
+    top: 6px;
+    font-size: 18px;
+    font-weight: bold;
+    color: color(yellow);
+  }
+}
+
+.location-address-link {
+  margin-bottom: $space-xxs;
+}
+
+.location-social {
+  margin: $space-xxs 0;
+}
+
+.location-social-link {
+  text-decoration: none;
+  color: color(slate);
+  font-size: rem($font-xl);
+  padding-left: rem($space-xs);
+}
+
+.location-nav {
+  margin-left: 0;
+  margin-top: 0;
+}
+
+.location-nav-item {
+  margin-bottom: rem($space-xxs);
+}
+
+.location-thumb {
+  width: 70%;
+  margin: 0 auto;
+}

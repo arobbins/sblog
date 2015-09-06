@@ -1,0 +1,39 @@
+body {
+  min-height: 100vh;
+  background-color: #FFF;
+  line-height: 1.8;
+  font-size: 19px;
+  font-family: $font-secondary;
+  color: #282b30;
+  -webkit-backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Needed as a Flexbox fallback for IE
+.is-ie10,
+.is-ie11 {
+  body {
+    display: block;
+  }
+}
+
+::selection {
+  background-color: white;
+}
+
+code, kbd, pre, samp {
+  border-radius: 5px;
+}
+
+ul, ol, dl {
+  padding: 0;
+}
+
+ul, ol, dl {
+  margin: $space-xs 0 $space-xs $space-xs;
+}
+
+dd {
+  margin: $space-xxs 0 $space-xs $space-xs;
+}

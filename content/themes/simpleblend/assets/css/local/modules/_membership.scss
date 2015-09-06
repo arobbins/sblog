@@ -1,0 +1,159 @@
+.membership-tiers-wrapper {
+  background-color: color(misc, offwhite);
+  padding: $space-l;
+}
+
+.membership-amenities-wrapper,
+.membership-priorities-wrapper {
+  padding-top: $space-xl;
+  padding-bottom: $space-xl;
+
+  @include respond-to(800) {
+    flex-direction: column;
+  }
+}
+
+.membership-amenities-wrapper {
+  @include respond-to(800) {
+    flex-direction: column;
+  }
+}
+
+.membership-tier {
+  border-bottom: 1px solid color(misc, accent);
+  padding-bottom: $space-s;
+  margin-bottom: $space-s;
+
+  @include respond-to(800) {
+    flex-direction: column;
+  }
+
+  &:last-child {
+    border: 0;
+    margin-bottom: 0;
+  }
+}
+
+.tier-heading {
+  font-size: $font-xl;
+
+  @include respond-to(500) {
+    margin-top: $space-s;
+  }
+}
+
+.tier-image {
+  @include respond-to(800) {
+    align-self: flex-start;
+  }
+}
+
+.tier-image-wrapper {
+  @include respond-to(800) {
+    -webkit-flex: 0 0 auto;
+  }
+}
+
+.tier-button-heading {
+  margin-bottom: $space-xxs;
+  font-weight: bold;
+}
+
+.tier-list {
+  list-style: none;
+  margin: 0 0 $space-s 0;
+  padding: 0;
+}
+
+.tier-list-item {
+  padding-left: 15px;
+
+  &:before {
+    content: '\2022';
+    display: block;
+    position: relative;
+    left: -15px;
+    max-width: 0;
+    max-height: 0;
+    top: -5px;
+    color: color(green, dark);
+    font-size: $font-m;
+  }
+}
+
+.amenities-heading {
+  font-size: $font-xl;
+  padding-bottom: $space-s;
+  border-bottom: 1px solid color(misc, accent);
+  margin: 0 0 $space-s 0;
+}
+
+.amenities-list-item {
+  width: calc(100%/2);
+  float: left;
+  padding-right: 1em;
+
+  @include respond-to(1000) {
+    width: 100%;
+  }
+}
+
+.amenities-optional {
+  @include respond-to(800) {
+    margin-top: rem($space-m);
+    -webkit-flex: 0 0 auto;
+  }
+}
+
+.amenities-all {
+  @include respond-to(800) {
+    -webkit-flex: 0 0 auto;
+  }
+}
+
+.priority-heading {
+  font-size: $font-xl;
+  text-align: center;
+  color: color(slate, dark);
+
+  @include respond-to(800) {
+    margin-top: rem($space-m);
+  }
+}
+
+.priority-quote {
+  color: white;
+  font-size: $space-xs;
+  line-height: 1.3;
+
+  @include respond-to(500) {
+    margin-top: rem($space-xs);
+  }
+}
+
+.priorities-heading {
+  font-size: $font-xl;
+  margin-bottom: 0;
+  color: color(slate, dark);
+}
+
+.priorities-intro {
+  color: white;
+  font-size: $font-l;
+  margin-top: $space-xxs;
+
+  @include respond-to(600) {
+    font-size: $font-m;
+    line-height: 1.3;
+  }
+}
+
+.priority-image {
+  margin: $space-s 0;
+
+  @include respond-to(500) {
+    max-width: 70%;
+    margin: 0 auto;
+  }
+
+}

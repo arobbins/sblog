@@ -1,0 +1,27 @@
+.error404,
+.search {
+ .footer-link.is-active a {
+    // color: color(grey, xx-light);
+ }
+}
+
+.search-results .type-page .article-heading-link:before {
+  // content: "Page: ";
+}
+
+.search-no-results .sidebar,
+.search-results .intro-content,
+.search-results .sidebar,
+.search-results .wrapper .carousel-wrap,
+.search-results .wrapper .hero-wrap {
+  display: none;
+}
+
+.search-results .wrapper {
+  margin-top: rem($space-m);
+}
+
+.search-results .article a {
+  text-decoration: none;
+  // color: color(slate, darkest)
+}

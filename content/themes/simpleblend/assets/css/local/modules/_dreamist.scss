@@ -1,0 +1,118 @@
+.dreamist-title,
+.dreamist-image {
+  float: left;
+  width: calc(100%/2);
+}
+
+.dreamist-title {
+  font-family: $font-secondary;
+  font-size: $font-l;
+  padding: rem($space-s);
+  color: white;
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+
+  @include respond-to(800) {
+    font-size: $font-xs;
+    line-height: 1.3;
+    top: 0;
+    bottom: auto;
+  }
+
+  @include respond-to(700) {
+    font-size: $font-m;
+    line-height: 1.3;
+    top: 0;
+    bottom: auto;
+  }
+
+  @include respond-to(500) {
+    font-size: $font-xs;
+    line-height: 1.3;
+    padding: 10px;
+  }
+}
+
+.dreamist-posts {
+  position: relative;
+}
+
+.dreamist-post {
+  overflow: hidden;
+  max-height: 215px;
+
+  &:nth-child(4n+1) {
+    background-color: color(green, dark);
+  }
+
+  &:nth-child(4n+2) {
+    background-color: color(misc, offwhite);
+
+    .dreamist-title {
+      color: color(slate, dark);
+    }
+  }
+
+  &:nth-child(4n+3) {
+    background-color: color(red);
+
+    .dreamist-title {
+      left: 0;
+    }
+
+    .dreamist-title,
+    .dreamist-image {
+      float: right;
+      width: calc(100%/2);
+    }
+  }
+
+  &:nth-child(4n+4) {
+    background-color: color(yellow, dark);
+
+    .dreamist-title {
+      left: 0;
+    }
+
+    .dreamist-title,
+    .dreamist-image {
+      float: right;
+      width: calc(100%/2);
+    }
+  }
+
+  // Shifting layout on phones
+  &:nth-child(2n+2) {
+    .dreamist-image {
+      @include respond-to(700) {
+        float: right;
+      }
+    }
+
+    .dreamist-title {
+      @include respond-to(700) {
+        left: 0;
+      }
+    }
+  }
+
+  &:nth-child(2n+1) {
+    .dreamist-image {
+      @include respond-to(700) {
+        float: left;
+      }
+    }
+
+    .dreamist-title {
+      @include respond-to(700) {
+        left: 50%;
+      }
+    }
+  }
+
+  &:hover {
+    box-shadow: 0px 7px 30px -6px rgba(0,0,0,0.47);
+  }
+}
+

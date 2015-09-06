@@ -1,0 +1,257 @@
+.events {}
+.events-description {}
+.events-date {}
+
+.event {
+  background-color: white;
+  padding: rem($space-s);
+  margin-bottom: rem($space-s);
+}
+
+.events-heading {
+  font-size: $heading3;
+  color: color(slate, dark);
+
+  @include respond-to(700) {
+    margin-bottom: rem($space-s);
+  }
+
+  &:before {
+    position: relative;
+    top: 4px;
+    left: 0;
+    margin-right: $space-xxs;
+  }
+}
+
+.events-image {}
+
+.event-title {
+  color: color(yellow, dark);
+  line-height: 1.3;
+  font-size: rem($font-xl);
+  margin-bottom: 0;
+  margin-top: rem(10px);
+
+  @include respond-to(800) {
+    font-size: rem($font-l);
+  }
+}
+
+.event-date {
+  font-weight: 900;
+  font-size: rem($font-m);
+  margin-bottom: 0;
+  margin-top: $space-xxs;
+
+  @include respond-to(800) {
+    font-size: rem($font-s);
+  }
+
+  @include respond-to(700) {
+    margin-top: 0;
+  }
+}
+
+.events-link {
+  display: inline-block;
+}
+
+.events-row {
+  margin-bottom: $space-m;
+  border-bottom: 1px solid color(misc, accent);
+  padding-bottom: rem($space-s);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  @include respond-to(700) {
+    flex-direction: column;
+  }
+
+  .l-grid-item {
+    @include respond-to(700) {
+      padding: 0;
+    }
+  }
+
+  .event-title {
+    margin-top: 0;
+
+    @include respond-to(700) {
+      margin-top: rem(10px);
+    }
+  }
+
+  .event-description {
+    @include respond-to(700) {
+      margin-top: rem($space-xxs);
+    }
+  }
+}
+
+.event-empty {
+  width: 50%;
+  text-align: center;
+  align-self: center;
+  margin: 3em auto 0;
+  background-color: white;
+  padding: $space-s 0;
+
+  @include respond-to(700) {
+    width: 70%;
+  }
+
+  @include respond-to(500) {
+    width: 100%;
+  }
+}
+
+/*
+  Full layout styles
+*/
+.events-full {
+  background-color: white;
+  padding: $space-s;
+
+  .event-title {
+    margin-top: 0;
+
+    @include respond-to(600) {
+      margin-top: rem($space-s);
+    }
+  }
+
+  .event-item {
+    margin-bottom: rem($space-xxs);
+  }
+
+  .event-image {
+    width: auto;
+  }
+
+}
+
+.events-full-wrapper {
+  @include respond-to(700) {
+    flex-direction: column-reverse;
+  }
+}
+
+.events-full-header {
+  border-bottom: 1px solid color(misc, accent);
+  margin-bottom: $space-xs;
+}
+
+.events-upcoming {
+
+  .event-link {
+    color: color(green, dark);
+  }
+
+  @include respond-to(700) {
+    -webkit-flex: 0 0 auto;
+  }
+}
+
+.events-next {
+  border-right: 1px solid color(misc, accent);
+  padding-right: $space-s;
+  margin-right: $space-s;
+
+  @include respond-to(700) {
+    padding: 0 0 $space-s 0;
+    margin: 0 0 $space-s 0;
+    border-right: none;
+    border-bottom: 1px solid color(misc, accent);
+  }
+
+  .event-date {
+    font-weight: 100;
+    font-size: $font-m;
+    text-transform: uppercase;
+  }
+
+  .event-time {
+    font-weight: 100;
+    color: color(yellow, dark);
+  }
+
+  .event-link {
+    margin-top: $space-s;
+  }
+
+  .l-row {
+    @include respond-to(900) {
+      flex-direction: column;
+    }
+  }
+
+}
+
+.events-next-wrapper {
+  @include respond-to(900) {
+    display: flex;
+  }
+
+  @include respond-to(700) {
+    display: block;
+  }
+
+  @include respond-to(500) {
+    -webkit-flex: 0 0 auto;
+  }
+}
+
+.event-image {
+  display: block;
+  padding-left: 0;
+  width: 100%;
+}
+
+.event-link {
+  text-decoration: none;
+  display: inline-block;
+  color: white;
+}
+
+.event-time {
+  margin: 0 10px 0 0;
+}
+
+.event-time,
+.event-link {
+  font-size: $font-s;
+}
+
+.events-showmore {
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: $font-s;
+  display: block;
+  margin-top: $space-s;
+}
+
+.events-wrapper {
+  background-color: white;
+  padding: rem($space-m);
+}
+
+.grid {
+  .event {
+    min-height: 600px;
+  }
+
+  .event-time {
+    font-size: rem($font-m);
+
+    @include respond-to(800) {
+      font-size: rem($font-s);
+    }
+  }
+}
+
+.event-description p {
+  margin-top: 5px;
+}

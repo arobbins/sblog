@@ -1,0 +1,152 @@
+.menu-item {}
+
+.menu-secondary {
+  margin: 0;
+  padding: rem($space-xxs - 5) 0;
+
+  a {
+    text-transform: uppercase;
+
+    &:hover {
+      color: white;
+    }
+  }
+}
+
+.menu-child {}
+
+.menu {
+  list-style: none;
+
+  li {
+    float: left;
+  }
+}
+
+.menu-primary {
+  margin: 0;
+
+  a {
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: $font-s;
+    font-family: $font-secondary;
+    display: inline-block;
+    border-bottom: rem(10px) solid color(slate);
+    color: color(slate);
+    text-indent: rem(10px);
+
+    // Refine
+    padding-bottom: rem(15px);
+    margin: 0 rem(4px);
+    width: rem(120px);
+
+    &:hover {
+      border-bottom: rem($space-xxs) solid color(green, dark);
+      color: color(green, dark);
+    }
+  }
+
+  .active a {
+    color: color(green, dark);
+    border-bottom: rem($space-xxs) solid color(green, dark);
+  }
+}
+
+.menu-footer {
+  margin: 0;
+  padding: rem($space-xs) rem($space-xxs) rem($space-xs) rem($space-xxs);
+
+  li {
+    width: calc(100%/2);
+    padding-bottom: rem(7px);
+    padding-left: 1%;
+
+    @include respond-to(1200) {
+      width: 100%;
+    }
+
+    @include respond-to(1000) {
+      width: calc(100%/2);
+    }
+  }
+
+  a {
+    background: url('assets/imgs/icon-arrow-right.svg') 0% 50% no-repeat;
+    font-size: $font-xs;
+    padding-left: $space-xs;
+    color: white;
+    text-decoration: none;
+    width: 100%;
+    display: inline-block;
+
+    @include respond-to(400) {
+      font-size: $font-xs;
+    }
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
+
+.dropdown-menu-item {
+  width: 100%;
+  display: block;
+  text-decoration: none;
+  padding: 0;
+  text-indent: 30px;
+  text-align: left;
+  padding: rem($space-xxs) 0;
+  color: white;
+
+  &:hover {
+    background-color: darken(color(yellow, dark), 8);
+    cursor: pointer;
+    color: white;
+  }
+}
+
+.dropdown.is-open {
+  .dropdown-menu {
+    display: block;
+    box-shadow: 0px 7px 30px -6px rgba(0,0,0,0.47);
+    z-index: 2;
+  }
+  .dropdown-toggle {
+    z-index: 3;
+  }
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+
+  @include respond-to(500) {
+    width: 100%;
+  }
+}
+
+.dropdown-menu {
+  display: none;
+  margin: 0;
+  list-style: none;
+  background-color: color(yellow, dark);
+  position: absolute;
+  width: 100%;
+}
+
+.dropdown-toggle {
+  padding-right: rem($space-s*2);
+  padding-left: rem($space-m);
+  text-align: left;
+
+  &.icon-arrow-down {
+    &:before {
+      position: absolute;
+      right: rem($space-xs);
+      font-size: rem($font-xxs);
+      top: 35%;
+    }
+  }
+}

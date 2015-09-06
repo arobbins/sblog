@@ -1,0 +1,34 @@
+.navigator {
+  background-color: color(misc, offwhite);
+  padding: 0 rem(10px) rem(10px) rem(10px);
+
+  @include respond-to(700) {
+    flex-direction: column;
+  }
+
+  @include respond-to(500) {
+    padding: rem($space-m);
+  }
+
+  .dropdown {
+    width: 100%;
+  }
+}
+
+.navigator-heading {
+  color: color(green, dark);
+  font-size: rem($font-xl);
+}
+
+.navigator-menu {
+
+  @include respond-to(700) {
+    -webkit-flex: 0 0 auto;
+  }
+
+  &:first-child {
+    @include respond-to(500) {
+      margin-bottom: rem($space-m);
+    }
+  }
+}

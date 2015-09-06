@@ -1,0 +1,26 @@
+//
+// Defaults to the light color. For example, color(red) will equal rgb(255, 89, 98)
+//
+$colors: (
+  red: (
+    light: rgb(255, 89, 98),
+    dark: rgb(179, 62, 68)
+  ),
+  green: (
+    light: rgb(72, 220, 188),
+    dark: rgb(37, 174, 144)
+  ),
+  yellow: (
+    light: rgb(242, 211, 144),
+    dark: rgb(245, 181, 74)
+  ),
+  slate: (
+    light: rgb(144, 153, 163),
+    dark: rgb(85, 96, 111),
+    darkest: rgb(27, 35, 45)
+  ),
+  misc: (
+    accent: rgb(216, 219, 223),
+    offwhite: rgb(238, 239, 247)
+  )
+);

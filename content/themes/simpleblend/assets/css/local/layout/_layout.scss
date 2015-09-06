@@ -1,0 +1,137 @@
+.main {
+  // margin-bottom: 80px;
+}
+
+.header {
+  margin: $space-m 0;
+}
+
+.article-author {
+  border-top: 1px solid #cfcfcf;
+  padding-top: 15px;
+  margin-top: 1em;
+  margin-bottom: 15px;
+}
+
+.author-image {
+  margin-right: 1em;
+}
+
+.author-bio {
+  font-size: 0.8em;
+}
+
+.article-link {
+  display: block;
+}
+
+.author-name {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.article-info {
+  font-size: 17px;
+  margin-top: 1em;
+}
+
+.post-divider {
+  font-size: 11px;
+  position: relative;
+  top: 7px;
+  left: -3px;
+  padding: 0 8px 0 6px;
+}
+
+.article-date {
+  // font-style: italic;
+}
+
+
+
+.post-preview {
+  padding: 2em;
+  -webkit-transform: translateZ(0px);
+  // background-color: white;
+
+  &:hover {
+    cursor: pointer;
+    border-bottom: none;
+
+    h2 {
+      color: white;
+    }
+  }
+
+}
+
+.post-initial {
+  text-transform: uppercase;
+}
+
+.single-post .article-info {
+  margin-bottom: $space-s;
+  border-bottom: 1px solid color(misc, accent);
+  padding-bottom: $space-xs;
+}
+
+.single-post .post {
+  border-bottom: none;
+}
+
+.wrapper {
+  @include respond-to(800) {
+    flex-direction: column;
+  }
+}
+
+.content-wrapper {
+  @include respond-to(800) {
+    flex-direction: column;
+  }
+}
+
+.sidebar {
+  margin: rem($space-xxs) 0 rem(100px) rem($space-m);
+  padding-top: 0;
+
+  @include respond-to(800) {
+    margin: 0 0 rem($space-l) 0;
+    flex: 0 0 auto;
+  }
+}
+
+.module .sidebar {
+  margin-bottom: rem($space-xxs);
+}
+
+.post {
+  margin-bottom: 2em;
+  padding-bottom: 1em;
+  border-bottom: 1px solid color(misc, accent);
+
+  @include respond-to(800) {
+    padding-right: 0;
+  }
+}
+
+.screen-reader-text {
+  display: none;
+}
+
+.page-heading {
+  &:before {
+    position: relative;
+    left: -5px;
+    font-size: 45px;
+
+    @include respond-to(500) {
+      font-size: rem($heading2);
+    }
+  }
+}
+
+.home .content {
+  max-width: rem(1300px);
+}

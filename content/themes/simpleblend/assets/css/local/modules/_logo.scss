@@ -1,0 +1,300 @@
+@-webkit-keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  85% { /*2.4 / 2.9 = 0.827*/
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fade-in-out {
+  0% {
+    opacity: 1;
+  }
+
+  5% {
+    opacity: 0;
+  }
+
+  60% {
+    opacity: 0;
+  }
+
+  65% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes o1-bottomright {
+  50% {
+    fill: color(green, dark);
+  }
+
+  50.001% {
+    fill: color(slate, dark);
+  }
+
+  100% {
+    fill: color(slate, dark);
+  }
+
+}
+
+@keyframes o1-bottom {
+  50% {
+    fill: color(red);
+  }
+
+  50.001% {
+    fill: color(yellow, dark);
+  }
+
+  100% {
+    fill: color(yellow, dark);
+  }
+
+}
+
+@keyframes o1-left {
+  70% {
+    fill: color(red);
+  }
+
+  70.001% {
+    fill: color(green);
+  }
+
+  100% {
+    fill: color(green);
+  }
+
+}
+
+@keyframes o1-topright {
+
+  30% {
+    fill: color(red, dark);
+  }
+
+  30.001% {
+    fill: white;
+  }
+
+  100% {
+    fill: white;
+  }
+
+}
+
+@keyframes shimmer {
+
+  0% {
+    opacity: 1;
+    transform: rotate(0deg);
+  }
+
+  5% {
+    opacity: 0;
+    transform: rotate(280deg);
+  }
+
+  60% {
+    opacity: 0;
+    transform: rotate(180deg);
+  }
+
+  65% {
+    opacity: 1;
+    transform: rotate(0deg);
+  }
+
+  100% {
+    opacity: 1;
+  }
+
+}
+
+@keyframes color-fade {
+
+  0% {
+    fill: color(red);
+  }
+
+  25% {
+    fill: color(yellow);
+  }
+
+  50% {
+    fill: color(green);
+  }
+
+  75% {
+    fill: color(yellow);
+  }
+
+  100% {
+    fill: color(red);
+  }
+
+}
+
+.logo-greenlines-wrapper {
+  clip-path: url(#p);
+}
+
+.logo-greenlines-rotate {
+  transform-origin: center;
+  transform: rotate(180deg);
+  animation-name: rotate;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+  transition-timing-function: ease-in-out;
+}
+
+.logo-shimmer-wrapper {
+  // clip-path: url(#q);
+  // transform: translateX(196px);
+}
+
+.logo-shimmer {
+  // transform: translate(-30px,-171px);
+  // animation: shimmer 4s infinite;
+
+}
+
+.shard7 {
+  opacity: 1;
+  transform-origin: center;
+  animation: shimmer 8s linear infinite;
+}
+
+.shard11 {
+  opacity: 1;
+  transform-origin: center;
+  animation: shimmer 8s linear infinite;
+  animation-delay: 5s;
+}
+
+.shard3 {
+  opacity: 1;
+  transform-origin: center;
+  animation: shimmer 8s linear infinite;
+  animation-delay: 2.3s;
+}
+
+.shard12 {
+  opacity: 1;
+  transform-origin: center;
+  animation: shimmer 12s linear infinite;
+  animation-delay: 6s;
+}
+
+.shard14 {
+  opacity: 1;
+  transform-origin: center;
+  animation: shimmer 8s linear infinite;
+  animation-delay: 1s;
+}
+
+
+.logo-o1-bottom {
+  animation: o1-bottom 5s infinite;
+  animation-delay: 2.5s;
+}
+
+.logo-o1-bottomright {
+  animation: o1-bottomright 5s infinite;
+  animation-delay: 1s;
+}
+
+.logo-o1-left {
+  animation: o1-left 5s infinite;
+  animation-delay: 2s;
+}
+
+.logo-o1-topright {
+  animation: o1-topright 4s infinite;
+}
+
+// Second letter C
+// .logo-c2-topleft {
+//   animation: fade-in-out 5s infinite;
+//   transform-origin: center;
+// }
+
+// .logo-c2-bottom {
+//   animation: fade-in-out 10s infinite;
+//   transform-origin: center;
+//   animation-delay: 2s;
+// }
+
+// .logo-c2-center {
+//   animation: fade-in-out 10s infinite;
+//   transform-origin: center;
+//   animation-delay: 3s;
+// }
+
+// .logo-c2-bottomright {
+//   animation: fade-in-out 10s infinite;
+//   transform-origin: center;
+//   animation-delay: 4.6s;
+// }
+
+// .logo-c2-topright {
+//   animation: fade-in-out 15s infinite;
+//   transform-origin: center;
+//   animation-delay: 5.6s;
+// }
+
+.logo-shape-o2 {
+  fill: color(red);
+  animation: color-fade 30s linear infinite;
+}
+
+.logo-shape-o2-4 {
+  opacity: 1;
+  animation: fade-in-out 8s linear infinite;
+}
+
+.logo-shape-o2-bottomright {
+  opacity: 1;
+  animation: fade-in-out 8s linear infinite;
+  animation-delay: 2s;
+}
+
+.logo-shape-o2-right {
+  opacity: 1;
+  animation: fade-in-out 8s linear infinite;
+  animation-delay: 3s;
+}
+
+.logo-o2-topright {
+  opacity: 1;
+  animation: fade-in-out 8s linear infinite;
+  animation-delay: 1s;
+}
+
+.logo-o2-large {
+  opacity: 1;
+  animation: fade-in-out 10s linear infinite;
+  animation-delay: 3s;
+}
+
+.logo-o2-single {
+  opacity: 1;
+  animation: fade-in-out 10s linear infinite;
+  animation-delay: 3s;
+}
+
+.logo-o2-leftlarge {
+  opacity: 1;
+  animation: fade-in-out 7s linear infinite;
+  animation-delay: 4.5s;
+}

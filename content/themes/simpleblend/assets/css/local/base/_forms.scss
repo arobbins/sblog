@@ -1,0 +1,142 @@
+label {
+  display: block;
+  font-weight: bold;
+  font-size: $label;
+  color: color(slate, darkest);
+  margin-bottom: 7px;
+
+  @include respond-to(500) {
+    text-align: left;
+  }
+}
+
+select,
+textarea,
+input {
+  width: 100%;
+  margin-bottom: $space-xxs;
+  padding: 6px 12px;
+  border: 1px solid color(slate);
+  line-height: 1.6;
+  color: color(slate, dark);
+  // Removes rounded corners
+  border-radius: 0;
+
+  &:disabled {
+    opacity: 0.6;
+  }
+}
+
+select {
+  background: color(yellow, dark) url('assets/imgs/icon-arrow-down.svg') no-repeat;
+  background-size: 15px auto;
+  background-position: right rem($space-xs) center;
+  text-decoration: none;
+  vertical-align: middle;
+  border-radius: 0;
+  color: white;
+  border: 0;
+  overflow: hidden;
+  padding: rem($space-xxs) rem($space-m);
+  appearance: none;
+  -webkit-appearance: none;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+}
+
+/* For IE 11 */
+select::-ms-expand {
+  display: none;
+}
+
+.form-search {}
+.form-search-input {}
+.form-search-trigger {}
+
+.form-search {
+  position: relative;
+
+  &:before {
+    position: absolute;
+    right: rem(13px);
+    top: 20%;
+    color: color(slate);
+    font-size: $font-s;
+  }
+
+  .search-field {
+    padding-right: 40px;
+  }
+}
+
+.form-newsletter {
+  // Aligns to the bottom of .footer-news container
+  // margin-top: auto;
+
+  @include respond-to(900) {
+    margin-top: 0;
+  }
+
+  form {
+    margin-top: rem($space-xs);
+  }
+
+  .gfield_label {
+    color: white;
+  }
+
+  .gfield_required {
+    display: none;
+  }
+
+  .gform_validation_container {
+    display: none;
+  }
+
+  .gform_fields {
+    list-style: none;
+    margin: 0;
+  }
+
+  .gform_body {
+    margin-right: 1em;
+
+    @include respond-to(400) {
+      width: 100%;
+      margin: 0;
+    }
+  }
+
+  .gform_footer {
+    float: left;
+    margin-top: 2.3em;
+
+    @include respond-to(500) {
+      margin-top: 0;
+    }
+
+    @include respond-to(400) {
+      width: 100%;
+    }
+  }
+
+  .button {
+    margin-top: auto;
+    padding: rem(7px) rem($space-m);
+    background-color: color(green, dark);
+
+    &:hover {
+      background-color: lighten(color(green, dark), 5);
+    }
+
+    &:disabled {
+      &:hover {
+        background-color: color(green, dark);
+      }
+    }
+  }
+
+}

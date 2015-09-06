@@ -1,0 +1,183 @@
+.footer {
+  background-size: cover;
+
+  @include respond-to(700) {
+    background-size: initial;
+    background-repeat: repeat;
+    background-color: color(slate, dark);
+  }
+
+  .tagline {
+    @include respond-to(600) {
+      text-align: center;
+      margin-bottom: rem($space-m);
+    }
+  }
+}
+
+.footer-main {
+  padding: rem($space-xxl) 0 rem($space-l) 0;
+
+  > .l-row {
+
+  }
+}
+
+.footer-logo {
+  max-width: rem(200px);
+
+  @include respond-to(600) {
+    align-self: center;
+  }
+}
+
+.footer-copywrite {}
+.footer-link {}
+
+.footer-about {
+  margin: 0 $space-gutter-m;
+
+  p {
+    margin-top: 0;
+  }
+
+  @include respond-to(1000) {
+    margin: $space-gutter-s 0;
+  }
+}
+
+.footer-button-group {
+  .button:first-child {
+    margin-bottom: rem($space-xxs);
+  }
+
+  @include respond-to(400) {
+    width: 100%;
+  }
+
+}
+
+.footer-nav,
+.footer-about,
+.footer-news {
+  @include respond-to(1000) {
+    flex: 0 0 calc(100%);
+  }
+}
+
+.footer-about,
+.footer-news {
+  background-color: color(slate, darkest);
+  padding: $space-xs;
+  color: white;
+
+  @include respond-to(900) {
+    flex: 0 0 calc(100%);
+  }
+}
+
+.footer-news-items {
+  margin: 0;
+  list-style: none;
+}
+
+.footer-news-item {
+  margin: 0;
+  list-style: none;
+}
+
+.footer-news-link {
+  color: white;
+  text-decoration: none;
+  font-size: $font-s;
+  position: relative;
+  padding-left: rem($space-s);
+  width: 100%;
+  display: inline-block;
+
+  &:before {
+    position: absolute;
+    left: 0;
+    top: rem(9px);
+    font-size: rem(15px);
+  }
+}
+
+.footer-contact {
+  margin-top: rem($space-xs);
+
+}
+
+.footer-contact-link {
+  color: white;
+  font-size: $font-s;
+  padding-left: rem($space-xxs);
+  text-decoration: none;
+
+  &:before {
+    color: color(yellow);
+    font-size: rem(28px);
+    text-decoration: none;
+    position: relative;
+    top: 7px;
+    left: -10px;
+  }
+
+  @include respond-to(900) {
+    margin-left: rem($space-xl);
+  }
+}
+
+.footer-nav {
+  padding: 0;
+  background-color: color(green, dark);
+}
+
+.footer-icon {
+  font-size: $font-xl;
+  color: white;
+  text-decoration: none;
+
+  @include respond-to(1000) {
+    margin-right: rem($space-m);
+  }
+
+  @include respond-to(400) {
+    margin-right: rem($space-xs);
+  }
+
+  &:before {
+    position: relative;
+    top: rem(3px);
+  }
+}
+
+.footer-social {
+  background-color: color(slate, darkest);
+  padding: rem($space-xxs) rem($space-xs) rem($space-xxs) rem($space-xs);
+
+  @include respond-to(1000) {
+    justify-content: flex-start;
+  }
+
+}
+
+.footer-heading {
+  color: white;
+  font-family: $font-secondary;
+  font-size: $font-m;
+  margin-bottom: $space-xxs;
+  font-weight: 900;
+}
+
+.footer-bottom {
+  padding: rem($space-l) 0;
+  background-color: white;
+
+  > .l-row {
+    @include respond-to(600) {
+      flex-direction: column;
+    }
+  }
+
+}

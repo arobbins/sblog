@@ -1,0 +1,95 @@
+h1, h2, h3, h4, h5, h6 {
+  a {
+    color: #1a2935;
+  }
+}
+
+h1 {
+  font-size: rem($heading1);
+  font-family: $font-primary;
+  margin: 0 0 rem($space-xxs) 0;
+  line-height: 1;
+
+  @include respond-to(500) {
+    font-size: rem($heading2);
+  }
+
+  &:before {
+    color: color(slate);
+  }
+
+}
+
+.entry-title {
+  a {
+    text-decoration: none;
+  }
+}
+
+h2 {
+  font-size: rem($heading2);
+  font-family: $font-primary;
+  margin: 0 0 rem($space-xxs) 0;
+  line-height: 1;
+}
+
+h3 {
+  font-size: rem($heading3);
+  font-family: $font-primary;
+  margin: 0 0 rem($space-xxs) 0;
+}
+
+h4 {
+  font-size: rem($heading4);
+  font-family: $font-primary;
+  margin: 0 0 rem($space-xxs) 0;
+}
+
+h5 {
+  font-size: rem($heading5);
+  font-family: $font-secondary;
+  margin: 0 0 rem($space-xxs) 0;
+  font-weight: bold;
+}
+
+h6 {
+  font-size: rem($heading6);
+  font-family: $font-secondary;
+  margin: 0 0 rem($space-xxs) 0;
+  font-weight: bold;
+}
+
+a {
+  color: #207178;
+
+  &:hover {
+    // color: lighten(desaturate(#0f4975, 28), 25);
+    color: #1c1d21;
+  }
+}
+
+em, i {
+  font-style: italic;
+}
+
+.tagline {
+  margin: 0;
+  font-family: $font-primary;
+  font-size: $font-l;
+}
+
+.copy-intro {
+  font-size: rem($font-m);
+
+  @include respond-to(500) {
+    font-size: rem($font-xs);
+  }
+
+  p {
+    margin-top: 0;
+  }
+}
+
+blockquote {
+  margin: 0;
+}

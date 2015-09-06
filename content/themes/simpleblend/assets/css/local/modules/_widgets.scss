@@ -1,0 +1,17 @@
+.widget {
+  margin-bottom: rem($space-m);
+
+  ul {
+    margin-top: 0;
+  }
+
+  h3 {
+    margin-bottom: 0;
+  }
+}
+
+.widget-primary {}
+.widget-secondary {}
+.widget-heading {}
+.widget-copy {}
+.widget-link {}

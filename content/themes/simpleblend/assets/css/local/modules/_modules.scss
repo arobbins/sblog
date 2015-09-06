@@ -1,0 +1,99 @@
+.module {
+  padding: rem($space-l) 0;
+}
+
+.module-about {
+  background-color: #25ae90; /* TODO: Change color into variable */
+  padding: 100px 0;
+  background-size: cover;
+}
+
+.intro-content + .module-members {
+  padding-top: 0;
+  padding-bottom: rem($space-xxl * 2);
+}
+
+.module-members {
+  @include respond-to(400) {
+    padding-top: 0;
+  }
+}
+
+.module-dream {
+  padding: rem($space-xxl*2) 0;
+
+  @include respond-to(400) {
+    padding: rem($space-l) 0;
+  }
+}
+
+.module-gallery {
+  background-color: color(green, dark);
+}
+
+.module-gallery,
+.module-events {
+  padding: rem($space-m*2) 0;
+
+  @include respond-to(700) {
+    background-size: initial;
+  }
+}
+
+.module-gallery,
+.module-quotes,
+.module-promo {
+  padding: rem($space-xl + 50) 0;
+}
+
+.module-quotes {
+  min-height: 325px;
+
+  @include respond-to(700) {
+    padding: rem($space-l) 0;
+  }
+}
+
+.module-team,
+.module-default,
+.module-rooms,
+.module-pricing,
+.module-navigator,
+.module-usersguide {
+  padding-top: 0;
+}
+
+.module-default {
+  padding-bottom: 0;
+
+  h5 {
+    font-family: $font-primary;
+  }
+
+  .l-row {
+    .l-grid-item {
+      @include respond-to(500) {
+        flex-direction: column;
+        flex: 1;
+      }
+    }
+
+    @include respond-to(500) {
+      flex-direction: column;
+      flex: 1;
+    }
+  }
+
+  @include respond-to(500) {
+    padding-bottom: $space-m;
+  }
+
+}
+
+.module-membership-tiers {
+  padding: rem($space-xxl) 0;
+}
+
+.module-membership-priorities {
+  background-color: color(yellow, dark);
+}

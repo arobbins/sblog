@@ -1,0 +1,37 @@
+.pricing-wrapper,
+.pricing {
+  margin-bottom: $space-l;
+}
+
+.pricing-wrapper {
+  margin-bottom: 0;
+}
+
+.pricing-tier-heading {
+  font-size: $font-xl;
+}
+
+.pricing-col {
+  .button {
+    margin-bottom: $space-xxs;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.pricing-enterprise {
+  @include respond-to(400) {
+    margin-bottom: 0;
+  }
+}
+
+.pricing-col-signup {
+  min-width: rem(200px);
+}
+
+.pricing-col-benefits-list {
+  margin-top: 0;
+  margin-bottom: 0;
+}

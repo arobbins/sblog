@@ -12,12 +12,29 @@
   }
 }
 
+.article-info {
+  margin-bottom: 30px;
+  border-bottom: 1px solid color(misc, accent);
+  padding-bottom: 5px;
+  font-size: 17px;
+
+  @include respond-to(500) {
+    flex-direction: row;
+  }
+}
+
+.article-comments {
+  @include respond-to(500) {
+    display: none;
+  }
+}
+
 .article-footer {
   -webkit-flex: 0 0 auto;
 }
 
 .article-date {
-  margin-right: 10px;
+  // margin-right: 10px;
 }
 
 .article-byline {
@@ -53,5 +70,29 @@
   figure {
     max-width: 100%;
     margin: 0;
+  }
+}
+
+.article-link {
+  display: block;
+}
+
+.post-divider {
+  color: #2c3e50;
+  font-size: 16px;
+  position: relative;
+  top: 7px;
+  left: -2px;
+  margin: 0 1.2em;
+
+  @include respond-to(500) {
+    display: none;
+  }
+}
+
+.article-date {
+  @include respond-to(400) {
+    display: block;
+    width: 100%;
   }
 }

@@ -2,66 +2,63 @@
   // margin-bottom: 80px;
 }
 
-.header {
-  margin: $space-m 0;
+.error404 {
+
+  h1, p {
+    text-align: center;
+  }
+
+  h1 {
+    font-size: 100px;
+    font-weight: bold;
+  }
+
+  p {
+
+  }
 }
 
-.article-author {
-  border-top: 1px solid #cfcfcf;
-  padding-top: 15px;
-  margin-top: 1em;
-  margin-bottom: 15px;
-}
-
-.author-image {
-  margin-right: 1em;
-}
-
-.author-bio {
-  font-size: 0.8em;
-}
-
-.article-link {
-  display: block;
-}
-
-.author-name {
-  margin: 0;
-  font-size: 18px;
-  font-weight: bold;
-}
-
-.article-info {
-  font-size: 17px;
-  margin-top: 1em;
-}
-
-.post-divider {
-  font-size: 11px;
-  position: relative;
-  top: 7px;
-  left: -3px;
-  padding: 0 8px 0 6px;
-}
-
-.article-date {
-  // font-style: italic;
+.avatar {
+  // border-radius: 50%;
 }
 
 
+
+.entry-content {
+  > p:first-of-type {
+    &:first-letter {
+      float: left;
+      font-size: 75px;
+      line-height: 60px;
+      padding-top: 16px;
+      padding-right: 17px;
+      padding-left: 3px;
+    }
+  }
+}
 
 .post-preview {
-  padding: 2em;
-  -webkit-transform: translateZ(0px);
-  // background-color: white;
+  padding: 0 2em 2em;
+
+  @include respond-to(900) {
+    padding: 0;
+  }
+
+  .entry-title {
+    margin-top: 0;
+  }
 
   &:hover {
-    cursor: pointer;
-    border-bottom: none;
+    // cursor: pointer;
+    // border-bottom: none;
 
     h2 {
       color: white;
     }
+  }
+
+  &.post {
+    border-bottom: none;
   }
 
 }
@@ -70,14 +67,9 @@
   text-transform: uppercase;
 }
 
-.single-post .article-info {
-  margin-bottom: $space-s;
-  border-bottom: 1px solid color(misc, accent);
-  padding-bottom: $space-xs;
-}
-
 .single-post .post {
   border-bottom: none;
+  margin-top: 2em;
 }
 
 .wrapper {
@@ -96,8 +88,13 @@
   margin: rem($space-xxs) 0 rem(100px) rem($space-m);
   padding-top: 0;
 
+  @include respond-to(900) {
+    padding: 30px 0;
+    margin: 30px 0;
+    border-top: 1px solid #d8dbdf;
+  }
+
   @include respond-to(800) {
-    margin: 0 0 rem($space-l) 0;
     flex: 0 0 auto;
   }
 }
@@ -107,7 +104,6 @@
 }
 
 .post {
-  margin-bottom: 2em;
   padding-bottom: 1em;
   border-bottom: 1px solid color(misc, accent);
 
@@ -132,6 +128,19 @@
   }
 }
 
+.content {
+  margin-top: 3em;
+
+  @include respond-to(900) {
+    margin-top: 0;
+    flex-direction: column-reverse;
+  }
+}
+
 .home .content {
   max-width: rem(1300px);
+
+  @include respond-to(900) {
+    margin-top: 1em;
+  }
 }

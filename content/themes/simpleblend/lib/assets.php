@@ -76,8 +76,14 @@ function assets() {
 
   wp_enqueue_style('awt-css', asset_path('/assets/css/app.min.css'), false, null);
 
-  wp_enqueue_script('stripe-checkout', 'https://checkout.stripe.com/checkout.js', [], null, true);
+  wp_enqueue_style('prism-css', asset_path('/assets/css/vendor/prism.min.css'), false, null);
+  wp_enqueue_script('prism-js', asset_path('/assets/js/vendor/prism.min.js'), ['jquery'], null, true);
 
-  // wp_enqueue_script('sage_js', asset_path('assets/js/local/app.main.js'), ['jquery'], null, true);
+  wp_enqueue_script('lazyload', 'https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js', ['jquery'], null, true);
+
+  wp_enqueue_script('fitvid', 'https://cdnjs.cloudflare.com/ajax/libs/fitvids/1.1.0/jquery.fitvids.min.js', ['jquery'], null, true);
+
+  wp_enqueue_script('sage_js', asset_path('/assets/js/app.min.js'), ['jquery'], null, true);
+
 }
 add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\assets', 100);

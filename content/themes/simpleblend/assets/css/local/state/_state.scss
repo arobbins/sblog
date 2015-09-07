@@ -22,6 +22,10 @@
   display: none;
 }
 
+.is-lazy {
+  // display: none;
+}
+
 .is-circle {
   border-radius: 50%;
   display: block;
@@ -63,7 +67,6 @@
 .is-loading:after {
 
 }
-
 
 // Loading spinner
 .spinner {

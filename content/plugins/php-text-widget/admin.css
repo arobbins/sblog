@@ -1,0 +1,12 @@
+#satollo-header {
+  text-align: left;
+  background-color: #f4f4f4;
+  padding: 5px;
+  padding-left: 15px;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+
+#satollo-header a {
+    margin-right: 15px;
+}

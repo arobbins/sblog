@@ -1,13 +1,18 @@
 body {
   min-height: 100vh;
+  letter-spacing: 0.01em;
   background-color: #FFF;
   line-height: 1.8;
   font-size: 19px;
   font-family: $font-secondary;
-  color: #282b30;
+  color: #2c3e50;
   -webkit-backface-visibility: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  @include respond-to(500) {
+    font-size: 15px;
+  }
 }
 
 // Needed as a Flexbox fallback for IE
@@ -19,7 +24,8 @@ body {
 }
 
 ::selection {
-  background-color: white;
+  background-color: #c0dde4;
+  color: white;
 }
 
 code, kbd, pre, samp {

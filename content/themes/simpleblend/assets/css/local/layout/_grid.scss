@@ -14,7 +14,7 @@
   flex-wrap: wrap;
 
   @include respond-to(500) {
-    // flex-direction: column;
+    flex-direction: column;
   }
 }
 
@@ -228,6 +228,10 @@
   width: 100%;
   max-width: rem(860px);
   padding: 0 rem(30px);
+
+  @include respond-to(500) {
+    padding: 0 rem(15px);
+  }
 }
 
 .l-section {

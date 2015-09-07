@@ -88,6 +88,78 @@
   }
 }
 
+.header .header-nav-link-bitcoin {
+  padding: 6px 12px;
+  border-radius: 50%;
+  background-color: #f7931a;
+  font-size: 25px;
+
+  i {
+    color: white;
+    transform: rotate(15deg);
+    position: relative;
+    // left: 1px;
+  }
+}
+
+.header {
+  margin: 1em 0 0;
+  padding: 0 2em;
+
+  a {
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+}
+
+.header-logo {
+  width: 40px;
+}
+
+.header-nav {
+  display: none;
+  list-style: none;
+}
+
+.header-nav-item {
+  float: left;
+}
+
+.header-back-link {
+  text-decoration: none;
+  color: #2c3e50;
+  font-size: 30px;
+
+  @include respond-to(600) {
+    text-align: center;
+    width: 100%;
+  }
+
+  @include respond-to(500) {
+    font-size: 50px;
+  }
+
+  &:hover {
+    color: white;
+  }
+}
+
+.header-nav-link {
+  color: #2c3e50;
+  padding-left: 1em;
+  font-size: 30px;
+
+  &:hover {
+    opacity: 0.6;
+
+    &::before {
+      // opacity: 0.6;
+    }
+
+  }
+}
+
 .home .header-breadcrumbs {
   display: none;
 }

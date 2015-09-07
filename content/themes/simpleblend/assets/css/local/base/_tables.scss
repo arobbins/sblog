@@ -19,7 +19,7 @@ tbody {
 }
 
 td, th {
-  padding: $space-xxs;
+  padding: 5px $space-xxs;
   border: 1px solid color(slate, light);
   vertical-align: top;
   max-width: 600px;
@@ -29,7 +29,7 @@ td, th {
   }
 
   &:first-child {
-    min-width: 200px;
+    // min-width: 200px;
 
     @include respond-to(500) {
       min-width: auto;

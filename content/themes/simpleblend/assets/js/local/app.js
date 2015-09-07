@@ -4,7 +4,8 @@
 
     var Utils = require('./utils');
 
-    Utils.sayHello();
+    Utils.lazyLoadImgs();
+    Utils.responsifyVideos();
 
   });
 

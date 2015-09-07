@@ -2,14 +2,24 @@
 
   var Utils = (function() {
 
-    var $images = $("body");
+    var $images = $('.is-lazy'),
+        $videos = $('.content-video').parent(),
+        $body = $('body'),
+        $content = $('.entry-content');
 
-    var sayHello = function sayHello() {
-      alert('Hello!!');
+    var lazyLoadImgs = function lazyLoadImgs() {
+      $images.lazyload({
+        effect: "fadeIn"
+      });
+    };
+
+    var responsifyVideos = function responsifyVideos() {
+      $videos.fitVids();
     };
 
     return {
-      sayHello: sayHello
+      lazyLoadImgs: lazyLoadImgs,
+      responsifyVideos: responsifyVideos
     }
 
   })();

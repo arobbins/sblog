@@ -1,5 +1,4 @@
 .widget {
-  margin-bottom: rem($space-m);
 
   ul {
     margin-top: 0;
@@ -15,3 +14,15 @@
 .widget-heading {}
 .widget-copy {}
 .widget-link {}
+
+.textwidget {
+  font-size: 15px;
+
+  p {
+    margin-top: 0;
+  }
+
+  img {
+    margin-bottom: 10px;
+  }
+}

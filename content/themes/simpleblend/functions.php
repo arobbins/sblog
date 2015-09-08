@@ -41,8 +41,8 @@ add_filter('excerpt_length', 'et_excerpt_length');
 /* Add a link  to the end of our excerpt contained in a div for styling purposes and to break to a new line on the page.*/
 
 function et_excerpt_more($more) {
-  $more = 'More';
-  return ' ... <a href="'. get_permalink($post->ID) . '" class="view-full-post-btn">' . $more . '</a>';
+  $more = '<i class="fa fa-long-arrow-right hvr-wobble-horizontal"></i>';
+  return ' <a href="'. get_permalink($post->ID) . '" class="article-more">' . $more . '</a>';
 }
 add_filter('excerpt_more', 'et_excerpt_more');
 

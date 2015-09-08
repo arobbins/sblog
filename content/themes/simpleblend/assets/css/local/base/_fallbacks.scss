@@ -1,5 +1,9 @@
 .is-ie {
 
+  .l-center {
+    margin: 0 auto;
+  }
+
   &.l-col {
     display: block;
   }
@@ -39,91 +43,24 @@
     float: left;
   }
 
-  .header-main {
-    display: table;
-    width: 100%;
-
-    .header-logo {
-      max-width: 400px;
-      width: 400px;
-      display: table-cell;
-      vertical-align: middle;
-
-      img {
-        height: 70px;
-      }
-    }
-
-    nav {
-      display: table-cell;
-      vertical-align: bottom;
-    }
-
-    form {
-      float: right;
-      display: block;
-      margin-top: 75px;
-      margin-right: 55px;
-      width: 200px;
-    }
+  .content {
+    margin-top: 3em;
   }
 
-  .footer-about,
-  .footer-news,
-  .footer-nav {
+  .author-contact {
+    width: 60%;
+    float: left;
+  }
+
+  .author-footer-name {
     width: 30%;
+    float: left;
   }
 
-  .footer-about {
-    display: block;
+  .author-footer-bio > p:last-child {
+    float: left;
   }
 
-  .footer-logo {
-    img {
-      width: 200px;
-    }
-  }
-
-  .module-usersguide {
-    .l-center {
-      margin: 0 auto;
-    }
-  }
-
-  .module-usersguide,
-  .membership-priorities-wrapper {
-    display: block;
-    flex: none;
-  }
-
-  .remodal-wrapper {
-    max-width: 100%;
-  }
-
-  .location-nav-item,
-  .feeds-blog,
-  .feeds-twitter {
-    display: block;
-  }
-
-  .team-info {
-    flex: none;
-  }
-
-  .team-host-single {
-    .team-info {
-      width: 60%;
-      float: left;
-    }
-  }
-
-  .feed {
-    min-height: 380px;
-  }
-
-  .article-footer {
-    flex: none;
-  }
 }
 
 //

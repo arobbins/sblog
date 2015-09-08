@@ -108,7 +108,7 @@
 
   a {
     &:hover {
-      opacity: 0.6;
+      // opacity: 0.6;
     }
   }
 }
@@ -126,10 +126,20 @@
   float: left;
 }
 
+.header-nav-link {
+  color: #2c3e50;
+  padding-left: 1em;
+  font-size: 30px;
+
+  &:hover {
+    // opacity: 0.6;
+  }
+}
+
 .header-back-link {
   text-decoration: none;
+  font-size: 36px;
   color: #2c3e50;
-  font-size: 30px;
 
   @include respond-to(600) {
     text-align: center;
@@ -137,27 +147,9 @@
   }
 
   @include respond-to(500) {
-    font-size: 50px;
+    // font-size: 40px;
   }
 
-  &:hover {
-    color: white;
-  }
-}
-
-.header-nav-link {
-  color: #2c3e50;
-  padding-left: 1em;
-  font-size: 30px;
-
-  &:hover {
-    opacity: 0.6;
-
-    &::before {
-      // opacity: 0.6;
-    }
-
-  }
 }
 
 .home .header-breadcrumbs {

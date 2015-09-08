@@ -19,7 +19,19 @@
 }
 
 .avatar {
-  // border-radius: 50%;
+  border-radius: 50%;
+  width: 100%;
+
+  @include respond-to(900) {
+    margin: 0 auto;
+    display: block;
+    width: 50%;
+  }
+
+  @include respond-to(600) {
+    width: 70%;
+  }
+
 }
 
 
@@ -59,6 +71,12 @@
 
   &.post {
     border-bottom: none;
+
+    &:last-child {
+      @include respond-to(600) {
+        padding: 0;
+      }
+    }
   }
 
 }
@@ -89,7 +107,7 @@
   padding-top: 0;
 
   @include respond-to(900) {
-    padding: 30px 0;
+    padding: 40px 0;
     margin: 30px 0;
     border-top: 1px solid #d8dbdf;
   }
@@ -97,6 +115,12 @@
   @include respond-to(800) {
     flex: 0 0 auto;
   }
+
+  @include respond-to(600) {
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+
 }
 
 .module .sidebar {

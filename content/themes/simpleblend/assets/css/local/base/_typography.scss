@@ -45,6 +45,10 @@ h2 {
   font-size: rem($heading2);
   font-family: $font-primary;
   margin: 1em 0 rem($space-xxs) 0;
+
+  @include respond-to(400) {
+    font-size: rem(32px);
+  }
 }
 
 h3 {

@@ -1,5 +1,5 @@
 table {
-  border: 1px solid color(slate);
+  // border: 1px solid color(slate);
   width: 100%;
 
   @include respond-to(700) {
@@ -8,19 +8,23 @@ table {
 }
 
 thead {
-  background-color: color(green, dark);
+  background-color: #269aa3;
+
+  @include respond-to(700) {
+    // background-color: white;
+  }
 }
 
 tbody {
   @include respond-to(700) {
-    width: 100%;
-    display: table;
+    // width: 100%;
+    // display: table;
   }
 }
 
 td, th {
   padding: 5px $space-xxs;
-  border: 1px solid color(slate, light);
+  font-size: 17px;
   vertical-align: top;
   max-width: 600px;
 
@@ -33,14 +37,27 @@ td, th {
 
     @include respond-to(500) {
       min-width: auto;
-      text-align: center;
+      // text-align: center;
     }
   }
 
 }
 
-td {
-  border: 1px solid color(slate, light);
+td:nth-child(even) {
+  @include respond-to(700) {
+    // background-color: #f4f4f4;
+  }
+}
+
+tr {
+  &:nth-child(even) {
+    background-color: #f4f4f4;
+
+    @include respond-to(500) {
+      min-width: auto;
+      // text-align: left;
+    }
+  }
 }
 
 th {
@@ -69,41 +86,4 @@ table.large-only {
   @include respond-to(900) {
     display: none;
   }
-}
-
-/*
- * Mobile table styles
-*/
-.st-head-row {
-  color: color(slate, dark);
-}
-
-.st-head-row-main {
-  text-align: center;
-  background-color: color(green, dark);
-  color: white;
-}
-
-
-/*
- * Custom styles for tables inserted via Wordpress TinyMC.
- * Matches the above CSS.
-*/
-.table-generated {
-  border: 1px solid rgb(144, 153, 163);
-}
-
-.table-generated td {
-  padding: 10px;
-  border: 1px solid rgb(144, 153, 163);
-  vertical-align: top;
-  max-width: 600px;
-}
-
-.table-generated tr:first-child td {
-  background-color: color(green, dark);
-  text-align: left;
-  color: white;
-  font-family: $font-primary;
-  font-size: rem($font-m);
 }

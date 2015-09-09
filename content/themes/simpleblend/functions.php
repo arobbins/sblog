@@ -29,17 +29,23 @@ foreach ($sage_includes as $file) {
 }
 unset($file, $filepath);
 
-/*
-  Seperate this into includes eventually
-*/
 
+
+
+
+
+
+//
+// Limiting the excert to 30 chars
+//
 function et_excerpt_length($length) {
-  return 40;
+  return 30;
 }
 add_filter('excerpt_length', 'et_excerpt_length');
 
-/* Add a link  to the end of our excerpt contained in a div for styling purposes and to break to a new line on the page.*/
-
+//
+// Modifying the view more link for posts
+//
 function et_excerpt_more($more) {
   $more = '<i class="fa fa-long-arrow-right hvr-wobble-horizontal"></i>';
   return ' <a href="'. get_permalink($post->ID) . '" class="article-more">' . $more . '</a>';
@@ -52,7 +58,6 @@ remove_filter('pre_user_description', 'wp_filter_kses');
 // add sanitization for WordPress posts
 add_filter( 'pre_user_description', 'wp_filter_post_kses');
 
-
 //
 // Adding lazy load class to all images in content area of posts
 //
@@ -62,21 +67,23 @@ function lazy_imgs($html, $id, $caption, $title, $align, $url, $size, $alt) {
   $html = str_replace('<img ', $imgNew, $html);
   return $html;
 }
-
 add_filter('image_send_to_editor', 'lazy_imgs', 10, 8);
 
+//
+// Adding lazy load class to all images in content area of posts
+//
 function img_responsive($content) {
   return str_replace('<img class="', '<img class="is-lazy ', $content);
 }
-
 add_filter('the_content', 'img_responsive');
 
-
-add_filter( 'embed_oembed_html', 'custom_youtube_oembed' );
-
+//
+// Adding class to all iframe videos
+//
 function custom_youtube_oembed( $code ) {
   if( stripos( $code, 'youtube.com' ) !== FALSE && stripos( $code, 'iframe' ) !== FALSE )
       $code = str_replace( '<iframe', '<iframe class="content-video" type="text/html" ', $code );
 
   return $code;
 }
+add_filter( 'embed_oembed_html', 'custom_youtube_oembed' );

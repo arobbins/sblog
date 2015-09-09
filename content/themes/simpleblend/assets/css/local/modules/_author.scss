@@ -39,6 +39,7 @@
 
   @include respond-to(900) {
     text-align: center;
+    margin-left: 0;
   }
 
   p:last-child {
@@ -85,7 +86,7 @@
   margin: rem(5px) 0 0 rem(3px);
 
   @include respond-to(900) {
-    margin-right: rem(114px);
+    margin-right: rem(84px);
     text-align: center;
   }
 

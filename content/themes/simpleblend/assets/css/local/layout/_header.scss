@@ -49,7 +49,11 @@
 .header-back-link {
   text-decoration: none;
   font-size: 36px;
-  color: #2c3e50;
+  color: color(base);
+
+  &:hover {
+    color: color(base);
+  }
 
   @include respond-to(600) {
     text-align: center;

@@ -1,5 +1,4 @@
 table {
-  // border: 1px solid color(slate);
   width: 100%;
 
   @include respond-to(700) {
@@ -8,54 +7,35 @@ table {
 }
 
 thead {
-  background-color: #269aa3;
-
-  @include respond-to(700) {
-    // background-color: white;
-  }
-}
-
-tbody {
-  @include respond-to(700) {
-    // width: 100%;
-    // display: table;
-  }
+  background-color: color(theads);
 }
 
 td, th {
-  padding: 5px $space-xxs;
-  font-size: 17px;
+  padding: rem($space-s / 2) rem($space-s);
+  font-size: rem(17px);
   vertical-align: top;
-  max-width: 600px;
+  max-width: rem(600px);
 
   p {
     margin: 0;
   }
 
   &:first-child {
-    // min-width: 200px;
-
     @include respond-to(500) {
       min-width: auto;
-      // text-align: center;
     }
   }
 
 }
 
-td:nth-child(even) {
-  @include respond-to(700) {
-    // background-color: #f4f4f4;
-  }
-}
+td:nth-child(even) {}
 
 tr {
   &:nth-child(even) {
-    background-color: #f4f4f4;
+    background-color: color(rows);
 
     @include respond-to(500) {
       min-width: auto;
-      // text-align: left;
     }
   }
 }
@@ -64,7 +44,7 @@ th {
   text-align: left;
   color: white;
   font-family: $font-primary;
-  font-size: rem($font-m);
+  font-size: rem($space-m);
 }
 
 .table-mobile {

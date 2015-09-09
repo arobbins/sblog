@@ -1,18 +1,16 @@
 .footer {
   text-align: center;
-  margin-bottom: 3em;
+  margin-bottom: rem($space-l * 2);
+  margin-top: rem($space-m * 4);
+  opacity: 0.5;
 }
 
 .footer-copy {
   margin-top: 0;
-  font-size: 16px;
-  font-family: Lato,cursive,helvetica,sans-serif;
-
-  i {
-    color: #f55567;;
-  }
+  font-size: rem(14px);
+  font-family: Lato,cursive, helvetica, sans-serif;
 }
 
 .footer-logo {
-  width: 35px;
+  width: rem($space-l);
 }

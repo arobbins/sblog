@@ -1,8 +1,7 @@
 .author-footer {
-  padding: 30px 0;
-  margin: 30px 0;
-  // background-color: #f9f9f9;
-  border-top: 1px solid #d8dbdf;
+  padding: rem($space-l) 0;
+  margin: rem($space-l) 0;
+  border-top: 1px solid color(borders);
 
   @include respond-to(900) {
     flex-direction: column;
@@ -10,11 +9,11 @@
 }
 
 .author-footer-avatar {
-  margin-right: 1em;
+  margin-right: rem($space-s);
 
   @include respond-to(900) {
     margin-right: 0;
-    margin-bottom: 1em;
+    margin-bottom: rem($space-s);
     align-self: center;
     width: 100%;
   }
@@ -25,7 +24,7 @@
     justify-content: center;
     width: 100%;
     display: flex;
-    margin: 1em 0;
+    margin: rem($space-s) 0;
   }
 
   @include respond-to(400) {
@@ -35,8 +34,8 @@
 }
 
 .author-footer-bio {
-  font-size: 16px;
-  margin: 0;
+  font-size: rem($bio);
+  margin: 0 0 0 rem($space-m);
 
   @include respond-to(900) {
     text-align: center;
@@ -44,6 +43,7 @@
 
   p:last-child {
     margin-top: 0;
+    max-width: 100%;
 
     @include respond-to(900) {
       width: 80%;
@@ -56,47 +56,42 @@
     }
 
   }
-
 }
 
 .author-footer-name {
-  margin: 0 15px 0 0;
-  font-size: 20px;
+  margin: 0 rem($space-l / 2) 0 0;
+  font-size: rem($author-footer-name);
   font-weight: bold;
 
   @include respond-to(900) {
     margin: 0;
     display: flex;
     width: 100%;
-    font-size: 24px;
+    font-size: rem(24px);
     justify-content: center;
   }
 
 }
 
 .author-footer-social {
-  margin: 0 10px 5px 0px;
-
-  @include respond-to(900) {
-    // margin: 1em 0;
-  }
+  margin: rem(2px) rem(18px) rem(5px) rem(10px);
 
   @include respond-to(400) {
-    margin-top: 1em;
+    margin-top: rem($space-s);
   }
 }
 
 .author-footer-donations {
-  margin: 5px 0 0 3px;
+  margin: rem(5px) 0 0 rem(3px);
 
   @include respond-to(900) {
-    margin-right: 6em;
+    margin-right: rem(114px);
     text-align: center;
   }
 
   @include respond-to(400) {
-    margin-bottom: 0.5em;
-    margin-top: 1em;
+    margin-bottom: rem($space-s / 2);
+    margin-top: rem($space-s);
   }
 
 }
@@ -104,5 +99,4 @@
 .author-footer-social,
 .author-footer-donations {
   float: left;
-  // width: 20%;
 }

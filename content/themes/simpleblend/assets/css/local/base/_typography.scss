@@ -1,10 +1,10 @@
 h1, h2, h3, h4, h5, h6 {
   line-height: 1.2;
-  color: #2c3e50;
+  color: color(headings);
 
   a {
     text-decoration: none;
-    color: #2c3e50;
+    color: color(headings);
   }
 
   + p {
@@ -16,7 +16,7 @@ h1, h2, h3, h4, h5, h6 {
 .entry-title {
   a:hover {
     text-decoration: underline;
-    color: #2c3e50;
+    color: color(headings);
   }
 }
 
@@ -24,7 +24,7 @@ h1 {
   font-weight: bold;
   font-size: rem($heading1);
   font-family: $font-primary;
-  margin: 0 0 rem($space-xxs) 0;
+  margin: 0 0 rem(10px) 0;
 
   @include respond-to(700) {
     font-size: 2.6rem;
@@ -33,18 +33,13 @@ h1 {
   @include respond-to(400) {
     font-size: rem($heading2);
   }
-
-  &:before {
-    color: color(slate);
-  }
-
 }
 
 h2 {
   font-weight: bold;
   font-size: rem($heading2);
   font-family: $font-primary;
-  margin: 1em 0 rem($space-xxs) 0;
+  margin: 1em 0 rem(10px) 0;
 
   @include respond-to(400) {
     font-size: rem(32px);
@@ -52,41 +47,19 @@ h2 {
 }
 
 h3 {
-  color: #3d566f;
   font-size: rem($heading3);
   font-family: $font-primary;
-  margin: 1em 0 rem($space-xxs) 0;
-}
-
-h4 {
-  color: #3d566f;
-  font-size: rem($heading4);
-  font-family: $font-primary;
-  margin: 1em 0 rem($space-xxs) 0;
-}
-
-h5 {
-  color: #3d566f;
-  font-size: rem($heading5);
-  font-family: $font-secondary;
-  margin: 1em 0 rem($space-xxs) 0;
-  font-weight: bold;
-}
-
-h6 {
-  color: #3d566f;
-  font-size: rem($heading6);
-  font-family: $font-secondary;
-  margin: 1em 0 rem($space-xxs) 0;
+  margin: 1em 0 rem(10px) 0;
+  text-transform: uppercase;
+  font-size: 26px;
   font-weight: bold;
 }
 
 a {
-  color: #269aa3;
+  color: color(links);
 
   &:hover {
-    // color: lighten(desaturate(#0f4975, 28), 25);
-    color: #61c3cb;
+    color: color(linksHover);
   }
 }
 
@@ -94,32 +67,28 @@ em, i {
   font-style: italic;
 }
 
-.tagline {
-  margin: 0;
-  font-family: $font-primary;
-  font-size: $font-l;
-}
-
-.copy-intro {
-  font-size: rem($font-m);
-
-  @include respond-to(500) {
-    font-size: rem($font-xs);
-  }
-
-  p {
-    margin-top: 0;
-  }
-}
-
 blockquote {
   padding-left: 20px;
   font-style: italic;
-  border-left: 3px solid #f2f2f2;
+  border-left: 3px solid color(borders);
   margin: 2em 0em 2em 1.5em;
 
   @include respond-to(500) {
     margin-left: 0;
-
   }
+}
+
+.fa-heart {
+  color: color(heart);
+  opacity: 0.5;
+}
+
+.fa-coffee {
+  color: color(coffee);
+  opacity: 0.5;
+}
+
+.fa-wordpress {
+  color: color(wordpress);
+  opacity: 0.5;
 }

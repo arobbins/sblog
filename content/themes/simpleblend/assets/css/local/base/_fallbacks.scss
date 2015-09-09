@@ -179,207 +179,29 @@
     }
   }
 
-  .membership-tier .l-fit,
-  .tier-image-wrapper {
-    float: left;
-  }
-
-  .membership-priorities-wrapper {
-    .l-grid-1 {
-      float: left;
-      display: block;
-      width: 1200px;
-      margin: 0 auto;
-    }
-
-    .l-grid-4 {
-      display: block;
-      float: left;
-      width: 300px;
-    }
-  }
-
-  .nav-previous,
-  .nav-next {
-    margin: 20px 0;
-  }
-
-  .article {
-    margin-bottom: 2em;
-  }
-
-  .wrapper .main {
-    float: left;
-    width: 60%;
-  }
-
-  .module-gallery {
-    display: none !important;
-  }
-
-  .main {
-    .carousel-wrap {
-      display: none !important;
-    }
+  .home .main {
+    width: 67%;
+    margin-top: 2em;
   }
 
   .sidebar {
     float: left;
     width: 30%;
-    display: block !important;
-  }
-
-  .events-next {
-    float: left;
-    width: 50%;
-  }
-
-  .events-upcoming {
-    float: right;
-  }
-
-  .events-full-wrapper {
-    overflow: hidden;
-  }
-
-  .member-solid,
-  .member {
-    float: left;
-    width: 168px;
-    display: block;
-  }
-
-  .team-host,
-  .room {
-    float: left;
-  }
-
-  .room-single {
-    & > .l-grid-3 {
-      vertical-align: top;
-    }
-
-    & > .l-fit {
-      float: left;
-    }
-  }
-
-  .feeds-social {
-    float: left;
-
-    li {
-      float: left;
-      margin-right: 10px;
-    }
-  }
-
-  .feeds-blog,
-  .feeds-twitter {
-    float: left;
-  }
-
-  .content-wrapper {
-    & > .l-fit {
-      width: 66%;
-      float: left;
-      padding-right: 2em;
-    }
-  }
-
-  .menu-secondary {
-    float: right;
-    width: auto;
-  }
-
-  .header-main {
-    width: 100%;
-    margin-bottom: 2em;
-
-    nav {
-      width: 400px;
-      position: relative;
-      top: 107px;
-    }
-
-    form {
-      float: right;
-      display: block;
-      margin-top: 0;
-      margin-right: 55px;
-      width: 200px;
-      position: relative;
-      top: 33px;
-    }
-  }
-
-  #breadcrumbs {
-    margin-bottom: 2em;
-  }
-
-  .footer-about,
-  .footer-news,
-  .footer-nav {
-    float: left;
-    min-height: 460px;
-  }
-
-  .footer-news {
-    width: 500px;
-  }
-
-  .tagline {
-    float: left;
-  }
-
-  .footer-logo {
-    float: right;
-  }
-
-  .footer-contact-link {
-    float: right;
-  }
-
-  .footer-nav {
-    position: relative;
-  }
-
-  .footer-social {
-    position: absolute;
-    bottom: 0;
-  }
-
-  .footer-contact {
     margin-top: 2em;
-
-    &:before {
-      display: inline-block;
-    }
   }
 
-  .footer-icon {
-    margin-right: 20px;
+  .author-footer-bio {
+    padding-left: 1.5em;
   }
 
-  .header-logo {
-    position: relative;
-    top: 24px;
-  }
+}
 
-  .intro-content {
-    margin-top: $space-m;
-  }
-
-  .promo-logo {
-    display: block !important;
-    margin: 0 auto !important;
-  }
-
-  .promo-button {
-    margin: 1em auto !important;
-    width: 300px !important;
-  }
-
-  .slick-track {
-    width: 100% !important;
+//
+// Flexbox fallback for IE
+//
+.is-ie10,
+.is-ie11 {
+  body {
+    display: block;
   }
 }

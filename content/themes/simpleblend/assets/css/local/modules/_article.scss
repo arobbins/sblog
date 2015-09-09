@@ -1,10 +1,10 @@
 .article {
-  padding-bottom: $space-xl;
-  margin-bottom: $space-xl;
-  border-bottom: 1px solid color(misc, accent);
+  padding-bottom: rem($space-m);
+  margin-bottom: rem($space-m);
+  // border-bottom: 1px solid color(misc, accent);
 
   &:first-child {
-    margin-top: $space-xs;
+    margin-top: rem($space-s);
   }
 
   &:last-child {
@@ -13,10 +13,10 @@
 }
 
 .article-info {
-  margin-bottom: 20px;
-  border-bottom: 1px solid color(misc, accent);
-  padding-bottom: 5px;
-  font-size: 15px;
+  margin-bottom: rem($space-m);
+  border-bottom: 1px solid color(borders);
+  padding-bottom: rem($space-s / 2);
+  font-size: rem($article-info);
 
   @include respond-to(500) {
     flex-direction: row;
@@ -34,38 +34,18 @@
 }
 
 .article-byline {
-  margin-bottom: 10px;
-}
-
-.article-heading {
-  color: color(slate, dark);
+  margin-bottom: rem($space-s);
 }
 
 .article-heading-link {
   text-decoration: none;
-  color: color(slate, dark);
 }
 
 .posts-navigation {
-  margin-bottom: rem($space-xl*2);
+  margin-bottom: rem($space-l * 2);
 
   @include respond-to(800) {
-    margin-bottom: rem($space-xl);
-  }
-}
-
-.nav-previous {
-  float: left;
-}
-
-.nav-next {
-  float: right;
-}
-
-.entry-content {
-  figure {
-    max-width: 100%;
-    margin: 0;
+    margin-bottom: rem($space-m);
   }
 }
 
@@ -74,10 +54,10 @@
 }
 
 .post-divider {
-  color: #2c3e50;
-  font-size: 16px;
+  color: color(dividers);
+  font-size: rem($post-divider);
   position: relative;
-  top: 4px;
+  top: rem(4px);
   left: -2px;
   margin: 0 1.2em;
 
@@ -90,19 +70,20 @@
   @include respond-to(500) {
     display: inline;
     width: auto;
-    margin-right: 10px;
+    margin-right: rem($space-s);
   }
 }
 
 .article-more {
-  margin-left: 10px;
+  margin-left: rem($space-s);
+  font-size: rem($article-more);
 
   @include respond-to(800) {
-    margin: 0px;
+    margin: 0;
     display: block;
     width: 100%;
     text-align: center;
-    font-size: 36px;
+    font-size: rem($space-l + 6);
   }
 
 }

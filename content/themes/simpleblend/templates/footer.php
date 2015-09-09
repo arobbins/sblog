@@ -1,8 +1,8 @@
-<footer class="footer content-info" role="contentinfo">
-  <a href="https://simpleblend.net" class="footer-link hvr-grow-rotate">
+<footer class="l-contain l-center footer content-info" role="contentinfo">
+  <a href="https://simpleblend.net" class="footer-link hvr-bob">
     <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/imgs/logo-mark-dark.svg" alt="Simpleblend" class="footer-logo">
   </a>
-  <p class="footer-copy">Made with <i class="fa fa-heart"></i></p>
+  <p class="footer-copy">Made with <i class="fa fa-heart"></i> <i class="fa fa-coffee"></i> and <i class="fa fa-wordpress"></i></p>
 </footer>
 
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>

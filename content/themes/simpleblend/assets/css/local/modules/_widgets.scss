@@ -9,14 +9,8 @@
   }
 }
 
-.widget-primary {}
-.widget-secondary {}
-.widget-heading {}
-.widget-copy {}
-.widget-link {}
-
 .textwidget {
-  font-size: 16px;
+  font-size: rem($bio);
 
   p {
     margin-top: 0;
@@ -37,7 +31,6 @@
     &:nth-of-type(2) {
       @include respond-to(900) {
         text-align: center;
-        // margin: 2em auto;
       }
 
       @include respond-to(400) {

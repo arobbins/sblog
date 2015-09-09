@@ -1,45 +1,30 @@
 body {
   min-height: 100vh;
   letter-spacing: 0.01em;
-  background-color: #FFF;
+  background-color: #fbfbfb;
   line-height: 1.8;
-  font-size: 19px;
+  font-size: $base;
   font-family: $font-secondary;
-  color: #2c3e50;
+  color: color(base);
   -webkit-backface-visibility: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
   @include respond-to(500) {
-    font-size: 15px;
-  }
-}
-
-// Needed as a Flexbox fallback for IE
-.is-ie10,
-.is-ie11 {
-  body {
-    display: block;
+    font-size: ($base - 4px);
   }
 }
 
 ::selection {
-  background-color: #c0dde4;
+  background-color: color(selection);
   color: white;
 }
 
 code, kbd, pre, samp {
-  border-radius: 5px;
+  border-radius: rem($space-s / 2);
 }
 
 ul, ol, dl {
   padding: 0;
-}
-
-ul, ol, dl {
-  margin: $space-xs 0 $space-xs $space-xs;
-}
-
-dd {
-  margin: $space-xxs 0 $space-xs $space-xs;
+  margin: rem($space-s) 0 rem($space-s) rem($space-s);
 }

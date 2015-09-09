@@ -1,21 +1,6 @@
 // Retrieve a selected color from our $colors palette
-@function color($palette, $tone: 'light') {
-  @return map-get(map-get($colors, $palette), $tone);
-}
-
-// Set the appropriate z-index
-@function z($key) {
-  @if map-has-key($z-layers, $key) {
-    @return map-get($z-layers, $key);
-  }
-
-  @warn "Unknown `#{$key}` in $z-layers.";
-  @return null;
-}
-
-// Calculating percent
-@function calc-percent($target, $container) {
-  @return ($target / $container) * 100%;
+@function color($color) {
+  @return map-get($colors, $color);
 }
 
 // Calculating REM value. Adding px fallback in post-processor

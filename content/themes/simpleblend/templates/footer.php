@@ -19,3 +19,10 @@
         (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
     }());
 </script>
+
+<script>
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-57791901-1']);
+  _gaq.push(['_setDomainName', 'simpleblend.net']);
+  _gaq.push(['_trackPageview']);
+</script>

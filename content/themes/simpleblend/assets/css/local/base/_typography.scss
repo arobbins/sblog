@@ -68,10 +68,14 @@ em, i {
 }
 
 blockquote {
-  padding-left: 20px;
+  padding: 0 0 0 rem(35px);
   font-style: italic;
   border-left: 3px solid color(borders);
-  margin: 2em 0em 2em 1.5em;
+  margin: 2.5em 0 2.5em 1.5em;
+  position: relative;
+  width: 120%;
+  left: -14%;
+  font-size: rem($quotes);
 
   @include respond-to(500) {
     margin-left: 0;

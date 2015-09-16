@@ -63,6 +63,18 @@ a {
   }
 }
 
+p {
+  a {
+    color: color(base);
+    text-decoration: none;
+    border-bottom: 2px solid color(links);
+
+    &:hover {
+      color: color(links);
+    }
+  }
+}
+
 em, i {
   font-style: italic;
 }

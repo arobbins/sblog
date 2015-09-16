@@ -24,6 +24,13 @@
 }
 
 .article-comments {
+  text-decoration: none;
+  color: color(base);
+
+  &:hover {
+    color: color(base);
+  }
+
   @include respond-to(500) {
     display: none;
   }
@@ -77,6 +84,7 @@
 .article-more {
   margin-left: rem($space-s);
   font-size: rem($article-more);
+  border: none;
 
   @include respond-to(800) {
     margin: 0;

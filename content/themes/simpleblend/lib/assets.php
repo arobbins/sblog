@@ -76,6 +76,8 @@ function assets() {
 
   wp_enqueue_style('hover-css', asset_path('/assets/css/vendor/hover-min.css'), false, null);
 
+  wp_enqueue_style('animate-css', "https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.4.0/animate.min.css", false, null);
+
   wp_enqueue_style('prism-css', asset_path('/assets/css/vendor/prism.min.css'), false, null);
   wp_enqueue_script('prism-js', asset_path('/assets/js/vendor/prism.min.js'), ['jquery'], null, true);
 

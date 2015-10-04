@@ -13,6 +13,10 @@ body {
   @include respond-to(500) {
     font-size: ($base - 4px);
   }
+
+  &.animated {
+    animation-duration: 0.5s;
+  }
 }
 
 ::selection {

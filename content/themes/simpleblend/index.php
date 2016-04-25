@@ -1,14 +1,13 @@
-<?php get_template_part('templates/page', 'header'); ?>
+<?php foreach(posts_by_year() as $year => $posts) : ?>
+  <h2 class="article-year"><?php echo $year; ?></h2>
+  <ol class="articles">
+    <?php foreach($posts as $post) : setup_postdata($post); ?>
+      <li class="article">
+        <a href="<?php the_permalink(); ?>" class="article-link"><?php the_title(); ?></a>
+        <?php the_tags(); ?>
+      </li>
+    <?php endforeach; ?>
+  </ol>
+<?php endforeach; ?>
 
-<?php if (!have_posts()) : ?>
-  <div class="alert alert-warning">
-    <?php _e('Sorry, no results were found.', 'sage'); ?>
-  </div>
-  <?php get_search_form(); ?>
-<?php endif; ?>
-
-<?php while (have_posts()) : the_post(); ?>
-  <?php get_template_part('templates/content', get_post_type() != 'post' ? get_post_type() : get_post_format()); ?>
-<?php endwhile; ?>
-
-<?php the_posts_navigation(); ?>
+<?php // the_posts_navigation(); ?>

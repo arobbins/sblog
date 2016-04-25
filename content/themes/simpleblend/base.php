@@ -23,11 +23,6 @@ use Roots\Sage\Wrapper;
     ?>
 
     <div class="content l-contain l-center l-row" role="document">
-      <?php if (Config\display_sidebar()) : ?>
-      <aside class="sidebar l-col l-grid-4" role="complementary">
-        <?php include Wrapper\sidebar_path(); ?>
-      </aside>
-      <?php endif; ?>
       <main class="main l-col l-fit" role="main">
         <?php include Wrapper\template_path(); ?>
       </main>

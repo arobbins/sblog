@@ -20,7 +20,7 @@ class WPSEO_Upgrade {
 	 * Class constructor
 	 */
 	public function __construct() {
-		$this->options = WPSEO_Options::get_all();
+		$this->options = WPSEO_Options::get_option( 'wpseo' );
 
 		WPSEO_Options::maybe_set_multisite_defaults( false );
 
@@ -46,10 +46,16 @@ class WPSEO_Upgrade {
 			$this->upgrade_23();
 		}
 
+		if ( version_compare( $this->options['version'], '3.0', '<' ) ) {
+			$this->upgrade_30();
+		}
+
 		/**
 		 * Filter: 'wpseo_run_upgrade' - Runs the upgrade hook which are dependent on Yoast SEO
 		 *
-		 * @api string - The current version of Yoast SEO
+		 * @deprecated Since 3.1
+		 *
+		 * @api        string - The current version of Yoast SEO
 		 */
 		do_action( 'wpseo_run_upgrade', $this->options['version'] );
 
@@ -72,7 +78,7 @@ class WPSEO_Upgrade {
 	/**
 	 * Run the Yoast SEO 1.5 upgrade routine
 	 *
-	 * @param string $version
+	 * @param string $version Current plugin version.
 	 */
 	private function upgrade_15( $version ) {
 		// Clean up options and meta.
@@ -93,7 +99,6 @@ class WPSEO_Upgrade {
 		 */
 		delete_option( 'wpseo_ms' );
 
-		$this->move_hide_links_options();
 		$this->move_pinterest_option();
 	}
 
@@ -170,20 +175,11 @@ class WPSEO_Upgrade {
 	}
 
 	/**
-	 * Moves the hide- links options from the permalinks option to the titles option
+	 * Performs upgrade functions to Yoast SEO 3.0
 	 */
-	private function move_hide_links_options() {
-		$options_titles = get_option( 'wpseo_titles' );
-		$options_permalinks = get_option( 'wpseo_permalinks' );
-
-		foreach ( array( 'hide-feedlinks', 'hide-rsdlink', 'hide-shortlink', 'hide-wlwmanifest' ) as $hide ) {
-			if ( isset( $options_titles[ $hide ] ) ) {
-				$options_permalinks[ $hide ] = $options_titles[ $hide ];
-				unset( $options_titles[ $hide ] );
-				update_option( 'wpseo_permalinks', $options_permalinks );
-				update_option( 'wpseo_titles', $options_titles );
-			}
-		}
+	private function upgrade_30() {
+		// Remove the meta fields for sitemap prio.
+		delete_post_meta_by_key( '_yoast_wpseo_sitemap-prio' );
 	}
 
 	/**
@@ -204,13 +200,12 @@ class WPSEO_Upgrade {
 	 * Runs the needed cleanup after an update, setting the DB version to latest version, flushing caches etc.
 	 */
 	private function finish_up() {
-		$this->options = get_option( 'wpseo' );                             // Re-get to make sure we have the latest version.
+		$this->options = WPSEO_Options::get_option( 'wpseo' );              // Re-get to make sure we have the latest version.
 		update_option( 'wpseo', $this->options );                           // This also ensures the DB version is equal to WPSEO_VERSION.
 
 		add_action( 'shutdown', 'flush_rewrite_rules' );                    // Just flush rewrites, always, to at least make them work after an upgrade.
-		WPSEO_Utils::clear_sitemap_cache();                                 // Flush the sitemap cache.
+		WPSEO_Sitemaps_Cache::clear();                                 // Flush the sitemap cache.
 
 		WPSEO_Options::ensure_options_exist();                              // Make sure all our options always exist - issue #1245.
 	}
-
 }

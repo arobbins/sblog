@@ -1,97 +1,28 @@
 .article {
-  padding-bottom: rem($space-m);
-  margin-bottom: rem($space-m);
-  // border-bottom: 1px solid color(misc, accent);
-
-  &:first-child {
-    margin-top: rem($space-s);
-  }
-
-  &:last-child {
-    border-bottom: none;
-  }
+  &:first-child {}
+  &:last-child {}
 }
 
 .article-info {
-  margin-bottom: rem($space-m);
-  border-bottom: 1px solid color(borders);
-  padding-bottom: rem($space-s / 2);
-  font-size: rem($article-info);
+  font-size: rem($font-xs);
+  margin-bottom: 0;
+  //border-bottom: 1px solid #e1e1e1;
+  padding-bottom: 5px;
+  display: inline;
+  line-height: 1;
+  opacity: 0.6;
 
   @include respond-to(500) {
     flex-direction: row;
   }
 }
 
-.article-comments {
-  text-decoration: none;
-  color: color(base);
-
-  &:hover {
-    color: color(base);
-  }
-
-  @include respond-to(500) {
-    display: none;
-  }
-}
-
-.article-footer {
-  -webkit-flex: 0 0 auto;
-}
-
-.article-byline {
-  margin-bottom: rem($space-s);
-}
-
-.article-heading-link {
-  text-decoration: none;
-}
-
-.posts-navigation {
-  margin-bottom: rem($space-l * 2);
-
-  @include respond-to(800) {
-    margin-bottom: rem($space-m);
-  }
-}
-
-.article-link {
-  display: block;
-}
-
-.post-divider {
-  color: color(dividers);
-  font-size: rem($post-divider);
-  position: relative;
-  top: rem(4px);
-  left: -2px;
-  margin: 0 1.2em;
-
-  @include respond-to(500) {
-    display: none;
-  }
-}
-
-.article-date {
-  @include respond-to(500) {
-    display: inline;
-    width: auto;
-    margin-right: rem($space-s);
-  }
-}
-
-.article-more {
-  margin-left: rem($space-s);
-  font-size: rem($article-more);
-  border: none;
-
-  @include respond-to(800) {
-    margin: 0;
-    display: block;
-    width: 100%;
-    text-align: center;
-    font-size: rem($space-l + 6);
-  }
-
-}
+.article-comments {}
+.article-footer {}
+.article-byline {}
+.article-heading-link {}
+.posts-navigation {}
+.article-link {}
+.post-divider {}
+.article-date {}
+.article-more {}

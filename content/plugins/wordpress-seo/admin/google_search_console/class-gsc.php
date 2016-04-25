@@ -42,8 +42,13 @@ class WPSEO_GSC {
 	 * Constructor for the page class. This will initialize all GSC related stuff
 	 */
 	public function __construct() {
-		// Settings.
-		add_action( 'admin_init', array( $this, 'register_settings' ) );
+		add_action( 'init', array( $this, 'init' ) );
+	}
+
+	/**
+	 * Run init logic.
+	 */
+	public function init() {
 
 		// Setting the screen option.
 		if ( filter_input( INPUT_GET, 'page' ) === 'wpseo_search_console' ) {
@@ -57,9 +62,11 @@ class WPSEO_GSC {
 			$this->set_dependencies();
 			$this->request_handler();
 		}
-		elseif ( current_user_can( 'manage_options' ) && WPSEO_GSC_Settings::get_profile() === '' && get_user_option( 'wpseo_dismissed_gsc_notice', get_current_user_id() ) !== '1' ) {
+		elseif ( WPSEO_Utils::is_yoast_seo_page() && current_user_can( 'manage_options' ) && WPSEO_GSC_Settings::get_profile() === '' && get_user_option( 'wpseo_dismissed_gsc_notice', get_current_user_id() ) !== '1' ) {
 			add_action( 'admin_init', array( $this, 'register_gsc_notification' ) );
 		}
+
+		add_action( 'admin_init', array( $this, 'register_settings' ) );
 	}
 
 	/**
@@ -116,24 +123,23 @@ class WPSEO_GSC {
 	 * Load the admin redirects scripts
 	 */
 	public function page_scripts() {
-		wp_enqueue_script( 'wp-seo-admin-gsc', plugin_dir_url( WPSEO_FILE ) . 'js/wp-seo-admin-gsc' . WPSEO_CSSJS_SUFFIX . '.js', array( 'jquery' ), WPSEO_VERSION );
+
+		$asset_manager = new WPSEO_Admin_Asset_Manager();
+		$asset_manager->enqueue_script( 'admin-gsc' );
+		$asset_manager->enqueue_style( 'metabox-css' );
 		add_screen_option( 'per_page', array(
 			'label'   => __( 'Crawl errors per page', 'wordpress-seo' ),
 			'default' => 50,
 			'option'  => 'errors_per_page',
 		) );
-
-		wp_enqueue_style( 'jquery-qtip.js', plugins_url( 'css/jquery.qtip' . WPSEO_CSSJS_SUFFIX . '.css', WPSEO_FILE ), array(), WPSEO_VERSION );
-		wp_enqueue_style( 'metabox-tabs', plugins_url( 'css/metabox-tabs' . WPSEO_CSSJS_SUFFIX . '.css', WPSEO_FILE ), array(), WPSEO_VERSION );
-		wp_enqueue_script( 'jquery-qtip', plugins_url( 'js/jquery.qtip.min.js', WPSEO_FILE ), array( 'jquery' ), WPSEO_VERSION, true );
 	}
 
 	/**
 	 * Set the screen options
 	 *
-	 * @param string $status
-	 * @param string $option
-	 * @param string $value
+	 * @param string $status Status string.
+	 * @param string $option Option key.
+	 * @param string $value  Value to return.
 	 *
 	 * @return mixed
 	 */
@@ -196,8 +202,8 @@ class WPSEO_GSC {
 	 * Catch the redirects search post and redirect it to a search get
 	 */
 	private function list_table_search_post_to_get() {
-		if ( $search_string = filter_input( INPUT_POST, 's' ) ) {
-			$url = add_query_arg( 's', $search_string );
+		if ( ( $search_string = filter_input( INPUT_POST, 's' ) ) !== null ) {
+			$url = ( $search_string !== '' ) ? add_query_arg( 's', $search_string ) : remove_query_arg( 's' );
 
 			// Do the redirect.
 			wp_redirect( $url );
@@ -225,8 +231,8 @@ class WPSEO_GSC {
 	/**
 	 * Adding notification to the yoast notification center
 	 *
-	 * @param string $message
-	 * @param string $type
+	 * @param string $message Message string.
+	 * @param string $type    Message type.
 	 */
 	private function add_notification( $message, $type ) {
 		Yoast_Notification_Center::get()->add_notification(
@@ -271,11 +277,10 @@ class WPSEO_GSC {
 			array(
 				'id'      => 'basic-help',
 				'title'   => __( 'Issue categories', 'wordpress-seo' ),
-				'content' => '<p><strong>' .__( 'Desktop', 'wordpress-seo' ) . '</strong><br />' . __( 'Errors that occurred when your site was crawled by Googlebot.', 'wordpress-seo' ) . '</p>'
-							. '<p><strong>' .__( 'Smartphone', 'wordpress-seo' ) . '</strong><br />' . __( 'Errors that occurred only when your site was crawled by Googlebot-Mobile (errors didn\'t appear for desktop).', 'wordpress-seo' ) . '</p>'
-							. '<p><strong>' .__( 'Feature phone', 'wordpress-seo' ) . '</strong><br />' . __( 'Errors that only occurred when your site was crawled by Googlebot for feature phones (errors didn\'t appear for desktop).', 'wordpress-seo' ) . '</p>',
+				'content' => '<p><strong>' . __( 'Desktop', 'wordpress-seo' ) . '</strong><br />' . __( 'Errors that occurred when your site was crawled by Googlebot.', 'wordpress-seo' ) . '</p>'
+							. '<p><strong>' . __( 'Smartphone', 'wordpress-seo' ) . '</strong><br />' . __( 'Errors that occurred only when your site was crawled by Googlebot-Mobile (errors didn\'t appear for desktop).', 'wordpress-seo' ) . '</p>'
+							. '<p><strong>' . __( 'Feature phone', 'wordpress-seo' ) . '</strong><br />' . __( 'Errors that only occurred when your site was crawled by Googlebot for feature phones (errors didn\'t appear for desktop).', 'wordpress-seo' ) . '</p>',
 			)
 		);
 	}
-
 }

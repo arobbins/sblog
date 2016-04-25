@@ -1,8 +1,8 @@
 === Advanced Custom Fields Pro ===
 Contributors: elliotcondon
-Tags: custom, field, custom field, advanced, simple fields, magic fields, more fields, repeater, matrix, post, type, text, textarea, file, image, edit, admin
+Tags: acf, advanced, custom, field, fields, custom field, custom fields, simple fields, magic fields, more fields, repeater, edit
 Requires at least: 3.6.0
-Tested up to: 4.3
+Tested up to: 4.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -105,6 +105,121 @@ http://support.advancedcustomfields.com/
 
 
 == Changelog ==
+
+= 5.3.7 =
+* Options page: Added new 'update_button' setting to modify update button text
+* Options page: Added columns support (Screen Options)
+* Core: Added widget preview / save compatibility with the customizer
+* Core: Minor fixes and improvements
+* Language: Updated German translation - thanks to Ralf Koller
+* Language: Updated French Translation - thanks to Maxime Bernard-Jacquet
+
+= 5.3.6.1 =
+* Flexible Content field: Fixed PHP error in 'acf/fields/flexible_content/layout_title' filter (when used as a sub field)
+* Core: Fixed bug causing `get_field()` to load from the incorrect post (when within a custom WP_Query loop)
+
+= 5.3.6 =
+* Flexible Content field: Added new 'acf/fields/flexible_content/layout_title' filter to customize layout title
+* Image field: Fixed bug where searching within media library would ignore restriction settings
+* File field: Same as above
+* Field group: Added post types to comment form location rules
+* Color Picker field: Added 'color_picker_args' JS filter to modify wpColorPicker args
+* API: Improved `get_` functions to load value from the current queried object (post, user, term)
+* Core: Added new 'acf/translate_field' filter to translate field settings text
+* Core: Added new 'acf/translate_field_group' filter to translate field group settings text
+* Core: Removed 'l10n_field' and 'l10n_field_group' settings
+* Core: Fixed bug causing 'acf/input/admin_head' action to run twice
+* Core: Added support for new WP 4.5 term edit page
+* Core: Moved google map and wysiwyg JS initialisation later in the page load to help speed up edit screens
+* Core: Minor fixes and improvements
+
+= 5.3.5 =
+* User field: Fixed pagination bug causing missing results
+* Core: Added new filter 'acf/location/screen' to customize location rules matching args
+* Core: Minor fixes and improvements
+* Language: Updated Dutch translation - thanks to Derk Oosterveld
+* Language: Updated Italian translation - thanks to Davide Pantè
+* Language: Added Swiss German translation - thanks to Raphael Hüni
+
+= 5.3.4 =
+* User field: Added pagination for Select2 results
+* Tab field: Fixed issue where no tab was active within a widget
+* Taxonomy field: Fixed issue where term order was lost when using 'load_terms' setting
+* Image field: Alt tag will now update when editing/changing selected image
+* Field group: Removed Comic sans 'Drag/drop' text (OMG)
+* Core: Changed button classes from '.acf-button' to '.button'
+* Core: Fixed double `__()` issue when exporting field group with new l10n settings
+* Core: Removed some 'wp_cache_delete()' functions to improve load speed on heavily cached websites
+* Core: Removed `esc_html()` from field label and added new filter 'acf/get_field_label'
+* Core: Minor fixes and improvements
+* API: Added new 'honeypot' setting to the `acf_form()` function
+* Language: Added Bulgarian translation - thanks to Marin Atanasov
+* Language: Added Swiss German translation - thanks to Raphael Hüni
+* Language: Added Indonesian translation - thanks to Rio Bermano
+
+= 5.3.3.2 =
+* Core: Fixed bug preventing new translation settings 'l10n_field' and 'l10n_field_group'
+* Core: Fixed bug preventing plugin updates when included within theme
+* Core: Added `esc_html()` to field label
+
+= 5.3.3.1 =
+* Tab field: Fixed bug causing issues with conditional logic
+* WYSIWYG field: Fixed PHP error on front end form
+
+= 5.3.3 =
+* Google Maps field: Fixed bug where pasting value did not trigger auto complete
+* Select field: Improved Select2 search matching for special characters
+* Select field: Improved asset loading to allow other Select2 libraries to load first
+* Select field: Added compatibility for both Select2 v3 and v4
+* WYSIWYG field: Added new responsive images filter to the 'acf_the_content' filter
+* oEmbed field: Added compatibility for custom oEmbed handlers
+* Flexible Content field: Fixed bug causing sub fields to move when duplicating layouts
+* Core: Added new translation settings 'l10n', 'l10n_textdomain', 'l10n_field' and 'l10n_field_group'
+* Core: Improved Export to PHP feature which now uses the above translation settings
+* Core: Fixed PHP error preventing new field groups from loading when editing a post
+* Core: Added hierarchy to taxonomy terms shown in drop down elements
+* Core: Improved update logic to ignore plugin when included within a theme / plugin
+* API: Improved `acf_form()` loading efficiency when using 'new_post' setting
+* API: Improved `add_row()` function to work when no value exists
+* API: Added new function `get_row_index()` to use within the `have_rows()` loop
+* Language: Updated Polish translation - thanks to Michal Lepiarz
+* Language: Updated Persian translation - thanks to Kamel
+* Language: Updated Spanish translation - thanks to Federico Schäfer
+* Language: Updated Norwegian translation - thanks to Havard Grimelid
+* Language: Updated Swedish translation - thanks to Björn Göransson
+
+= 5.3.2.2 =
+* Core: Fixed PHP error when registering a local field missing one of more settings
+* Core: Fixed incorrect json load_path setting when WPML is active
+* Language: Updated Polish translation - thanks to Michal Lepiarz
+
+= 5.3.2.1 =
+* Core: Fixed bug causing issues when loading values from an options page, widget or taxonomy term
+
+= 5.3.2 =
+* Repeater field: Added new setting and icon to collapse row
+* Google Maps: Improved google API loading for better theme compatibility
+* Taxonomy field: Fixed bug where 'Add new term' popup only showed 20 parent terms
+* Core: Added new setting 'export_translate' to customise which field settings should be wrapped in __()
+* Core: Improved efficiency of AJAX call when finding new field groups when editing a post
+* API: Added new functions add_row(), update_row() and delete_row()
+* Language: Updated German translation - thanks to Ralf Koller
+* Language: Updated Italian translation - thanks to Davide Pantè
+* Language: Updated Dutch translation - thanks to Derk Oosterveld
+* Language: Updated Portuguese translation - thanks to Augusto Simão
+
+= 5.3.1 =
+* Flexible Content field: added toggle icons to show layout open/close state
+* Gallery field: Fixed bug where images could not save a blank title value
+* Taxonomy field: Added pagination when rendered as a Select2 element
+* Relationship field: Changed validation to better edit values when a minimum is set
+* Google map field: Fixed minor autocomplete bugs and added search icon
+* Message field: Added new_lines setting
+* Core: Added '*' to required fields when editing a field group
+* Core: Prevented updates to .json file when syncing
+* Core: Fields now render as div (instead of table) when labels are left aligned
+* Core: Minor fixes and improvements
+* Language: Updated .po headers - thanks to Ralf Koller
 
 = 5.3.0 =
 * WYSIWYG field: Fixed 'Visual/Text' toggle bug with WP 4.3
@@ -885,7 +1000,7 @@ http://support.advancedcustomfields.com/
 = 3.3.8 =
 * [Added] Gallery field { auto add image on upload, new style to show already added images
 * [Fixed] Fix saving value issue with WP e-commerce http://support.advancedcustomfields.com/discussion/comment/7026#Comment_7026
-* [Updated] Date picker field { new display format option (different from save format), UI overhaul
+* [Updated] Date picker field { new Display Format option (different from save format), UI overhaul
 * [Added] Add new field - Number
 * [Fixed] Test post object / select based fields for saving empty value - http://support.advancedcustomfields.com/discussion/2759/post-object-and-conditional-statement
 

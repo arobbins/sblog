@@ -14,19 +14,6 @@
 
 }
 
-.entry-content {
-  > p:first-of-type {
-    &:first-letter {
-      float: left;
-      font-size: rem(75px);
-      line-height: rem($space-l * 2);
-      padding-top: rem($space-s + 6);
-      padding-right: rem($space-s + 7);
-      padding-left: rem($space-s - 7);
-    }
-  }
-}
-
 .post-preview {
   padding: 0 rem($space-m * 2) rem($space-m * 2);
 
@@ -73,6 +60,7 @@
 }
 
 .sidebar {
+  display: none;
 
   @include respond-to(900) {
     padding: rem($space-m*2) 0;
@@ -100,7 +88,7 @@
 }
 
 .content {
-  margin-top: rem($space-l * 2);
+  margin-top: rem(10px);
 
   @include respond-to(900) {
     margin-top: 0;
@@ -111,7 +99,7 @@
 .home {
 
   .l-contain {
-    max-width: rem(1300px);
+    max-width: rem(700px);
   }
 
   .content {

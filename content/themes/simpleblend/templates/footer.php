@@ -1,8 +1,15 @@
-<footer class="l-contain l-center footer content-info" role="contentinfo">
-  <a href="https://simpleblend.net" class="footer-link hvr-bob">
-    <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/imgs/logo-mark-dark.svg" alt="Simpleblend" class="footer-logo">
-  </a>
-  <p class="footer-copy">Made with <i class="fa fa-heart"></i> <i class="fa fa-coffee"></i> and <i class="fa fa-wordpress"></i></p>
+
+<footer class="footer content-info l-row l-row-center" role="contentinfo">
+  <?php if(!is_front_page()) { ?>
+    <a class="l-fit header-back-link fa fa-long-arrow-left hvr-wobble-horizontal" href="<?= esc_url(home_url('/')); ?>">
+
+    </a>
+  <?php } else { ?>
+
+    <p>Andrew Robbins &mdash; Web Developer</p>
+    <p><a href="https://simpleblend.net">https://simpleblend.net</a> &bull; <a href=""><i class="fa fa-twitter" aria-hidden="true"></i></a> <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+</p>
+  <?php } ?>
 </footer>
 
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>

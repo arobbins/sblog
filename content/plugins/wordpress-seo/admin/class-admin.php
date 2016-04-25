@@ -14,20 +14,19 @@ class WPSEO_Admin {
 	private $options;
 
 	/**
-	 * @var Yoast_Dashboard_Widget
+	 * Array of classes that add admin functionality
+	 *
+	 * @var array
 	 */
-	public $dashboard_widget;
-
-	/**
-	 * @var WPSEO_GSC
-	 */
-	private $page_gsc;
+	protected $admin_features;
 
 	/**
 	 * Class constructor
 	 */
 	function __construct() {
-		$this->options = WPSEO_Options::get_all();
+		global $pagenow;
+
+		$this->options = WPSEO_Options::get_options( array( 'wpseo', 'wpseo_permalinks' ) );
 
 		if ( is_multisite() ) {
 			WPSEO_Options::maybe_set_multisite_defaults( false );
@@ -39,8 +38,19 @@ class WPSEO_Admin {
 			add_action( 'delete_category', array( $this, 'schedule_rewrite_flush' ) );
 		}
 
-		$this->page_gsc = new WPSEO_GSC();
-		$this->dashboard_widget = new Yoast_Dashboard_Widget();
+		$this->admin_features = array(
+			// Google Search Console.
+			'google_search_console' => new WPSEO_GSC(),
+			'dashboard_widget'      => new Yoast_Dashboard_Widget(),
+		);
+
+		if ( in_array( $pagenow, array( 'post-new.php', 'post.php', 'edit.php' ) ) ) {
+			$this->admin_features['primary_category'] = new WPSEO_Primary_Term_Admin();
+		}
+
+		if ( filter_input( INPUT_GET, 'page' ) === 'wpseo_tools' && filter_input( INPUT_GET, 'tool' ) === null ) {
+			new WPSEO_Recalculate_Scores();
+		}
 
 		// Needs the lower than default priority so other plugins can hook underneath it without issue.
 		add_action( 'admin_menu', array( $this, 'register_settings_page' ), 5 );
@@ -50,12 +60,12 @@ class WPSEO_Admin {
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'config_page_scripts' ) );
 
-		if ( '0' == get_option( 'blog_public' ) ) {
+		if ( '0' === get_option( 'blog_public' ) ) {
 			add_action( 'admin_footer', array( $this, 'blog_public_warning' ) );
 		}
 
 		if ( ( ( isset( $this->options['theme_has_description'] ) && $this->options['theme_has_description'] === true ) ||
-				$this->options['theme_description_found'] !== '' ) && $this->options['ignore_meta_description_warning'] !== true
+		       $this->options['theme_description_found'] !== '' ) && $this->options['ignore_meta_description_warning'] !== true
 		) {
 			add_action( 'admin_footer', array( $this, 'meta_description_warning' ) );
 		}
@@ -72,8 +82,21 @@ class WPSEO_Admin {
 		add_filter( 'set-screen-option', array( $this, 'save_bulk_edit_options' ), 10, 3 );
 
 		add_action( 'admin_init', array( 'WPSEO_Plugin_Conflict', 'hook_check_for_plugin_conflicts' ), 10, 1 );
+		add_action( 'admin_init', array( $this, 'import_plugin_hooks' ) );
 
-		WPSEO_Utils::register_cache_clear_option( 'wpseo',  '' );
+		WPSEO_Sitemaps_Cache::register_clear_on_option_update( 'wpseo' );
+	}
+
+	/**
+	 * Setting the hooks for importing data from other plugins
+	 */
+	public function import_plugin_hooks() {
+		if ( current_user_can( $this->get_manage_options_cap() ) ) {
+			$plugin_imports = array(
+				'wpSEO'       => new WPSEO_Import_WPSEO_Hooks(),
+				'aioseo'      => new WPSEO_Import_AIOSEO_Hooks(),
+			);
+		}
 	}
 
 	/**
@@ -81,6 +104,15 @@ class WPSEO_Admin {
 	 */
 	function schedule_rewrite_flush() {
 		add_action( 'shutdown', 'flush_rewrite_rules' );
+	}
+
+	/**
+	 * Returns all the classes for the admin features
+	 *
+	 * @return array
+	 */
+	public function get_admin_features() {
+		return $this->admin_features;
 	}
 
 	/**
@@ -94,20 +126,15 @@ class WPSEO_Admin {
 		}
 
 		// Base 64 encoded SVG image.
-		$icon_svg = 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCIgWw0KCTwhRU5USVRZIG5zX2Zsb3dzICJodHRwOi8vbnMuYWRvYmUuY29tL0Zsb3dzLzEuMC8iPg0KCTwhRU5USVRZIG5zX2V4dGVuZCAiaHR0cDovL25zLmFkb2JlLmNvbS9FeHRlbnNpYmlsaXR5LzEuMC8iPg0KCTwhRU5USVRZIG5zX2FpICJodHRwOi8vbnMuYWRvYmUuY29tL0Fkb2JlSWxsdXN0cmF0b3IvMTAuMC8iPg0KCTwhRU5USVRZIG5zX2dyYXBocyAiaHR0cDovL25zLmFkb2JlLmNvbS9HcmFwaHMvMS4wLyI+DQpdPg0KPHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYWFnXzEiIHhtbG5zOng9IiZuc19leHRlbmQ7IiB4bWxuczppPSImbnNfYWk7IiB4bWxuczpncmFwaD0iJm5zX2dyYXBoczsiDQoJIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOmE9Imh0dHA6Ly9ucy5hZG9iZS5jb20vQWRvYmVTVkdWaWV3ZXJFeHRlbnNpb25zLzMuMC8iDQoJIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgNDAgMzEuODkiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDQwIDMxLjg5IiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxnPg0KPHBhdGggZmlsbD0iI0ZGRkZGRiIgZD0iTTQwLDEyLjUyNEM0MCw1LjYwOCwzMS40NjksMCwyMCwwQzguNTMsMCwwLDUuNjA4LDAsMTIuNTI0YzAsNS41Niw1LjI0MywxMC4yNzIsMTMuNTU3LDExLjkwN3YtNC4wNjUNCgljMCwwLDAuMDQtMS0wLjI4LTEuOTJjLTAuMzItMC45MjEtMS43Ni0zLjAwMS0xLjc2LTUuMTIxYzAtMi4xMjEsMi41NjEtOS41NjMsNS4xMjItMTAuNDQ0Yy0wLjQsMS4yMDEtMC4zMiw3LjY4My0wLjMyLDcuNjgzDQoJczEuNCwyLjcyLDQuNjQxLDIuNzJjMy4yNDIsMCw0LjUxMS0xLjc2LDQuNzE1LTIuMmMwLjIwNi0wLjQ0LDAuODQ2LTguNzIzLDAuODQ2LTguNzIzczQuMDgyLDQuNDAyLDMuNjgyLDkuMzYzDQoJYy0wLjQwMSw0Ljk2Mi00LjQ4Miw3LjIwMy02LjEyMiw5LjEyM2MtMS4yODYsMS41MDUtMi4yMjQsMy4xMy0yLjYyOSw0LjE2OGMwLjgwMS0wLjAzNCwxLjU4Ny0wLjA5OCwyLjM2MS0wLjE4NGw5LjE1MSw3LjA1OQ0KCWwtNC44ODQtNy44M0MzNS41MzUsMjIuMTYxLDQwLDE3LjcxMyw0MCwxMi41MjR6Ii8+DQo8L2c+DQo8L3N2Zz4=';
+		$icon_svg = $this->get_menu_svg();
+
+		$manage_options_cap = $this->get_manage_options_cap();
 
 		// Add main page.
-		$admin_page = add_menu_page( 'Yoast SEO: ' . __( 'General Settings', 'wordpress-seo' ), __( 'SEO', 'wordpress-seo' ), 'manage_options', 'wpseo_dashboard', array(
+		$admin_page = add_menu_page( 'Yoast SEO: ' . __( 'General Settings', 'wordpress-seo' ), __( 'SEO', 'wordpress-seo' ), $manage_options_cap, 'wpseo_dashboard', array(
 			$this,
 			'load_page',
 		), $icon_svg, '99.31337' );
-
-		/**
-		 * Filter: 'wpseo_manage_options_capability' - Allow changing the capability users need to view the settings pages
-		 *
-		 * @api string unsigned The capability
-		 */
-		$manage_options_cap = apply_filters( 'wpseo_manage_options_capability', 'manage_options' );
 
 		// Sub menu pages.
 		$submenu_pages = array(
@@ -118,7 +145,6 @@ class WPSEO_Admin {
 				$manage_options_cap,
 				'wpseo_titles',
 				array( $this, 'load_page' ),
-				array( array( $this, 'title_metas_help_tab' ) ),
 			),
 			array(
 				'wpseo_dashboard',
@@ -162,20 +188,18 @@ class WPSEO_Admin {
 				__( 'Search Console', 'wordpress-seo' ),
 				$manage_options_cap,
 				'wpseo_search_console',
-				array( $this->page_gsc, 'display' ),
-				array( array( $this->page_gsc, 'set_help' ) ),
+				array( $this->admin_features['google_search_console'], 'display' ),
+				array( array( $this->admin_features['google_search_console'], 'set_help' ) ),
 			),
-		);
-
-		// Add Extension submenu page.
-		$submenu_pages[] = array(
-			'wpseo_dashboard',
-			'',
-			'<span style="color:#f18500">' . __( 'Extensions', 'wordpress-seo' ) . '</span>',
-			$manage_options_cap,
-			'wpseo_licenses',
-			array( $this, 'load_page' ),
-			null,
+			array(
+				'wpseo_dashboard',
+				'',
+				'<span style="color:#f18500">' . __( 'Extensions', 'wordpress-seo' ) . '</span>',
+				$manage_options_cap,
+				'wpseo_licenses',
+				array( $this, 'load_page' ),
+				null,
+			),
 		);
 
 		// Allow submenu pages manipulation.
@@ -204,6 +228,22 @@ class WPSEO_Admin {
 	}
 
 	/**
+	 * Returns the manage_options cap
+	 *
+	 * @return mixed|void
+	 */
+	private function get_manage_options_cap() {
+		/**
+		 * Filter: 'wpseo_manage_options_capability' - Allow changing the capability users need to view the settings pages
+		 *
+		 * @api string unsigned The capability
+		 */
+		$manage_options_cap = apply_filters( 'wpseo_manage_options_capability', 'manage_options' );
+
+		return $manage_options_cap;
+	}
+
+	/**
 	 * Adds contextual help to the titles & metas page.
 	 */
 	function title_metas_help_tab() {
@@ -211,7 +251,7 @@ class WPSEO_Admin {
 
 		$screen->set_help_sidebar( '
 			<p><strong>' . __( 'For more information:', 'wordpress-seo' ) . '</strong></p>
-			<p><a target="_blank" href="https://yoast.com/articles/wordpress-seo/#titles">' . __( 'Title optimization', 'wordpress-seo' ) . '</a></p>
+			<p><a target="_blank" href="https://yoast.com/wordpress-seo/#titles">' . __( 'Title optimization', 'wordpress-seo' ) . '</a></p>
 			<p><a target="_blank" href="https://yoast.com/google-page-title/">' . __( 'Why Google won\'t display the right page title', 'wordpress-seo' ) . '</a></p>'
 		);
 
@@ -247,7 +287,7 @@ class WPSEO_Admin {
 	function register_network_settings_page() {
 		if ( WPSEO_Utils::grant_access() ) {
 			// Base 64 encoded SVG image.
-			$icon_svg = 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCIgWw0KCTwhRU5USVRZIG5zX2Zsb3dzICJodHRwOi8vbnMuYWRvYmUuY29tL0Zsb3dzLzEuMC8iPg0KCTwhRU5USVRZIG5zX2V4dGVuZCAiaHR0cDovL25zLmFkb2JlLmNvbS9FeHRlbnNpYmlsaXR5LzEuMC8iPg0KCTwhRU5USVRZIG5zX2FpICJodHRwOi8vbnMuYWRvYmUuY29tL0Fkb2JlSWxsdXN0cmF0b3IvMTAuMC8iPg0KCTwhRU5USVRZIG5zX2dyYXBocyAiaHR0cDovL25zLmFkb2JlLmNvbS9HcmFwaHMvMS4wLyI+DQpdPg0KPHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYWFnXzEiIHhtbG5zOng9IiZuc19leHRlbmQ7IiB4bWxuczppPSImbnNfYWk7IiB4bWxuczpncmFwaD0iJm5zX2dyYXBoczsiDQoJIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOmE9Imh0dHA6Ly9ucy5hZG9iZS5jb20vQWRvYmVTVkdWaWV3ZXJFeHRlbnNpb25zLzMuMC8iDQoJIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgNDAgMzEuODkiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDQwIDMxLjg5IiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxnPg0KPHBhdGggZmlsbD0iI0ZGRkZGRiIgZD0iTTQwLDEyLjUyNEM0MCw1LjYwOCwzMS40NjksMCwyMCwwQzguNTMsMCwwLDUuNjA4LDAsMTIuNTI0YzAsNS41Niw1LjI0MywxMC4yNzIsMTMuNTU3LDExLjkwN3YtNC4wNjUNCgljMCwwLDAuMDQtMS0wLjI4LTEuOTJjLTAuMzItMC45MjEtMS43Ni0zLjAwMS0xLjc2LTUuMTIxYzAtMi4xMjEsMi41NjEtOS41NjMsNS4xMjItMTAuNDQ0Yy0wLjQsMS4yMDEtMC4zMiw3LjY4My0wLjMyLDcuNjgzDQoJczEuNCwyLjcyLDQuNjQxLDIuNzJjMy4yNDIsMCw0LjUxMS0xLjc2LDQuNzE1LTIuMmMwLjIwNi0wLjQ0LDAuODQ2LTguNzIzLDAuODQ2LTguNzIzczQuMDgyLDQuNDAyLDMuNjgyLDkuMzYzDQoJYy0wLjQwMSw0Ljk2Mi00LjQ4Miw3LjIwMy02LjEyMiw5LjEyM2MtMS4yODYsMS41MDUtMi4yMjQsMy4xMy0yLjYyOSw0LjE2OGMwLjgwMS0wLjAzNCwxLjU4Ny0wLjA5OCwyLjM2MS0wLjE4NGw5LjE1MSw3LjA1OQ0KCWwtNC44ODQtNy44M0MzNS41MzUsMjIuMTYxLDQwLDE3LjcxMyw0MCwxMi41MjR6Ii8+DQo8L2c+DQo8L3N2Zz4=';
+			$icon_svg = $this->get_menu_svg();
 			add_menu_page( 'Yoast SEO: ' . __( 'MultiSite Settings', 'wordpress-seo' ), __( 'SEO', 'wordpress-seo' ), 'delete_users', 'wpseo_dashboard', array(
 				$this,
 				'network_config_page',
@@ -304,6 +344,10 @@ class WPSEO_Admin {
 				require_once( WPSEO_PATH . 'admin/views/tool-file-editor.php' );
 				break;
 
+			case 'wpseo_tutorial_videos':
+				require_once( WPSEO_PATH . 'admin/pages/tutorial-videos.php' );
+				break;
+
 			case 'wpseo_dashboard':
 			default:
 				require_once( WPSEO_PATH . 'admin/pages/dashboard.php' );
@@ -337,9 +381,9 @@ class WPSEO_Admin {
 	/**
 	 * Saves the posts per page limit for bulk edit pages.
 	 *
-	 * @param int    $status
-	 * @param string $option
-	 * @param int    $value
+	 * @param int    $status Status value to pass through.
+	 * @param string $option Option name.
+	 * @param int    $value  Count value to check.
 	 *
 	 * @return int
 	 */
@@ -356,6 +400,10 @@ class WPSEO_Admin {
 	 */
 	function blog_public_warning() {
 		if ( ( function_exists( 'is_network_admin' ) && is_network_admin() ) || WPSEO_Utils::grant_access() !== true ) {
+			return;
+		}
+
+		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
 
@@ -428,8 +476,8 @@ class WPSEO_Admin {
 			array_unshift( $links, $settings_link );
 		}
 
-		if ( class_exists( 'Yoast_Product_WPSEO_Premium' ) ) {
-			$license_manager = new Yoast_Plugin_License_Manager( new Yoast_Product_WPSEO_Premium() );
+		if ( class_exists( 'WPSEO_Product_Premium' ) ) {
+			$license_manager = new Yoast_Plugin_License_Manager( new WPSEO_Product_Premium() );
 			if ( $license_manager->license_is_valid() ) {
 				return $links;
 			}
@@ -451,7 +499,10 @@ class WPSEO_Admin {
 	 */
 	function config_page_scripts() {
 		if ( WPSEO_Utils::grant_access() ) {
-			wp_enqueue_script( 'wpseo-admin-global-script', plugins_url( 'js/wp-seo-admin-global' . WPSEO_CSSJS_SUFFIX . '.js', WPSEO_FILE ), array( 'jquery' ), WPSEO_VERSION, true );
+			$asset_manager = new WPSEO_Admin_Asset_Manager();
+			$asset_manager->enqueue_script( 'admin-global-script' );
+
+			wp_localize_script( WPSEO_Admin_Asset_Manager::PREFIX . 'admin-global-script', 'wpseoAdminGlobalL10n', $this->localize_admin_global_script() );
 		}
 	}
 
@@ -485,62 +536,64 @@ class WPSEO_Admin {
 	 * @return string $clean_slug cleaned slug
 	 */
 	function remove_stopwords_from_slug( $slug ) {
+		return $this->filter_stopwords_from_slug( $slug, filter_input( INPUT_POST, 'post_title' ) );
+	}
+
+	/**
+	 * Filter the stopwords from the slug
+	 *
+	 * @param string $slug       The current slug, if not empty there will be done nothing.
+	 * @param string $post_title The title which will be used in case of an empty slug.
+	 *
+	 * @return string
+	 */
+	public function filter_stopwords_from_slug( $slug, $post_title ) {
 		// Don't change an existing slug.
 		if ( isset( $slug ) && $slug !== '' ) {
 			return $slug;
 		}
 
-		if ( ! filter_input( INPUT_POST, 'post_title' ) ) {
+		// When the post title is empty, just return the slug.
+		if ( empty( $post_title ) ) {
+			return $slug;
+		}
+
+		// Don't change the slug if this is a multisite installation and the site has been switched.
+		if ( is_multisite() && ms_is_switched() ) {
 			return $slug;
 		}
 
 		// Don't change slug if the post is a draft, this conflicts with polylang.
-		if ( 'draft' == filter_input( INPUT_POST, 'post_status' ) ) {
+		// Doesn't work with filter_input() since need current value, not originally submitted one.
+		if ( 'draft' === $_POST['post_status'] ) {
 			return $slug;
 		}
 
 		// Lowercase the slug and strip slashes.
-		$clean_slug = sanitize_title( stripslashes( filter_input( INPUT_POST, 'post_title' ) ) );
+		$new_slug = sanitize_title( stripslashes( $post_title ) );
 
-		// Turn it to an array and strip stopwords by comparing against an array of stopwords.
-		$clean_slug_array = array_diff( explode( '-', $clean_slug ), $this->stopwords() );
-
-		// Don't change the slug if there are less than 3 words left.
-		if ( count( $clean_slug_array ) < 3 ) {
-			return $clean_slug;
-		}
-
-		// Turn the sanitized array into a string.
-		$clean_slug = join( '-', $clean_slug_array );
-
-		return $clean_slug;
+		$stop_words = new WPSEO_Admin_Stop_Words();
+		return $stop_words->remove_in( $new_slug );
 	}
 
 	/**
 	 * Returns the stopwords for the current language
 	 *
 	 * @since 1.1.7
+	 * @deprecated 3.1 Use WPSEO_Admin_Stop_Words::list_stop_words() instead.
 	 *
 	 * @return array $stopwords array of stop words to check and / or remove from slug
 	 */
 	function stopwords() {
-		/* translators: this should be an array of stopwords for your language, separated by comma's. */
-		$stopwords = explode( ',', __( "a,about,above,after,again,against,all,am,an,and,any,are,as,at,be,because,been,before,being,below,between,both,but,by,could,did,do,does,doing,down,during,each,few,for,from,further,had,has,have,having,he,he'd,he'll,he's,her,here,here's,hers,herself,him,himself,his,how,how's,i,i'd,i'll,i'm,i've,if,in,into,is,it,it's,its,itself,let's,me,more,most,my,myself,nor,of,on,once,only,or,other,ought,our,ours,ourselves,out,over,own,same,she,she'd,she'll,she's,should,so,some,such,than,that,that's,the,their,theirs,them,themselves,then,there,there's,these,they,they'd,they'll,they're,they've,this,those,through,to,too,under,until,up,very,was,we,we'd,we'll,we're,we've,were,what,what's,when,when's,where,where's,which,while,who,who's,whom,why,why's,with,would,you,you'd,you'll,you're,you've,your,yours,yourself,yourselves", 'wordpress-seo' ) );
-
-		/**
-		 * Allows filtering of the stop words list
-		 * Especially useful for users on a language in which WPSEO is not available yet
-		 * and/or users who want to turn off stop word filtering
-		 * @api  array  $stopwords  Array of all lowercase stopwords to check and/or remove from slug
-		 */
-		$stopwords = apply_filters( 'wpseo_stopwords', $stopwords );
-
-		return $stopwords;
+		$stop_words = new WPSEO_Admin_Stop_Words();
+		return $stop_words->list_stop_words();
 	}
 
 
 	/**
 	 * Check whether the stopword appears in the string
+	 *
+	 * @deprecated 3.1
 	 *
 	 * @param string $haystack    The string to be checked for the stopword.
 	 * @param bool   $checkingUrl Whether or not we're checking a URL.
@@ -580,6 +633,46 @@ class WPSEO_Admin {
 			}
 		}
 	}
+
+	/**
+	 * Returns a base64 URL for the svg for use in the menu
+	 *
+	 * @return string
+	 */
+	private function get_menu_svg() {
+		$icon_svg = 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPjxzdmcgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbDpzcGFjZT0icHJlc2VydmUiIGZpbGw9Im5vbmUiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48Zz48Zz48Zz48Zz48cGF0aCBzdHlsZT0iZmlsbDojMDAwIiBkPSJNMjAzLjYsMzk1YzYuOC0xNy40LDYuOC0zNi42LDAtNTRsLTc5LjQtMjA0aDcwLjlsNDcuNywxNDkuNGw3NC44LTIwNy42SDExNi40Yy00MS44LDAtNzYsMzQuMi03Niw3NlYzNTdjMCw0MS44LDM0LjIsNzYsNzYsNzZIMTczQzE4OSw0MjQuMSwxOTcuNiw0MTAuMywyMDMuNiwzOTV6Ii8+PC9nPjxnPjxwYXRoIHN0eWxlPSJmaWxsOiMwMDAiIGQ9Ik00NzEuNiwxNTQuOGMwLTQxLjgtMzQuMi03Ni03Ni03NmgtM0wyODUuNywzNjVjLTkuNiwyNi43LTE5LjQsNDkuMy0zMC4zLDY4aDIxNi4yVjE1NC44eiIvPjwvZz48L2c+PHBhdGggc3R5bGU9ImZpbGw6IzAwMCIgc3Ryb2tlLXdpZHRoPSIyLjk3NCIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiBkPSJNMzM4LDEuM2wtOTMuMywyNTkuMWwtNDIuMS0xMzEuOWgtODkuMWw4My44LDIxNS4yYzYsMTUuNSw2LDMyLjUsMCw0OGMtNy40LDE5LTE5LDM3LjMtNTMsNDEuOWwtNy4yLDF2NzZoOC4zYzgxLjcsMCwxMTguOS01Ny4yLDE0OS42LTE0Mi45TDQzMS42LDEuM0gzMzh6IE0yNzkuNCwzNjJjLTMyLjksOTItNjcuNiwxMjguNy0xMjUuNywxMzEuOHYtNDVjMzcuNS03LjUsNTEuMy0zMSw1OS4xLTUxLjFjNy41LTE5LjMsNy41LTQwLjcsMC02MGwtNzUtMTkyLjdoNTIuOGw1My4zLDE2Ni44bDEwNS45LTI5NGg1OC4xTDI3OS40LDM2MnoiLz48L2c+PC9nPjwvc3ZnPg==';
+
+		return $icon_svg;
+	}
+
+	/**
+	 * Localization for the dismiss urls.
+	 *
+	 * @return array
+	 */
+	private function localize_admin_global_script() {
+		return array(
+			'dismiss_about_url'   => $this->get_dismiss_url( 'wpseo-dismiss-about' ),
+			'dismiss_tagline_url' => $this->get_dismiss_url( 'wpseo-dismiss-tagline-notice' ),
+		);
+	}
+
+	/**
+	 * Extending the current page URL with two params to be able to ignore the tour.
+	 *
+	 * @param string $dismiss_param The param used to dismiss the notification.
+	 *
+	 * @return string
+	 */
+	private function get_dismiss_url( $dismiss_param ) {
+		$arr_params = array(
+			$dismiss_param => '1',
+			'nonce'        => wp_create_nonce( $dismiss_param ),
+		);
+
+		return esc_url( add_query_arg( $arr_params ) );
+	}
+
 
 	/********************** DEPRECATED METHODS **********************/
 
@@ -644,7 +737,4 @@ class WPSEO_Admin {
 	function options_init() {
 		_deprecated_function( __METHOD__, 'WPSEO 1.5.0', 'WPSEO_Option::register_setting()' );
 	}
-
-
-
-} /* End of class */
+}

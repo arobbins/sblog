@@ -3,6 +3,10 @@
   margin-bottom: rem($space-l * 2);
   margin-top: rem($space-m * 4);
   opacity: 0.5;
+
+  p {
+    font-size: $font-xxs;
+  }
 }
 
 .footer-copy {

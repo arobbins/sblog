@@ -67,8 +67,8 @@ function asset_path($filename) {
 
 function assets() {
   wp_enqueue_style('fa', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css', false, null);
-  wp_enqueue_style('font-primary', 'https://fonts.googleapis.com/css?family=Lato:400,700', false, null);
-  wp_enqueue_style('font-secondary', 'https://fonts.googleapis.com/css?family=Merriweather', false, null);
+  wp_enqueue_style('font-primary', 'https://fonts.googleapis.com/css?family=Roboto+Slab:400,700', false, null);
+  wp_enqueue_style('font-secondary', 'https://fonts.googleapis.com/css?family=Lora:400,400italic,700,700italic', false, null);
 
   if (is_single() && comments_open() && get_option('thread_comments')) {
     wp_enqueue_script('comment-reply');

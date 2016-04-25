@@ -1,23 +1,34 @@
-module.exports = {
-	paths: {
-		project: './',
-		css: {
-			entry: './assets/css/local/app.scss',
-			all: './assets/css/local/**/*.scss',
-      dest: './assets/css'
-		},
-		js: {
-			entry: './assets/js/local/app.js',
-      vendor: './assets/js/vendor/*.js',
-      dest: './assets/js',
-      all: './assets/js/**/*.js'
-		}
-	},
-	names: {
-		css: 'app.min.css',
-		js: {
-			app: 'app.min.js',
-      vendor: 'vendor.min.js'
-		}
-	}
-};
+////////////
+// Config //
+////////////
+
+import browserSync from 'browser-sync';
+
+const config = {
+  files: {
+    html: './assets/**/*.html',
+    js: './assets/**/*.js',
+    css: './assets/css/local/**/*.scss',
+    cssEntry: './assets/css/local/app.scss',
+    entry: './assets/app.js'
+  },
+  folders: {
+    dest: './assets/css',
+    app: './app'
+  },
+  names: {
+    vendor: 'vendor.min.js',
+    app: 'app.min.js',
+    css: 'app.min.css'
+  },
+  libs: [
+    'rx',
+    'rx-dom',
+    'jquery',
+    'bitcoinjs-lib'
+  ],
+  bs: browserSync.create()
+
+}
+
+export default config;

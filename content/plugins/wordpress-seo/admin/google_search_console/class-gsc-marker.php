@@ -38,7 +38,7 @@ class WPSEO_GSC_Marker {
 	 *
 	 * If param URL is given, the request is performed by a bulk action
 	 *
-	 * @param string $url
+	 * @param string $url Optional URL.
 	 */
 	public function __construct( $url = '' ) {
 		$this->url    = $url;
@@ -47,6 +47,7 @@ class WPSEO_GSC_Marker {
 
 	/**
 	 * Getting the response for the AJAX request
+	 *
 	 * @return string
 	 */
 	public function get_response() {
@@ -105,7 +106,7 @@ class WPSEO_GSC_Marker {
 	/**
 	 * Sending a request to the Google Search Console API to let them know we marked an issue as fixed.
 	 *
-	 * @param WPSEO_GSC_Service $service
+	 * @param WPSEO_GSC_Service $service Service object instance.
 	 *
 	 * @return bool
 	 */
@@ -125,7 +126,7 @@ class WPSEO_GSC_Marker {
 	/**
 	 * Getting the counts for current platform - category combination and update the score of it.
 	 *
-	 * @param WPSEO_GSC_Service $service
+	 * @param WPSEO_GSC_Service $service Service object instance.
 	 */
 	private function update_issue_count( WPSEO_GSC_Service $service ) {
 		$counts  = new WPSEO_GSC_Count( $service );
@@ -139,5 +140,4 @@ class WPSEO_GSC_Marker {
 		// And update the count.
 		$counts->update_issue_count( $this->platform, $this->category, $total_issues );
 	}
-
 }

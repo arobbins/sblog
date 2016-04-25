@@ -37,7 +37,7 @@ class WPSEO_GSC_Category_Filters {
 	 *
 	 * Setting the hook to create the issues categories as the links
 	 *
-	 * @param array $platform_counts
+	 * @param array $platform_counts Set of issue counts by platform.
 	 */
 	public function __construct( array $platform_counts ) {
 		if ( ! empty( $platform_counts ) ) {
@@ -100,7 +100,7 @@ class WPSEO_GSC_Category_Filters {
 	/**
 	 * Setting the view counts based on the saved data. The info will be used to display the category filters
 	 *
-	 * @param array $platform_counts
+	 * @param array $platform_counts Set of counts by platform.
 	 */
 	private function set_counts( array $platform_counts ) {
 		$this->category_counts = $this->parse_counts( $platform_counts );
@@ -110,35 +110,38 @@ class WPSEO_GSC_Category_Filters {
 	 * Setting the values for the filter
 	 */
 	private function set_filter_values() {
-		$this->set_filter_value( 'access_denied', __( 'Access denied', 'wordpress-seo' ), __( 'Server requires authentication or is blocking Googlebot from accessing the site.', 'wordpress-seo' ) );
+		$this->set_filter_value( 'access_denied', __( 'Access denied', 'wordpress-seo' ), __( 'Server requires authentication or is blocking Googlebot from accessing the site.', 'wordpress-seo' ), __( 'Show information about errors in category \'Access Denied\'', 'wordpress-seo' ) );
 		$this->set_filter_value( 'faulty_redirects', __( 'Faulty redirects', 'wordpress-seo' ) );
 		$this->set_filter_value( 'not_followed',__( 'Not followed', 'wordpress-seo' ) );
-		$this->set_filter_value( 'not_found', __( 'Not found', 'wordpress-seo' ), __( 'URL points to a non-existent page.', 'wordpress-seo' ) );
-		$this->set_filter_value( 'other', __( 'Other', 'wordpress-seo' ), __( 'Google was unable to crawl this URL due to an undetermined issue.', 'wordpress-seo' ) );
+		$this->set_filter_value( 'not_found', __( 'Not found', 'wordpress-seo' ), __( 'URL points to a non-existent page.', 'wordpress-seo' ), __( 'Show information about errors in category \'Not Found\'', 'wordpress-seo' ) );
+		$this->set_filter_value( 'other', __( 'Other', 'wordpress-seo' ), __( 'Google was unable to crawl this URL due to an undetermined issue.', 'wordpress-seo' ), __( 'Show information about errors in category \'Other\'', 'wordpress-seo' ) );
 		/* Translators: %1$s: expands to '<code>robots.txt</code>'. */
-		$this->set_filter_value( 'roboted', __( 'Blocked', 'wordpress-seo' ), sprintf( __( 'Googlebot could access your site, but certain URLs are blocked for Googlebot in your %1$s file. This block could either be for all Googlebots or even specifically for Googlebot-mobile.', 'wordpress-seo' ), '<code>robots.txt</code>' ) );
-		$this->set_filter_value( 'server_error', __( 'Server Error', 'wordpress-seo' ), __( 'Request timed out or site is blocking Google.', 'wordpress-seo' ) );
-		$this->set_filter_value( 'soft_404', __( 'Soft 404', 'wordpress-seo' ), __( "The target URL doesn't exist, but your server is not returning a 404 (file not found) error.", 'wordpress-seo' ) );
+		$this->set_filter_value( 'roboted', __( 'Blocked', 'wordpress-seo' ), sprintf( __( 'Googlebot could access your site, but certain URLs are blocked for Googlebot in your %1$s file. This block could either be for all Googlebots or even specifically for Googlebot-mobile.', 'wordpress-seo' ), '<code>robots.txt</code>' ), __( 'Show information about errors in category \'Blocked\'' ) );
+		$this->set_filter_value( 'server_error', __( 'Server Error', 'wordpress-seo' ), __( 'Request timed out or site is blocking Google.', 'wordpress-seo' ), __( 'Show information about errors in category \'Server\'', 'wordpress-seo' ) );
+		$this->set_filter_value( 'soft_404', __( 'Soft 404', 'wordpress-seo' ), __( "The target URL doesn't exist, but your server is not returning a 404 (file not found) error.", 'wordpress-seo' ), __( 'Show information about errors in category \'Soft 404\'', 'wordpress-seo' ) );
 	}
 
 	/**
 	 * Add new filter value to the filter_values
-	 * @param string $key
-	 * @param string $value
-	 * @param string $description
+	 *
+	 * @param string $key              Filter key.
+	 * @param string $value            Filter value.
+	 * @param string $description      Optional description string.
+	 * @param string $help_button_text Optional help button text.
 	 */
-	private function set_filter_value( $key, $value, $description = '' ) {
+	private function set_filter_value( $key, $value, $description = '', $help_button_text = '' ) {
 		$this->filter_values[ $key ] = array(
 			'value'       => $value,
 			'description' => $description,
+			'help-button' => $help_button_text,
 		);
 	}
 
 	/**
 	 * Creates a filter link
 	 *
-	 * @param string  $category
-	 * @param integer $count
+	 * @param string  $category Issue type.
+	 * @param integer $count    Count for the type.
 	 *
 	 * @return string
 	 */
@@ -151,26 +154,29 @@ class WPSEO_GSC_Category_Filters {
 			$class .= ' current';
 		}
 
-		$title = '';
+		$help_button = $help_panel = '';
 		if ( $this->filter_values[ $category ]['description'] !== '' ) {
-			$title = " title='" . esc_attr( $this->filter_values[ $category ]['description'] ) . "'";
+			$help        = new WPSEO_Admin_Help_Panel( $category, $this->filter_values[ $category ]['help-button'], $this->filter_values[ $category ]['description'], 'has-wrapper' );
+			$help_button = $help->get_button_html();
+			$help_panel  = $help->get_panel_html();
 		}
 
 		return sprintf(
-			'<a href="%1$s" class="%2$s" %3$s>%4$s</a> (<span id="gsc_count_%5$s">%6$s</span>)',
+			'<a href="%1$s" class="%2$s">%3$s</a> (<span id="gsc_count_%4$s">%5$s</span>) %6$s %7$s',
 			esc_attr( $href ),
 			$class,
-			$title,
 			$this->filter_values[ $category ]['value'],
 			$category,
-			$count
+			$count,
+			$help_button,
+			$help_panel
 		);
 	}
 
 	/**
 	 * Parsing the category counts. When there are 0 issues for a specific category, just remove that one from the array
 	 *
-	 * @param array $category_counts
+	 * @param array $category_counts Set of counts for categories.
 	 *
 	 * @return mixed
 	 */
@@ -183,5 +189,4 @@ class WPSEO_GSC_Category_Filters {
 
 		return $category_counts;
 	}
-
 }

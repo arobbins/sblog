@@ -30,6 +30,7 @@ class WPSEO_Bulk_Title_Editor_List_Table extends WPSEO_Bulk_List_Table {
 
 	/**
 	 * The field in the database where meta field is saved.
+	 *
 	 * @var string
 	 */
 	protected $target_db_field = 'title';
@@ -42,8 +43,10 @@ class WPSEO_Bulk_Title_Editor_List_Table extends WPSEO_Bulk_List_Table {
 	public function get_columns() {
 
 		$columns = array(
-			'col_existing_yoast_seo_title' => __( 'Existing Yoast SEO Title', 'wordpress-seo' ),
-			'col_new_yoast_seo_title'      => __( 'New Yoast SEO Title', 'wordpress-seo' ),
+			/* translators: %1$s expands to Yoast SEO */
+			'col_existing_yoast_seo_title' => sprintf( __( 'Existing %1$s Title', 'wordpress-seo' ), 'Yoast SEO' ),
+			/* translators: %1$s expands to Yoast SEO */
+			'col_new_yoast_seo_title'      => sprintf( __( 'New %1$s Title', 'wordpress-seo' ), 'Yoast SEO' ),
 		);
 
 		return $this->merge_columns( $columns );
@@ -52,9 +55,9 @@ class WPSEO_Bulk_Title_Editor_List_Table extends WPSEO_Bulk_List_Table {
 	/**
 	 * Parse the title columns
 	 *
-	 * @param string $column_name
-	 * @param object $record
-	 * @param string $attributes
+	 * @param string $column_name Column name.
+	 * @param object $record      Data object.
+	 * @param string $attributes  HTML attributes.
 	 *
 	 * @return string
 	 */
@@ -80,6 +83,4 @@ class WPSEO_Bulk_Title_Editor_List_Table extends WPSEO_Bulk_List_Table {
 
 		unset( $meta_data );
 	}
-
-
 } /* End of class */

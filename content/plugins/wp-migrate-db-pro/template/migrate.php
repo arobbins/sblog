@@ -170,7 +170,7 @@ $breadcrumbs_params = array(
 							<span class="sort-handle"></span>
 						</td>
 						<td class="old-replace-col">
-							<input type="text" size="40" name="replace_old[]" class="code" id="old-path" placeholder="Old file path" value="<?php echo esc_attr( $this->absolute_root_file_path ); ?>" autocomplete="off" />
+							<input type="text" size="40" name="replace_old[]" class="code" id="old-path" placeholder="Old file path" value="<?php echo esc_attr( $this->get_absolute_root_file_path() ); ?>" autocomplete="off" />
 						</td>
 						<td class="arrow-col" title="Copy Find to Replace">
 							<span class="right-arrow">&rarr;</span>
@@ -319,7 +319,7 @@ $breadcrumbs_params = array(
 
 			<p><?php _e( 'Whoa! We\'ve detected that the database table prefix differs between installations. Clicking the Migrate button below will create new database tables in your local database with prefix "<span class="remote-prefix"></span>".', 'wp-migrate-db' ); ?></p>
 
-			<p><?php printf( __( 'However, your local install is configured to use table prefix "%1$s" and will ignore the migrated tables. So, <b>AFTER</b> migration is complete, you will need to edit your local install\'s wp-config.php and change the "%1$s" variable to "<span class="remote-prefix"></span>".', 'wp-migrate-db' ), $wpdb->prefix, $wpdb->prefix ); ?></p>
+			<p><?php printf( __( 'However, your local install is configured to use table prefix "%1$s" and will ignore the migrated tables. So, <b>AFTER</b> migration is complete, you will need to edit your local install\'s wp-config.php and change the "%1$s" variable to "<span class="remote-prefix"></span>".', 'wp-migrate-db' ), $wpdb->base_prefix, $wpdb->base_prefix ); ?></p>
 
 			<p><?php _e( 'This will allow your local install the use the migrated tables. Once you do this, you shouldn\'t have to do it again.', 'wp-migrate-db' ); ?></p>
 		</div>
@@ -327,9 +327,9 @@ $breadcrumbs_params = array(
 		<div class="notification-message warning-notice prefix-notice push">
 			<h4><?php _e( 'Warning: Different Table Prefixes', 'wp-migrate-db' ); ?></h4>
 
-			<p><?php printf( __( 'Whoa! We\'ve detected that the database table prefix differs between installations. Clicking the Migrate button below will create new database tables in the remote database with prefix "%s".', 'wp-migrate-db' ), $wpdb->prefix ); ?></p>
+			<p><?php printf( __( 'Whoa! We\'ve detected that the database table prefix differs between installations. Clicking the Migrate button below will create new database tables in the remote database with prefix "%s".', 'wp-migrate-db' ), $wpdb->base_prefix ); ?></p>
 
-			<p><?php printf( __( 'However, your remote install is configured to use table prefix "<span class="remote-prefix"></span>" and will ignore the migrated tables. So, <b>AFTER</b> migration is complete, you will need to edit your remote install\'s wp-config.php and change the "<span class="remote-prefix"></span>" variable to "%s".', 'wp-migrate-db' ), $wpdb->prefix ); ?></p>
+			<p><?php printf( __( 'However, your remote install is configured to use table prefix "<span class="remote-prefix"></span>" and will ignore the migrated tables. So, <b>AFTER</b> migration is complete, you will need to edit your remote install\'s wp-config.php and change the "<span class="remote-prefix"></span>" variable to "%s".', 'wp-migrate-db' ), $wpdb->base_prefix ); ?></p>
 
 			<p><?php _e( 'This will allow your remote install the use the migrated tables. Once you do this, you shouldn\'t have to do it again.', 'wp-migrate-db' ); ?></p>
 		</div>
@@ -344,13 +344,15 @@ $breadcrumbs_params = array(
 
 		<p class="migrate-db">
 			<input type="hidden" class="remote-json-data" name="remote_json_data" autocomplete="off"/>
-			<input class="button-primary migrate-db-button" type="submit" value="Migrate" name="Submit" autocomplete="off"/>
-			<input class="button save-settings-button" type="submit" value="Save Profile" name="submit_save_profile" autocomplete="off"/>
+			<input class="button-primary migrate-db-button" type="submit" value="<?php echo esc_attr_x( 'Export', 'Download a copy of the database', 'wp-migrate-db' ); ?>" name="Submit" autocomplete="off"/>
+			<input class="button save-settings-button" type="submit" value="<?php echo esc_attr_x( 'Save Profile', 'Save current migration settings', 'wp-migrate-db' ); ?>" name="submit_save_profile" autocomplete="off"/>
 		</p>
 
 	</div>
 
 	</form>
 	<?php $this->template( 'migrate-progress' ); ?>
+
+	<?php $this->template_part( array( 'progress_upgrade' ) ); ?>
 
 </div> <!-- end .migrate-tab -->

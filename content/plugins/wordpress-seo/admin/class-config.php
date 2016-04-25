@@ -16,11 +16,21 @@ class WPSEO_Admin_Pages {
 	public $currentoption = 'wpseo';
 
 	/**
+	 * Holds the asset manager.
+	 *
+	 * @var WPSEO_Admin_Asset_Manager
+	 */
+	private $asset_manager;
+
+	/**
 	 * Class constructor, which basically only hooks the init function on the init hook
 	 */
 	function __construct() {
 		add_action( 'init', array( $this, 'init' ), 20 );
+		$this->asset_manager = new WPSEO_Admin_Asset_Manager();
 	}
+
+
 
 	/**
 	 * Make sure the needed scripts are loaded for admin pages
@@ -45,10 +55,12 @@ class WPSEO_Admin_Pages {
 		wp_enqueue_style( 'thickbox' );
 		wp_enqueue_style( 'global' );
 		wp_enqueue_style( 'wp-admin' );
-		wp_enqueue_style( 'yoast-admin-css', plugins_url( 'css/yst_plugin_tools' . WPSEO_CSSJS_SUFFIX . '.css', WPSEO_FILE ), array(), WPSEO_VERSION );
+		$this->asset_manager->enqueue_style( 'select2' );
+
+		$this->asset_manager->enqueue_style( 'admin-css' );
 
 		if ( is_rtl() ) {
-			wp_enqueue_style( 'wpseo-rtl', plugins_url( 'css/wpseo-rtl' . WPSEO_CSSJS_SUFFIX . '.css', WPSEO_FILE ), array(), WPSEO_VERSION );
+			$this->asset_manager->enqueue_style( 'rtl' );
 		}
 	}
 
@@ -56,32 +68,35 @@ class WPSEO_Admin_Pages {
 	 * Loads the required scripts for the config page.
 	 */
 	function config_page_scripts() {
-		wp_enqueue_script( 'wpseo-admin-script', plugins_url( 'js/wp-seo-admin' . WPSEO_CSSJS_SUFFIX . '.js', WPSEO_FILE ), array(
-			'jquery',
-			'jquery-ui-core',
-		), WPSEO_VERSION, true );
-		wp_localize_script( 'wpseo-admin-script', 'wpseoAdminL10n', $this->localize_admin_script() );
+		$this->asset_manager->enqueue_script( 'admin-script' );
+
+		wp_localize_script( WPSEO_Admin_Asset_Manager::PREFIX . 'admin-script', 'wpseoAdminL10n', $this->localize_admin_script() );
+
 		wp_enqueue_script( 'dashboard' );
 		wp_enqueue_script( 'thickbox' );
 
 		$page = filter_input( INPUT_GET, 'page' );
 		$tool = filter_input( INPUT_GET, 'tool' );
 
+		wp_localize_script( WPSEO_Admin_Asset_Manager::PREFIX . 'admin-script', 'wpseoSelect2Locale', substr( get_locale(), 0, 2 ) );
+
 		if ( in_array( $page, array( 'wpseo_social', 'wpseo_dashboard' ) ) ) {
 			wp_enqueue_media();
-			wp_enqueue_script( 'wpseo-admin-media', plugins_url( 'js/wp-seo-admin-media' . WPSEO_CSSJS_SUFFIX . '.js', WPSEO_FILE ), array(
-				'jquery',
-				'jquery-ui-core',
-			), WPSEO_VERSION, true );
-			wp_localize_script( 'wpseo-admin-media', 'wpseoMediaL10n', $this->localize_media_script() );
+
+			$this->asset_manager->enqueue_script( 'admin-media' );
+			wp_localize_script( WPSEO_Admin_Asset_Manager::PREFIX . 'admin-media', 'wpseoMediaL10n', $this->localize_media_script() );
+		}
+
+		if ( 'wpseo_tools' === $page && empty( $tool ) ) {
+			$this->asset_manager->enqueue_script( 'yoast-seo' );
 		}
 
 		if ( 'wpseo_tools' === $page && 'bulk-editor' === $tool ) {
-			wp_enqueue_script( 'wpseo-bulk-editor', plugins_url( 'js/wp-seo-bulk-editor' . WPSEO_CSSJS_SUFFIX . '.js', WPSEO_FILE ), array( 'jquery' ), WPSEO_VERSION, true );
+			$this->asset_manager->enqueue_script( 'bulk-editor' );
 		}
 
 		if ( 'wpseo_tools' === $page && 'import-export' === $tool ) {
-			wp_enqueue_script( 'wpseo-export', plugins_url( 'js/wp-seo-export' . WPSEO_CSSJS_SUFFIX . '.js', WPSEO_FILE ), array( 'jquery' ), WPSEO_VERSION, true );
+			$this->asset_manager->enqueue_script( 'export' );
 		}
 	}
 
@@ -107,6 +122,7 @@ class WPSEO_Admin_Pages {
 		return array(
 			/* translators: %s: '%%term_title%%' variable used in titles and meta's template that's not compatible with the given template */
 			'variable_warning' => sprintf( __( 'Warning: the variable %s cannot be used in this template.', 'wordpress-seo' ), '<code>%s</code>' ) . ' ' . __( 'See the help tab for more info.', 'wordpress-seo' ),
+			'locale' => get_locale(),
 		);
 	}
 
@@ -292,9 +308,9 @@ class WPSEO_Admin_Pages {
 	 *
 	 * @deprecated 2.0
 	 *
-	 * @param string $var
-	 * @param string $label
-	 * @param string $option
+	 * @param string $var    Option name.
+	 * @param string $label  Label message.
+	 * @param string $option Optional option key.
 	 */
 	function media_input( $var, $label, $option = '' ) {
 		_deprecated_function( __METHOD__, 'WPSEO 2.0', 'This method is deprecated, please use the <code>Yoast_Form</code> class.' );
@@ -340,7 +356,7 @@ class WPSEO_Admin_Pages {
 
 		?>
 			<div id="<?php echo esc_attr( $id ); ?>" class="yoastbox">
-				<h2><?php echo $title; ?></h2>
+				<h1><?php echo $title; ?></h1>
 				<?php echo $content; ?>
 			</div>
 		<?php
@@ -395,6 +411,4 @@ class WPSEO_Admin_Pages {
 		_deprecated_function( __METHOD__, 'WPSEO 1.5.0', 'WPSEO_Options::reset()' );
 		WPSEO_Options::reset();
 	}
-
-
 } /* End of class */

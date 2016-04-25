@@ -1,6 +1,6 @@
 <?php
 /**
- * @package WPSEO\Internals
+ * @package    WPSEO\Internals
  * @since      1.5.4
  */
 
@@ -299,18 +299,18 @@ class WPSEO_Replace_Vars {
 	private function retrieve_date() {
 		$replacement = null;
 
-		if ( $this->args->post_date != '' ) {
+		if ( $this->args->post_date !== '' ) {
 			$replacement = mysql2date( get_option( 'date_format' ), $this->args->post_date, true );
 		}
 		else {
-			if ( get_query_var( 'day' ) && get_query_var( 'day' ) != '' ) {
+			if ( get_query_var( 'day' ) && get_query_var( 'day' ) !== '' ) {
 				$replacement = get_the_date();
 			}
 			else {
-				if ( single_month_title( ' ', false ) && single_month_title( ' ', false ) != '' ) {
+				if ( single_month_title( ' ', false ) && single_month_title( ' ', false ) !== '' ) {
 					$replacement = single_month_title( ' ', false );
 				}
-				elseif ( get_query_var( 'year' ) != '' ) {
+				elseif ( get_query_var( 'year' ) !== '' ) {
 					$replacement = get_query_var( 'year' );
 				}
 			}
@@ -367,7 +367,7 @@ class WPSEO_Replace_Vars {
 		$replacement = null;
 
 		if ( ! isset( $replacement ) && ( ( is_singular() || is_admin() ) && isset( $GLOBALS['post'] ) ) ) {
-			if ( isset( $GLOBALS['post']->post_parent ) && 0 != $GLOBALS['post']->post_parent ) {
+			if ( isset( $GLOBALS['post']->post_parent ) && 0 !== $GLOBALS['post']->post_parent ) {
 				$replacement = get_the_title( $GLOBALS['post']->post_parent );
 			}
 		}
@@ -399,25 +399,7 @@ class WPSEO_Replace_Vars {
 	 * @return string
 	 */
 	private function retrieve_sep() {
-		$replacement = WPSEO_Options::get_default( 'wpseo_titles', 'separator' );
-
-		// Get the titles option and the separator options.
-		$titles_options    = get_option( 'wpseo_titles' );
-		$seperator_options = WPSEO_Option_Titles::get_instance()->get_separator_options();
-
-		// This should always be set, but just to be sure.
-		if ( isset( $seperator_options[ $titles_options['separator'] ] ) ) {
-			// Set the new replacement.
-			$replacement = $seperator_options[ $titles_options['separator'] ];
-		}
-
-		/**
-		 * Filter: 'wpseo_replacements_filter_sep' - Allow customization of the separator character(s)
-		 *
-		 * @api string $replacement The current separator
-		 */
-
-		return apply_filters( 'wpseo_replacements_filter_sep', $replacement );
+		return WPSEO_Utils::get_title_separator();
 	}
 
 	/**
@@ -448,7 +430,7 @@ class WPSEO_Replace_Vars {
 		static $replacement;
 
 		if ( ! isset( $replacement ) ) {
-			$sitename = trim( strip_tags( get_bloginfo( 'name' ) ) );
+			$sitename = WPSEO_Utils::get_site_name();
 			if ( $sitename !== '' ) {
 				$replacement = $sitename;
 			}
@@ -532,6 +514,27 @@ class WPSEO_Replace_Vars {
 		return $replacement;
 	}
 
+	/**
+	 * Retrieve primary category for use as replacement string.
+	 *
+	 * @return bool|int|null
+	 */
+	private function retrieve_primary_category() {
+		$primary_category = null;
+
+		if ( ! empty( $this->args->ID ) ) {
+			$wpseo_primary_category = new WPSEO_Primary_Term( 'category', $this->args->ID );
+
+			$term_id = $wpseo_primary_category->get_primary_term();
+			$term    = get_term( $term_id );
+
+			if ( ! is_wp_error( $term ) && ! empty( $term ) ) {
+				$primary_category = $term->name;
+			}
+		}
+
+		return $primary_category;
+	}
 
 
 	/* *********************** ADVANCED VARIABLES ************************** */
@@ -715,7 +718,7 @@ class WPSEO_Replace_Vars {
 					$term      = current( $terms );
 					$term_desc = get_term_field( 'description', $term->term_id, $tax );
 					if ( $term_desc !== '' ) {
-						$replacement = $term_desc;
+						$replacement = trim( strip_tags( $term_desc ) );
 					}
 				}
 			}
@@ -1091,12 +1094,17 @@ class WPSEO_Replace_Vars {
 			'excerpt_only'         => __( 'Replaced with the post/page excerpt (without auto-generation)', 'wordpress-seo' ),
 			'tag'                  => __( 'Replaced with the current tag/tags', 'wordpress-seo' ),
 			'category'             => __( 'Replaced with the post categories (comma separated)', 'wordpress-seo' ),
+			'primary_category'     => __( 'Replaced with the primary category of the post/page', 'wordpress-seo' ),
 			'category_description' => __( 'Replaced with the category description', 'wordpress-seo' ),
 			'tag_description'      => __( 'Replaced with the tag description', 'wordpress-seo' ),
 			'term_description'     => __( 'Replaced with the term description', 'wordpress-seo' ),
 			'term_title'           => __( 'Replaced with the term name', 'wordpress-seo' ),
 			'searchphrase'         => __( 'Replaced with the current search phrase', 'wordpress-seo' ),
-			'sep'                  => __( 'The separator defined in your theme\'s <code>wp_title()</code> tag.', 'wordpress-seo' ),
+			'sep'                  => sprintf(
+				/* translators: %s: wp_title() function */
+				__( 'The separator defined in your theme\'s %s tag.', 'wordpress-seo' ),
+				'<code>wp_title()</code>'
+			),
 		);
 	}
 
@@ -1193,12 +1201,11 @@ class WPSEO_Replace_Vars {
 
 		/**
 		 * Allows filtering of the terms list used to replace %%category%%, %%tag%% and %%ct_<custom-tax-name>%% variables
+		 *
 		 * @api    string    $output    Comma-delimited string containing the terms
 		 */
-
 		return apply_filters( 'wpseo_terms', $output );
 	}
-
 } /* End of class WPSEO_Replace_Vars */
 
 

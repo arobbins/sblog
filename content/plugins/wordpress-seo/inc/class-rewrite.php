@@ -78,12 +78,12 @@ class WPSEO_Rewrite {
 	/**
 	 * Update the query vars with the redirect var when stripcategorybase is active
 	 *
-	 * @param array $query_vars
+	 * @param array $query_vars Main query vars to filter.
 	 *
 	 * @return array
 	 */
 	function query_vars( $query_vars ) {
-		$options = WPSEO_Options::get_all();
+		$options = WPSEO_Options::get_option( 'wpseo_permalinks' );
 
 		if ( $options['stripcategorybase'] === true ) {
 			$query_vars[] = 'wpseo_category_redirect';
@@ -121,9 +121,10 @@ class WPSEO_Rewrite {
 		$category_rewrite = array();
 
 		$taxonomy = get_taxonomy( 'category' );
+		$permalink_structure = get_option( 'permalink_structure' );
 
 		$blog_prefix = '';
-		if ( is_multisite() && ! is_subdomain_install() && is_main_site() ) {
+		if ( is_multisite() && ! is_subdomain_install() && is_main_site() && 0 === strpos( $permalink_structure, '/blog/' ) ) {
 			$blog_prefix = 'blog/';
 		}
 

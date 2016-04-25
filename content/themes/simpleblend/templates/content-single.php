@@ -27,8 +27,6 @@
         <span class="author-footer-name">About myself</span>
         <div class="author-contact">
           <p class="author-footer-social"><a href="https://twitter.com/andrewmrobbins" class="twitter-follow-button" data-show-count="false" data-size="large" data-show-screen-name="true">Follow @andrewmrobbins</a></p>
-          <div class="author-footer-donations changetip_tipme_button" data-bid="0d7a7432-bf39-4766-9577-eaa43c32fedd" data-uid="34dd6b374d524f88bf9a2dcb0c1912ae"></div>
-          <script>(function(document,script,id){var js,r=document.getElementsByTagName(script)[0],protocol=/^http:/.test(document.location)?'http':'https';if(!document.getElementById(id)){js=document.createElement(script);js.id=id;js.src=protocol+'://widgets.changetip.com/public/js/widgets.js';r.parentNode.insertBefore(js,r)}}(document,'script','changetip_w_0'));</script>
         </div>
         <?php the_author_meta('description'); ?>
       </div>

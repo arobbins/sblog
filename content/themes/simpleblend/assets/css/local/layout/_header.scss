@@ -13,8 +13,24 @@
 }
 
 .header {
-  margin: 1em 0 0;
-  padding: 0 2em;
+  margin: 0;
+  padding: 5px;
+  font-size: 14px;
+
+  //font-style: italic;
+  letter-spacing: 0.1em;
+  word-spacing: 1px;
+  opacity: 0.3;
+  padding: 15px;
+  line-height: 1;
+
+  p {
+    margin: 0;
+  }
+
+  &:hover {
+    opacity: 1;
+  }
 
   a {
     &:hover {
@@ -50,6 +66,8 @@
   text-decoration: none;
   font-size: 36px;
   color: color(base);
+  border: none;
+  box-shadow: none;
 
   &:hover {
     color: color(base);

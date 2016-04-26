@@ -3,10 +3,44 @@
   margin-bottom: rem($space-l * 2);
   margin-top: rem($space-m * 4);
   opacity: 0.5;
+  border-top: 1px solid color(borders);
+  padding-top: rem($space-l);
 
   p {
-    font-size: $font-xxs;
+    font-size: $font-xs;
+    margin: 0.5em 0;
   }
+
+  a {
+    border: none;
+    box-shadow: none;
+
+    &:hover {
+      border: none;
+      box-shadow: none;
+      background-color: transparent;
+      color: black;
+      opacity: 1;
+    }
+  }
+
+  i {
+    font-size: $font-xl;
+    margin: 0 5px;
+  }
+
+  .name {
+    &:after {
+      content: ' ';
+      width: 5px;
+      background-color: black;
+      height: 41px;
+      margin: 0 1em;
+    }
+  }
+
+  .title {}
+
 }
 
 .footer-copy {

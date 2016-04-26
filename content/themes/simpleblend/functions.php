@@ -83,7 +83,7 @@ function posts_by_year() {
   $posts = get_posts(array(
     'numberposts' => -1,
     'orderby' => 'post_date',
-    'order' => 'ASC',
+    'order' => 'DESC',
     'post_type' => 'post',
     'post_status' => 'publish'
   ));

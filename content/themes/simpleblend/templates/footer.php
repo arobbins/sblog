@@ -1,14 +1,14 @@
 
-<footer class="footer content-info l-row l-row-center" role="contentinfo">
+<footer class="footer content-info l-col l-row-center" role="contentinfo">
   <?php if(!is_front_page()) { ?>
     <a class="l-fit header-back-link fa fa-long-arrow-left hvr-wobble-horizontal" href="<?= esc_url(home_url('/')); ?>">
 
     </a>
   <?php } else { ?>
 
-    <p>Andrew Robbins &mdash; Web Developer</p>
-    <p><a href="https://simpleblend.net">https://simpleblend.net</a> &bull; <a href=""><i class="fa fa-twitter" aria-hidden="true"></i></a> <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
-</p>
+    <p><span class="name">Andrew Robbins</span> <span class="title">Web Developer</span></p>
+    <p><a href="https://simpleblend.net">Simpleblend.net</a></p>
+    <p><a href="<?php the_field('theme_twitter', 'option');?>"><i class="fa fa-twitter" aria-hidden="true"></i></a> <a href="<?php the_field('theme_linkedin', 'option');?>"><i class="fa fa-linkedin" aria-hidden="true"></i></a></p>
   <?php } ?>
 </footer>
 

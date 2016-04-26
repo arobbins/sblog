@@ -24,12 +24,12 @@ Author URI:     http://www.simpleblend.net
 @import "layout/header";
 @import "layout/footer";
 @import "layout/layout";
-@import "layout/article";
 
 // Modules
 @import "modules/widgets";
 @import "modules/article";
 @import "modules/author";
+@import "modules/posts";
 
 // State
 @import "state/state";

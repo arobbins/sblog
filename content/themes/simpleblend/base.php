@@ -22,7 +22,7 @@ use Roots\Sage\Wrapper;
       get_template_part('templates/header');
     ?>
 
-    <div class="content l-contain l-center l-row" role="document">
+    <div class="content l-contain l-center l-row l-fit" role="document">
       <main class="main l-col l-fit" role="main">
         <?php include Wrapper\template_path(); ?>
       </main>

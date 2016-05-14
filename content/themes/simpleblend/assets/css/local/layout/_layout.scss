@@ -103,8 +103,12 @@
   }
 
   .content {
+    position: relative;
+    left: 30px;
+
     @include respond-to(900) {
       margin-top: rem($space-s);
+      left: 0;
     }
   }
 

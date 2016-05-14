@@ -1,9 +1,9 @@
 .footer {
   text-align: center;
   margin-bottom: rem($space-l * 2);
-  margin-top: rem($space-m * 4);
+  margin-top: rem($space-m * 3);
   opacity: 0.5;
-  border-top: 1px solid color(borders);
+  // border-top: 1px solid color(base);
   padding-top: rem($space-l);
 
   p {
@@ -32,10 +32,11 @@
   .name {
     &:after {
       content: ' ';
-      width: 5px;
-      background-color: black;
+      width: 1px;
+      border-right: 1px solid color(base);
       height: 41px;
       margin: 0 1em;
+      margin-right: 18px;
     }
   }
 

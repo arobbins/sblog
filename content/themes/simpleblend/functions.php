@@ -76,10 +76,10 @@ add_filter( 'embed_oembed_html', 'custom_youtube_oembed' );
 
 
 function posts_by_year() {
-  // array to use for results
+
   $years = array();
 
-  // get posts from WP
+  // Grabbing all posts from WP
   $posts = get_posts(array(
     'numberposts' => -1,
     'orderby' => 'post_date',
@@ -88,13 +88,17 @@ function posts_by_year() {
     'post_status' => 'publish'
   ));
 
-  // loop through posts, populating $years arrays
+  // loop through posts, populating our data structure
   foreach($posts as $post) {
-    $years[date('Y', strtotime($post->post_date))][] = $post;
-  }
 
-  // reverse sort by year
+    $year = date('Y', strtotime($post->post_date));
+    $month = date('F', strtotime($post->post_date));
+
+    $years[$year][$month][] = $post;
+
+  }
   krsort($years);
 
   return $years;
+  
 }

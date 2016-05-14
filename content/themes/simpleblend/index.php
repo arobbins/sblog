@@ -1,13 +1,26 @@
-<?php foreach(posts_by_year() as $year => $posts) : ?>
-  <h2 class="article-year"><?php echo $year; ?></h2>
-  <ol class="articles">
-    <?php foreach($posts as $post) : setup_postdata($post); ?>
-      <li class="article">
-        <a href="<?php the_permalink(); ?>" class="article-link"><?php the_title(); ?></a>
-        <?php the_tags(); ?>
-      </li>
-    <?php endforeach; ?>
-  </ol>
-<?php endforeach; ?>
+<?php foreach(posts_by_year() as $year => $months) { ?>
 
-<?php // the_posts_navigation(); ?>
+  <!-- <h2 class="article-year"><?php echo $year; ?></h2> -->
+
+  <?php foreach($months as $month => $posts) { ?>
+
+    <h3 class="article-date">
+      <p class="article-year"><?php echo $year; ?></p>
+      <i class="article-divider fa fa-flash" aria-hidden="true"></i>
+      <p class="article-month"><?php echo $month; ?></p>
+    </h3>
+
+    <ol class="articles">
+      <?php foreach($posts as $post) : setup_postdata($post); ?>
+        <li class="article">
+          <a href="<?php the_permalink(); ?>" class="article-link"><?php the_title(); ?></a>
+          <?php the_tags(); ?>
+        </li>
+      <?php endforeach; ?>
+    </ol>
+
+  <?php }
+
+  }
+
+?>

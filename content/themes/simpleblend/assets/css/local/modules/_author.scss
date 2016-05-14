@@ -1,7 +1,9 @@
 .author-footer {
-  padding: rem($space-l) 0;
-  margin: rem($space-l) 0;
+  padding: rem($space-l) 0 rem($space-m);
+  margin: rem($space-l) 0 rem($space-l*2);
   border-top: 1px solid color(borders);
+  border-bottom: 1px solid color(borders);
+  width: 100%;
 
   @include respond-to(900) {
     flex-direction: column;

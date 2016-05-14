@@ -22,19 +22,24 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-weight: bold;
+  font-weight: normal;
   font-size: rem($heading1);
   font-family: $font-primary;
   margin: 0 0 rem(10px) 0;
-  line-height: 1;
+  line-height: 1.2;
 
   @include respond-to(700) {
     font-size: rem($heading2);
   }
 
   @include respond-to(400) {
-    font-size: rem($heading3);
+    // font-size: rem($heading3);
   }
+}
+
+.single h1 {
+  font-weight: bold;
+  margin-bottom: rem(5px);
 }
 
 h2 {

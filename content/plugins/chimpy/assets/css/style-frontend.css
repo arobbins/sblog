@@ -1,0 +1,179 @@
+/**
+ * Chimpy Plugin Styles
+ */
+
+/* Reset all styles */
+.chimpy-reset,
+.chimpy-reset div,
+.chimpy-reset span,
+.chimpy-reset h1,
+.chimpy-reset h2,
+.chimpy-reset h3,
+.chimpy-reset h4,
+.chimpy-reset h5,
+.chimpy-reset h6,
+.chimpy-reset p,
+.chimpy-reset a,
+.chimpy-reset img,
+.chimpy-reset fieldset,
+.chimpy-reset form,
+.chimpy-reset label,
+.chimpy-reset legend,
+.chimpy-reset table,
+.chimpy-reset caption,
+.chimpy-reset tbody,
+.chimpy-reset tfoot,
+.chimpy-reset thead,
+.chimpy-reset tr,
+.chimpy-reset th,
+.chimpy-reset td,
+.chimpy-reset button,
+.chimpy-reset button:hover,
+.chimpy-reset button:active,
+.chimpy-reset button:focus {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font: inherit;
+    font-size: 100%;
+    font-weight: normal;
+    color: #000;
+    background: 0;
+    vertical-align: baseline;
+}
+
+.chimpy-reset table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-bottom: 0;
+    border: 0;
+}
+
+.chimpy-reset ol,
+.chimpy-reset ul {
+    list-style: none;
+}
+
+.chimpy-reset caption,
+.chimpy-reset th {
+    text-align: left;
+}
+
+.chimpy-reset input,
+.chimpy-reset label {
+    display: block;
+}
+
+.chimpy-reset button,
+.chimpy-reset input,
+.chimpy-reset textarea,
+.chimpy-reset select {
+    margin: 0;
+    padding: 0;
+    max-width: 100%;
+    border: 0;
+    border-radius: 0;
+    padding: 0;
+    font-family:"Times New Roman", Times, serif;
+    font-size: 100%;
+    outline: 0;
+    color: #000;
+}
+
+.chimpy-reset input:focus,
+.chimpy-reset textarea:focus {
+    border: 0;
+    border-radius: 0;
+    padding: 0;
+    outline: 0;
+}
+
+.chimpy-reset button,
+.chimpy-reset input {
+    line-height: normal;
+}
+
+.chimpy-reset th,
+.chimpy-reset tr,
+.chimpy-reset td {
+  border-top: 0;
+  border-bottom: 0;
+  border: 0 !important;
+}
+
+/* Form states */
+div.chimpy_status_underlay {
+    background-color: #fff;
+}
+
+div.chimpy_signup_processing {
+    background-color: #fff;
+    background-image: url(./../img/progress.gif);
+    background-repeat: no-repeat;
+    background-position: center center;
+    min-height: 54px;
+}
+
+div.chimpy_signup_error {
+    background-color: #fff;
+    display: table;
+    overflow: hidden;
+    text-align: center;
+    min-height: 54px;
+    width: 100%;
+}
+
+div.chimpy_signup_error div {
+    display: table-cell;
+    vertical-align: middle;
+    padding: 15px 10px;
+    color: #ee9393;
+    font-size: 14px;
+}
+
+div.chimpy_signup_success {
+    background-color: #fff;
+    display: table;
+    overflow: hidden;
+    text-align: center;
+    min-height: 54px;
+    width: 100%;
+}
+
+div.chimpy_signup_success div {
+    display: table-cell;
+    vertical-align: middle;
+    padding: 15px 10px;
+    color: #6fb679;
+    font-size: 14px;
+}
+
+div.chimpy_lock_box {
+    padding: 5% 0 10% 0;
+    border: 1px solid rgba(0,0,0,.1);
+    background-color: rgba(248,248,248,.2);
+}
+
+div.chimpy_lock_content {
+    width: 80%;
+}
+
+div.chimpy_lock_title {
+    display: block;
+    padding: 0 10% 20px 10%;
+    text-align: center;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 25px;
+    font-weight: bold;
+    color: #232323;
+}
+
+div.chimpy_lock_message {
+    display: block;
+    padding: 0 10% 40px 10%;
+    text-align: center;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    color: #999;
+}

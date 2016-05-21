@@ -36,8 +36,9 @@
 }
 
 .author-footer-bio {
-  font-size: rem($bio);
+  font-size: rem($font-xs);
   margin: 0 0 0 rem($space-m);
+  font-family: $font-secondary;
 
   @include respond-to(900) {
     text-align: center;
@@ -64,7 +65,6 @@
 .author-footer-name {
   margin: 0 rem($space-l / 2) 0 0;
   font-size: rem($author-footer-name);
-  font-weight: bold;
 
   @include respond-to(900) {
     margin: 0;

@@ -33,6 +33,7 @@
     "request": "^2.69.0",
     "rx": "^4.0.8",
     "rx-dom": "^7.0.3",
+    "tether-tooltip": "^1.2.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "webcomponents.js": "^0.7.21"

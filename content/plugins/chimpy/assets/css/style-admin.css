@@ -1,0 +1,447 @@
+/**
+ * Chimpy Plugin Styles
+ */
+.chimpy-container {
+    min-width: 870px;
+}
+
+.chimpy-left {
+    width: 850px;
+    float: left;
+    border: 1px solid #dfdfdf;
+    border-top: none;
+    background-color: #fcfcfc;
+}
+
+.chimpy-right {
+    width: 350px;
+    float: left;
+    border: 1px solid #dfdfdf;
+    border-top: none;
+    background-color: #fcfcfc;
+    margin-left: 10px;
+}
+
+.chimpy-left h3,
+.chimpy-right h3 {
+    padding: 10px 0 10px 15px;
+    border-top: 1px solid #dfdfdf;
+    border-bottom: 1px solid #dfdfdf;
+    background-color: #f9f9f9;
+    margin: 0;
+}
+
+.chimpy-left .form-table,
+.chimpy-right .form-table {
+    margin: 10px 0 10px 15px;
+    width: auto;
+}
+
+.chimpy-left .submit,
+.chimpy-right .submit {
+    border-top: 1px solid #dfdfdf;
+    padding: 15px 0 10px 15px;
+}
+
+.chimpy-test-result-details {
+    border-top: 1px solid #dfdfdf;
+    padding: 15px 0 13px 15px;
+    margin: 0;
+}
+
+.chimpy-left .form-table th {
+    width: 300px;
+}
+
+.chimpy-right .form-table th {
+    width: 70px;
+    min-width: 70px;
+}
+
+.chimpy-field {
+    width: 400px;
+}
+
+.chimpy-right .form-table input,
+.chimpy-right .form-table select,
+.chimpy-right .form-table textarea {
+    width: 210px;
+}
+
+.chimpy-textarea {
+    width: 400px;
+    height: 100px;
+}
+
+.chimpy-right-info {
+    width: 300px;
+    padding: 0 0 10px 20px;
+    float: left;
+    display: block;
+}
+
+.chimpy-status {
+    padding: 15px 0px 10px 25px;
+}
+
+.chimpy-usage {
+    width: 650px;
+    padding: 15px 0px 0px 25px;
+}
+
+.chimpy-usage ul {
+    list-style: circle;
+}
+
+.chimpy-usage li {
+    margin-left: 30px;
+}
+
+.chimpy-list-groups {
+    padding: 15px 0px 20px 25px;
+}
+
+.chimpy-forms {
+    padding: 15px 0px 20px 25px;
+}
+
+.chimpy-section-info {
+    padding: 10px 25px 10px 25px;
+}
+
+#chimpy_forms_list,
+#chimpy_sync_list {
+    max-width: 800px;
+}
+
+.chimpy_forms_handle {
+    height: 16px;
+}
+
+.chimpy_forms_title {
+    float: left;
+}
+
+.chimpy_forms_remove {
+    float: right;
+}
+
+#chimpy_add_set {
+    float: right;
+    margin: 10px 25px 0 0;
+}
+
+#chimpy_add_field {
+    margin: 10px 0;
+}
+
+.chimpy_forms_section {
+    margin: 10px 0;
+    font-size: 1.17em;
+    font-weight: bold;
+    padding-bottom: 3px;
+    border-bottom: 1px solid #dfdfdf;
+    color: #464646;
+}
+
+.chimpy_fields_table_container {
+    margin-left: 25px;
+}
+
+.ui-accordion .ui-accordion-content {
+    overflow: visible;
+}
+
+.chimpy-fields {
+    padding: 15px 0px 20px 25px;
+}
+
+.chimpy-fields ul {
+    list-style: circle;
+}
+
+.chimpy-fields li {
+    margin-left: 30px;
+}
+
+.chimpy-fields table,
+.chimpy-fields thead,
+.chimpy-fields tbody,
+.chimpy-fields tr,
+.chimpy-fields th,
+.chimpy-fields td {
+    padding: 0;
+    margin: 0;
+    text-align: left;
+}
+
+.chimpy-fields th,
+.chimpy-fields td {
+    padding: 5px;
+}
+
+.chimpy_remove_field {
+    font-size: 13px;
+}
+
+.chimpy_name_input {
+    width: 256px;
+}
+
+.chimpy_fields_icon {
+    font-family: 'FontAwesome' !important;
+    font-size: 80%;
+    color: #555;
+}
+
+.chimpy_fields_table {
+    margin: 10px 0 10px 15px;
+}
+
+.chimpy_fields_table th,
+.chimpy_fields_table td {
+    border-left: 5px solid transparent;
+}
+
+.chimpy_fields_table td {
+    border-top: 5px solid transparent;
+}
+
+.chimpy_fields_table th:first-child,
+.chimpy_fields_table td:first-child {
+    border-left: 0;
+}
+
+.chimpy_fields_table thead tr th {
+    text-align: left;
+    font-weight: normal;
+}
+
+.icon32-chimpy {
+    background-image: url(../img/chimpy.png) !important;
+    background-size: 32px 32px;
+    background-position: 4px -1px !important;
+    margin: 0 10px 0 0;
+}
+
+.chimpy-ok {
+    background: url(../img/good.png)  center right no-repeat;
+    background-size: 16px 16px;
+    line-height: 16px;
+    padding-right: 16px;
+    margin-right: 15px;
+}
+
+.chimpy-error {
+    background: url(../img/bad.png)  center right no-repeat;
+    background-size: 16px 16px;
+    line-height: 16px;
+    padding-right: 16px;
+    margin-right: 15px;
+}
+
+.chimpy-code {
+    font-weight: bold;
+    margin: 10px;
+    padding: 20px;
+    width: 220px;
+    text-align: center;
+    border: 1px solid #dfdfdf;
+    background-color: #ffffff;
+    font-size: 15px;
+}
+
+.chimpy-account-info td {
+    padding: 5px 20px 5px 0;
+}
+
+.chimpy_tip{
+    position: relative;
+    float: right;
+    text-align: center;
+    width: 15px;
+    height: 15px;
+    color: #dfdfdf;
+}
+
+.chimpy_tip:hover{
+    color: #000;
+}
+
+li.search-choice {
+    background-color: #ffffff !important;
+    background: 0 !important;
+}
+
+.chimpy_loading {
+    margin: 0px;
+    padding: 0px;
+}
+
+.chimpy_loading_list {
+    margin: 20px 0 20px 25px;
+}
+
+.chimpy_loading_icon {
+    background: url(../img/progress.gif)  center left no-repeat;
+    background-size: 16px 16px;
+    line-height: 16px;
+    padding-right: 16px;
+    margin-right: 10px;
+}
+
+.chimpy_shortcode_loading {
+    background: url(../img/progress.gif)  center center no-repeat;
+    background-size: 16px 16px;
+    line-height: 16px;
+    padding-right: 16px;
+    width: 100px;
+    height: 50px;
+    display: none;
+}
+
+#chimpy_shortcode_error {
+    color: red;
+    display: none;
+}
+
+#chimpy_shortcode_success {
+    color: green;
+    display: none;
+}
+
+.chimpy_widget_loading {
+    background: url(../img/progress.gif)  center center no-repeat;
+    background-size: 16px 16px;
+    line-height: 16px;
+    padding-right: 16px;
+    width: 100px;
+    height: 50px;
+    display: none;
+}
+
+#chimpy_widget_error {
+    color: red;
+    display: none;
+}
+
+#chimpy_widget_success {
+    color: green;
+    display: none;
+}
+
+.chosen-container {
+    font-size: 12px !important;
+}
+
+#tiptip_holder {
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 99999;
+}
+
+#tiptip_holder.tip_top {
+	padding-bottom: 5px;
+}
+
+#tiptip_holder.tip_bottom {
+	padding-top: 5px;
+}
+
+#tiptip_holder.tip_right {
+	padding-left: 5px;
+}
+
+#tiptip_holder.tip_left {
+	padding-right: 5px;
+}
+
+#tiptip_content {
+	font-size: 11px;
+	color: #fff;
+	text-shadow: 0 0 2px #000;
+	padding: 4px 8px;
+	border: 1px solid rgba(255,255,255,0.25);
+	background-color: rgb(25,25,25);
+	background-color: rgba(25,25,25,0.92);
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(transparent), to(#000));
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	box-shadow: 0 0 3px #555;
+	-webkit-box-shadow: 0 0 3px #555;
+	-moz-box-shadow: 0 0 3px #555;
+}
+
+#tiptip_arrow, #tiptip_arrow_inner {
+	position: absolute;
+	border-color: transparent;
+	border-style: solid;
+	border-width: 6px;
+	height: 0;
+	width: 0;
+}
+
+#tiptip_holder.tip_top #tiptip_arrow {
+	border-top-color: #fff;
+	border-top-color: rgba(255,255,255,0.35);
+}
+
+#tiptip_holder.tip_bottom #tiptip_arrow {
+	border-bottom-color: #fff;
+	border-bottom-color: rgba(255,255,255,0.35);
+}
+
+#tiptip_holder.tip_right #tiptip_arrow {
+	border-right-color: #fff;
+	border-right-color: rgba(255,255,255,0.35);
+}
+
+#tiptip_holder.tip_left #tiptip_arrow {
+	border-left-color: #fff;
+	border-left-color: rgba(255,255,255,0.35);
+}
+
+#tiptip_holder.tip_top #tiptip_arrow_inner {
+	margin-top: -7px;
+	margin-left: -6px;
+	border-top-color: rgb(25,25,25);
+	border-top-color: rgba(25,25,25,0.92);
+}
+
+#tiptip_holder.tip_bottom #tiptip_arrow_inner {
+	margin-top: -5px;
+	margin-left: -6px;
+	border-bottom-color: rgb(25,25,25);
+	border-bottom-color: rgba(25,25,25,0.92);
+}
+
+#tiptip_holder.tip_right #tiptip_arrow_inner {
+	margin-top: -6px;
+	margin-left: -5px;
+	border-right-color: rgb(25,25,25);
+	border-right-color: rgba(25,25,25,0.92);
+}
+
+#tiptip_holder.tip_left #tiptip_arrow_inner {
+	margin-top: -6px;
+	margin-left: -7px;
+	border-left-color: rgb(25,25,25);
+	border-left-color: rgba(25,25,25,0.92);
+}
+
+/* Webkit Hacks  */
+@media screen and (-webkit-min-device-pixel-ratio:0) {	
+	#tiptip_content {
+		padding: 4px 8px 5px 8px;
+		background-color: rgba(45,45,45,0.88);
+	}
+	#tiptip_holder.tip_bottom #tiptip_arrow_inner { 
+		border-bottom-color: rgba(45,45,45,0.88);
+	}
+	#tiptip_holder.tip_top #tiptip_arrow_inner { 
+		border-top-color: rgba(20,20,20,0.92);
+	}
+}

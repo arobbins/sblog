@@ -4,7 +4,7 @@ body {
   background-color: #fbfbfb;
   line-height: 1.5;
   font-size: $base;
-  font-family: $font-secondary;
+  font-family: $font-primary;
   color: color(base);
   -webkit-backface-visibility: hidden;
   -webkit-font-smoothing: antialiased;
@@ -45,7 +45,7 @@ ol {
 }
 
 li {
-  margin-bottom: 1em;
+  // margin-bottom: 1em;
 }
 
 hr {
@@ -54,4 +54,18 @@ hr {
 
 dt {
   margin-top: 1em;
+}
+
+.logo {
+  width: 40px;
+}
+
+.logo-link {
+
+  @include dim;
+
+  &:hover {
+    background-color: transparent;
+  }
+
 }

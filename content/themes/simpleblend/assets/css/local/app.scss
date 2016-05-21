@@ -26,10 +26,12 @@ Author URI:     http://www.simpleblend.net
 @import "layout/layout";
 
 // Modules
-@import "modules/widgets";
-@import "modules/article";
-@import "modules/author";
-@import "modules/posts";
+@import "components/widgets";
+@import "components/article";
+@import "components/author";
+@import "components/posts";
+@import "components/buttons";
+@import "components/forms";
 
 // State
 @import "state/state";

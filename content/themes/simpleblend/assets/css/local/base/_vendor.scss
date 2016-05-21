@@ -6,3 +6,46 @@
     background-color: transparent;
   }
 }
+
+.entry-content .nc_socialPanel {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.tooltip-element.tooltip-open {
+  padding: 10px 20px;
+  background-color: white;
+  color: color(base);
+  font-size: rem(14px);
+  width: 20%;
+  position: relative;
+
+  @include respond-to(800) {
+    left: -200px !important;
+  }
+
+  @include respond-to(500) {
+    left: -250px !important;
+    width: 100% !important;
+  }
+
+  @include shadow();
+
+}
+
+.tooltip-target {
+  font-style: italic;
+  font-weight: bold;
+
+  .fa {
+    position: relative;
+    top: 0px;
+    left: -8px;
+    font-size: rem(18px);
+  }
+
+  &:hover {
+    cursor: help;
+  }
+}

@@ -1,0 +1,1203 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Chimpy\n"
+"POT-Creation-Date: 2014-03-13 19:34+0300\n"
+"PO-Revision-Date: 2014-03-13 19:35+0300\n"
+"Last-Translator: \n"
+"Language-Team: RightPress <info@rightpress.net>\n"
+"Language: en_EN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+"X-Poedit-KeywordsList: __;_e;_c;__ngettext:1,2;_n:1,2;_nc:1,2;"
+"__ngettext_noop:1,2;_n_noop:1,2;_x:1,2c;_nx:1,2,4c;_nx_noop:1,2,3c;_ex:1,2c;"
+"esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: /var/www/3.8.1/wp-content/plugins/chimpy\n"
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:328
+#, php-format
+msgid ""
+"Warning: PHP cURL extension is not enabled on this server. cURL is required "
+"for this plugin to function correctly. You can read more about cURL <a href="
+"\"%s\">here</a>."
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:504
+msgid "How do I display my forms?"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:546
+msgid "<p>Title of the form - will be displayed in a signup form header.</p>"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:547
+msgid "<p>Message to display above form fields.</p>"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:548
+msgid "<p>Message to display below form fields.</p>"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:549
+msgid "<p>Form submit button label.</p>"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:550
+msgid ""
+"<p>Select one of the predefined color schemes. You can further customize the "
+"look & feel of your forms by adding custom CSS rules to Settings > Override "
+"CSS.</p>"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:551
+msgid ""
+"<p>Optionaly provide an URL where subscribers should be redirected to after "
+"successful signup.</p> <p>Leave this field empty to simply display a thank "
+"you message.</p>"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:552
+msgid ""
+"<p>Select one of your MailChimp mailing lists for users to be subscribed to."
+"</p>"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:553
+msgid ""
+"<p>Select interest groups that you want to add automatically or allow users "
+"to choose in the form.</p> <p>If no interest groups are available, either "
+"mailing list has not been selected yet in the field above or you have no "
+"interest groups created for this list.</p>"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:554
+msgid ""
+"<p>Select how you would like interest groups to work with this form - you "
+"can either add all selected interest groups to subscribers profile by "
+"default or allow your visitors to manually select some.</p>"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:555
+msgid ""
+"<p>Controls on which parts of the website this form will appear (or not "
+"appear).</p>"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:556
+msgid "<p>List of pages to check current page against.</p>"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:557
+msgid "<p>List of posts to check current post against.</p>"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:558
+msgid "<p>List of post categories to check current post against.</p>"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:559
+msgid "<p>URL fragment to search in the URL of the page.</p>"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:568
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:1015
+msgid "Still connecting to MailChimp..."
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:569
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:377
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:409
+msgid "Mailing list"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:570
+msgid "There are no lists named"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:571
+msgid "Select a mailing list"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:572
+msgid "Selected list does not have groups named"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:573
+msgid "Select some groups (optional)"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:574
+msgid "Interest groups"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:575
+msgid "Field Label"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:576
+msgid "MailChimp Tag"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:577
+msgid "Icon"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:578
+msgid "Add Field"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:579
+msgid "Selected list does not have tags named"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:580
+msgid "Select a tag"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:581
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:911
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:938
+msgid "Connecting to MailChimp..."
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:582
+msgid "No pages named"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:583
+msgid "Select some pages"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:584
+msgid "No posts named"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:585
+msgid "Select some posts"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:586
+msgid "No post categories named"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:587
+msgid "Select some post categories"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:588
+msgid "No forms named"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:589
+msgid "Select some forms (optional)"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:590
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:868
+msgid "Signup Form #"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:591
+msgid "Email"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:592
+msgid "Submit"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:594
+#, php-format
+msgid ""
+"%s Response received from your server is <a href=\"%s\" target=\"_blank"
+"\">malformed</a>."
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:595
+msgid "Integration status"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:631
+#, php-format
+msgid ""
+"You must <a href=\"%s\">enter</a> your MailChimp API key to use this feature."
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:751
+msgid "Automatically"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:753
+msgid "All groups selected above"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:757
+msgid "Allow users to select (optional)"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:759
+msgid "Checkbox group for each grouping"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:760
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:767
+msgid "Radio button group for each grouping"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:761
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:768
+msgid "Select field (dropdown) for each grouping"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:765
+msgid "Require users to select (required)"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:778
+msgid "No condition"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:780
+msgid "Always display this form"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:781
+msgid "Disable this form"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:785
+msgid "Conditions"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:787
+msgid "Front page only"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:788
+msgid "Specific pages"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:789
+msgid "Specific posts"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:790
+msgid "Specific post categories"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:791
+msgid "URL contains"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:795
+msgid "Inversed Conditions"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:797
+msgid "Pages not"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:798
+msgid "Posts not"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:799
+msgid "Post categories not"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:800
+msgid "URL does not contain"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:809
+msgid "Cyan"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:810
+msgid "Red"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:811
+msgid "Orange"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:812
+msgid "Green"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:813
+msgid "Purple"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:814
+msgid "Pink"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:815
+msgid "Yellow"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:816
+msgid "Blue"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:817
+msgid "Black"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:868
+msgid "Remove"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:871
+msgid "Main Settings"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:874
+msgid "Form title"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:878
+msgid "Text above form"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:882
+msgid "Text below form"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:886
+msgid "Submit button label"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:890
+msgid "Color scheme"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:903
+msgid "Success redirect URL"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:915
+msgid "Add to groups"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:944
+msgid "Display condition"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:963
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:188
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:260
+msgid "Pages"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:976
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:189
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:244
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:259
+msgid "Posts"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:989
+msgid "Post categories"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:1002
+msgid "URL fragment"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:1015
+msgid "Add Form"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:1026
+msgid ""
+"You can create multiple newsletter signup forms on the \"Forms\" page. Each "
+"can be displayed in one of the following ways:"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:1028
+msgid "Widget"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:1029
+#, php-format
+msgid ""
+"Display any form on a sidebar of your choice by using a standard WordPress "
+"Widget. Go to the <a href=\"%s\">Widgets page</a> and use the one named "
+"MailChimp Signup (Chimpy). You can add as many instances of this widget as "
+"you like. You can optionally specify a comma-separated list of form IDs to "
+"limit which forms can be displayed on that particular spot."
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:1031
+msgid "Shortcode"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:1032
+msgid ""
+"Insert any a form into individual posts or pages by placing a shortcode "
+"anywhere in the content. To limit which forms can be displayed here, add a "
+"parameter <code>forms</code> with a comma-separated list of form IDs, e.g. "
+"<code>[chimpy_form forms=\"1,3,4\"]</code>"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:1034
+msgid "Function"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:1035
+msgid ""
+"To display a form in nonstandard parts of your website, take advantage of "
+"the PHP function <code>chimpy_form()</code>. To limit which forms can be "
+"displayed at that particular spot, pass a list of allowed form IDs in an "
+"array, e.g. <code>chimpy_form(array('1', '3', '4'))</code>"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:1037
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:141
+msgid "Popup"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:1038
+#, php-format
+msgid ""
+"Increase the signup rate by displaying one of your signup forms in a <a href="
+"\"%s\">popup</a>. If you wish popup to be opened on click and not "
+"automatically on page load, simply assign ID <code>chimpy_popup_open</code> "
+"to the element that you want to bind it to."
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:1040
+msgid "Under Post Content"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:1041
+#, php-format
+msgid ""
+"You can easily configure this plugin to display signup forms under each <a "
+"href=\"%s\">post</a> that you publish. You can exclude (or include only "
+"particular posts) by setting appropriate form displaying conditions."
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:1043
+msgid "As Content Lock"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:1044
+#, php-format
+msgid ""
+"If you have valuable content that your visitors are after, you may wish to "
+"<a href=\"%s\">lock</a> some of it so only visitors who subscribe to your "
+"mailing list can access it."
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:1049
+#, php-format
+msgid ""
+"If you've got any questions, feel free to visit our <a href=\"%s\">support "
+"center</a> or submit a <a href=\"%s\">support ticket</a>."
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:1577
+msgid "Your settings have been saved."
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:1583
+msgid "must be numeric"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:1584
+msgid "must be either 0 or 1"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:1585
+msgid "is not allowed"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:1586
+msgid "is not a valid email address"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:1587
+msgid "is not a valid URL"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:1588
+msgid "is not a valid text string"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:1594
+msgid "Reverted to a previous state."
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:1600
+msgid "Value of"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:1626
+msgid " is not valid or something went wrong. More details: "
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:1647
+msgid " is not in a valid format"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:1792
+msgid "Support"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:1794
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:19
+msgid "Settings"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:1895
+msgid "Unable to load lists"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:1901
+msgid "No lists found"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:1941
+msgid "Unable to load merge vars"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:1947
+msgid "No merge vars found"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:1993
+msgid "Unable to load groups"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:2001
+msgid "No groups found"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:2082
+msgid "No API key provided"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:2087
+msgid "PHP Curl extension not loaded on your server"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:2099
+msgid "Unable to initialize MailChimp class"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:2116
+msgid "Something went wrong..."
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:2175
+msgid "API key not set"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:2178
+msgid "Connected to account"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:2181
+msgid "Connection to MailChimp failed."
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:3397
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:438
+msgid "dd/mm/yyyy"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:3403
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:439
+msgid "dd-mm-yyyy"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:3409
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:440
+msgid "dd.mm.yyyy"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:3415
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:441
+msgid "mm/dd/yyyy"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:3421
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:442
+msgid "mm-dd-yyyy"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:3427
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:443
+msgid "mm.dd.yyyy"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:3433
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:444
+msgid "yyyy/mm/dd"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:3439
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:445
+msgid "yyyy-mm-dd"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:3445
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:446
+msgid "yyyy.mm.dd"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:3451
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:447
+msgid "dd/mm/yy"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:3457
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:448
+msgid "dd-mm-yy"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:3463
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:449
+msgid "dd.mm.yy"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:3469
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:450
+msgid "mm/dd/yy"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:3475
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:451
+msgid "mm-dd-yy"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:3481
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:452
+msgid "mm.dd.yy"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:3487
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:453
+msgid "yy/mm/dd"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:3493
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:454
+msgid "yy-mm-dd"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:3499
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:455
+msgid "yy.mm.dd"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:3507
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:467
+msgid "dd/mm"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:3513
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:468
+msgid "dd-mm"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:3519
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:469
+msgid "dd.mm"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:3525
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:470
+msgid "mm/dd"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:3531
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:471
+msgid "mm-dd"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/chimpy.php:3537
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:472
+msgid "mm.dd"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:13
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:14
+msgid "MailChimp"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:23
+msgid "Integration"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:26
+msgid "MailChimp API key"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:33
+msgid ""
+"<p>API key is required for this plugin to communicate with MailChimp servers."
+"</p> <p>To get an API key, login to your MailChimp account and navigate to "
+"Account Settings > Extras > API keys.</p>"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:38
+msgid "General Settings"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:41
+msgid "Require double opt-in"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:48
+msgid ""
+"<p>Controls whether a double opt-in confirmation message is sent before user "
+"is actually subscribed.</p>"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:51
+msgid "Send welcome email"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:58
+msgid ""
+"<p>If double opt-in is disabled and this setting is enabled, MailChimp will "
+"send your lists Welcome Email on user subscription. This has no effect if "
+"double opt-in is enabled.</p>"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:61
+msgid "Replace interest groups on update"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:68
+msgid ""
+"<p>Setting is used by MailChimp to determine whether interest groups are "
+"added to a set of existing interest groups of particular user or they are "
+"completely replaced with new interest groups. This is applicable when user "
+"is already subscribed to the list and profile is being updated.</p>"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:71
+msgid "Update existing subscribers"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:78
+msgid ""
+"<p>Control whether existing subscribers are updated when they fill out the "
+"signup form again or error is displayed. This has no effect for Sync "
+"functionality.</p>"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:83
+msgid "Form Styling"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:86
+msgid "Display field labels inline"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:93
+msgid ""
+"<p>Controls whether signup form field labels are displayed inside fields as "
+"value placeholders (inline) or above fields.</p>"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:96
+msgid "Hide interest groups initially"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:103
+msgid ""
+"<p>Interest groups can take significant amount of space. If this option is "
+"enabled, interest group fields will be hidden until user starts filling in "
+"the form (clicks anywhere on the form).</p>"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:106
+msgid "Max form width in pixels"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:113
+msgid ""
+"<p>If your website features a wide layout, you may wish to set the max width "
+"for the form to look better. This has no effect for forms displayed as popup."
+"</p>"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:116
+msgid "Override CSS"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:123
+msgid ""
+"<p>You can further customize the appearance of your signup forms by adding "
+"custom CSS to this field. To make changes to the style, simply use CSS class "
+"chimpy_custom_css as a basis.</p>"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:130
+msgid "Forms"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:134
+msgid "Manage Signup Forms"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:145
+msgid "Display Popup"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:148
+msgid "Enable popup"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:155
+msgid ""
+"<p>Displays popup with mailing list signup form as configured. You can use "
+"form conditions for more granual control.</p>"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:158
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:297
+msgid "Form to display"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:166
+msgid ""
+"<p>Select one of the forms created under tab Forms to display as a popup.</p>"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:169
+msgid "Open delay in seconds"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:176
+msgid ""
+"<p>If set, form will be opened after a specified number of seconds counting "
+"from the complete page load.</p>"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:179
+msgid "Display in"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:187
+msgid "Home page"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:190
+msgid "Everywhere else"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:192
+msgid "<p>Page types where you want the popup to be fired.</p>"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:197
+msgid "Frequency Capping"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:200
+msgid "Page frequency"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:207
+msgid ""
+"<p>Popup will be displayed once in every X pages opened. Leaving blank or "
+"setting value to 1 will have the same effect.</p>"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:210
+msgid "Time frequency in minutes"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:217
+msgid "<p>Popup will be displayed once in every X minutes.</p>"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:220
+msgid "Allow dismissing"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:227
+msgid ""
+"<p>If enabled, users will be provided with an option (a link to click) to "
+"hide the popup forever without filling in the form.</p>"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:230
+msgid "Dismiss link text"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:232
+msgid "Never display this again"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:237
+msgid ""
+"<p>If popup dismissing is enabled, this will be the text of the dismiss link."
+"</p>"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:248
+msgid "Display Below Every Post"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:251
+msgid "Display signup form below"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:262
+msgid ""
+"<p>Page types where you want the form to be displayed below the main "
+"content. You can use form conditions for more granular control.</p>"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:265
+msgid "Allow only these forms"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:273
+msgid ""
+"<p>If you leave this field empty, all forms will have a chance to be "
+"displayed. The final form will be selected using form conditions as "
+"configured under tab Forms.</p>"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:280
+msgid "Locking"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:284
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:310
+msgid "Subscribe To Unlock"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:287
+msgid "Enable content locking"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:294
+msgid ""
+"<p>If enabled, posts or pages that match form display conditions will be "
+"locked. Only subscribers will be able to access that content. This "
+"functionality uses cookies for tracking. If subscriber clears browser "
+"cookies, content will be locked again.</p> <p>Use form conditions to control "
+"which pages will be locked.</p>"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:305
+msgid ""
+"<p>Select one of the forms created under tab Forms to display instead of "
+"locked content.</p>"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:308
+msgid "Title"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:315
+msgid "<p>Title to display above signup form.</p>"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:318
+msgid "Message"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:320
+msgid ""
+"Subscribe now to become a premium member and gain access to premium content."
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:325
+msgid "<p>Message to display above signup form.</p>"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:332
+msgid "Checkbox"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:336
+msgid "Display Checkbox Below Forms"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:339
+msgid "Add signup checkbox to"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:347
+msgid "Registration Form"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:348
+msgid "Comments Form"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:350
+msgid ""
+"<p>Select WordPress forms where you would like mailing list opt-in checkbox "
+"to appear.</p>"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:353
+msgid "Checkbox label"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:355
+msgid "Subscribe to our newsletter"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:360
+msgid "<p>Label to display next to the checkbox.</p>"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:363
+msgid "Default state"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:371
+msgid "Not Checked"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:372
+msgid "Checked"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:374
+msgid "<p>Default checkbox state.</p>"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:384
+msgid ""
+"<p>Select one of your MailChimp mailing lists to subscribe visitors to.</p> "
+"<p>To save additional fields, create merge tags FNAME, LNAME, ROLE and "
+"USERNAME under your list settings in MailChimp.</p>"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:391
+msgid "Sync"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:395
+msgid "Synchronize User Data"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:398
+msgid "User roles to sync"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:406
+msgid ""
+"<p>Select user roles that you would like to synchronize with MailChimp.</p> "
+"<p>This feature sends data to MailChimp when one of the following actions "
+"occur - user is created, user is updated and user is deleted.</p>"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:416
+msgid ""
+"<p>Select one of your MailChimp mailing lists to sync user data with.</p> "
+"<p>To save additional fields, create merge tags FNAME, LNAME, ROLE and "
+"USERNAME under your list settings in MailChimp.</p>"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:423
+msgid "Localization"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:427
+msgid "Date Format"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:430
+msgid "Date field format"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:459
+msgid "Birthday field format"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:478
+msgid "Labels"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:481
+msgid "Subscribed successfully"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:483
+msgid "Thank you for signing up!"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:490
+msgid "(Error) Required field empty"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:492
+msgid "Please enter a value"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:499
+msgid "(Error) Invalid format"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:501
+msgid "Invalid format"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:508
+msgid "(Error) Value not a number"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:510
+msgid "Please enter a valid number"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:517
+msgid "(Error) Already subscribed"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:519
+msgid "You are already subscribed to this list"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:526
+msgid "(Error) Unknown error"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:528
+msgid "Unknown error. Please try again later."
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:543
+msgid "Displaying Forms"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-plugin-structure.inc.php:553
+msgid "Get In Touch"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-widget.class.php:22
+msgid "MailChimp Signup (Chimpy)"
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-widget.class.php:24
+msgid "Widget displays a signup form, if enabled under MailChimp settings."
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-widget.class.php:109
+#, php-format
+msgid ""
+"This widget renders a MailChimp signup form.<br />You can edit signup forms "
+"<a href=\"%s\">here</a>."
+msgstr ""
+
+#: /var/www/3.8.1/wp-content/plugins/chimpy/includes/chimpy-widget.class.php:112
+msgid "Allow only these forms (comma-separated IDs):"
+msgstr ""

@@ -88,7 +88,10 @@
 }
 
 .content {
-  margin-top: rem(10px);
+
+  @include respond-to(1100) {
+    margin-top: 0;
+  }
 
   @include respond-to(900) {
     margin-top: 0;
@@ -99,14 +102,14 @@
 .home {
 
   .l-contain {
-    max-width: rem(700px);
+    max-width: rem(800px);
   }
 
   .content {
     position: relative;
     left: 30px;
 
-    @include respond-to(900) {
+    @include respond-to(1000) {
       margin-top: rem($space-s);
       left: 0;
     }

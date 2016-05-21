@@ -1,3 +1,29 @@
+@font-face {
+  font-family: 'iosevka';
+  src: url('../fonts/iosevka-heavy-webfont.woff2') format('woff2'),
+       url('../fonts/iosevka-heavy-webfont.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'iosevka';
+  src: url('../fonts/iosevka-bold-webfont.woff2') format('woff2'),
+       url('../fonts/iosevka-bold-webfont.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'iosevka';
+  src: url('../fonts/iosevka-regular-webfont.woff2') format('woff2'),
+       url('../fonts/iosevka-regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+
 // Font sizes
 $font-xxxs:   13px;
 $font-xxs:    14px;
@@ -14,15 +40,16 @@ $font-primary-fallbacks: cursive, helvetica, sans-serif;
 $font-secondary-fallbacks: arial, helvetica, sans-serif;
 
 // Fonts
-$font-primary: 'Roboto Slab', $font-primary-fallbacks;
-$font-secondary: 'Lora', $font-secondary-fallbacks;
+$font-primary: 'iosevka', $font-primary-fallbacks;
+$font-secondary: 'Source Sans Pro', $font-secondary-fallbacks;
+// $font-secondary: 'Open Sans', $font-secondary-fallbacks;
 
 // Font sizes
-$base:        18px;
+$base:        20px;
 
-$heading1:    44px;
-$heading2:    32px;
-$heading3:    24px;
+$heading1:    48px;
+$heading2:    34px;
+$heading3:    28px;
 
 $quotes:    24px;
 
@@ -34,4 +61,4 @@ $article-more: 20px;
 
 $post-divider: 16px;
 
-$bio: 15px;
+$bio: 16px;

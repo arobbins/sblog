@@ -1,28 +1,15 @@
-.header .header-nav-link-bitcoin {
-  padding: 6px 12px;
-  border-radius: 50%;
-  background-color: #f7931a;
-  font-size: 25px;
-
-  i {
-    color: white;
-    transform: rotate(15deg);
-    position: relative;
-    // left: 1px;
-  }
-}
-
 .header {
+  visibility: hidden;
   margin: 0;
   padding: 5px;
-  font-size: 14px;
+  position: absolute;
+  top: 35px;
+  left: 20px;
 
-  //font-style: italic;
-  letter-spacing: 0.1em;
-  word-spacing: 1px;
-  opacity: 0.3;
-  padding: 15px;
-  line-height: 1;
+  @include respond-to(1100) {
+    position: static;
+    margin: 1em 0;
+  }
 
   p {
     margin: 0;
@@ -33,53 +20,18 @@
   }
 
   a {
+    @include removeLinkStyles();
+
     &:hover {
       // opacity: 0.6;
     }
   }
 }
 
-.header-logo {
-  width: 40px;
+.single .header {
+  visibility: visible;
 }
 
-.header-nav {
+.home .header {
   display: none;
-  list-style: none;
-}
-
-.header-nav-item {
-  float: left;
-}
-
-.header-nav-link {
-  color: #2c3e50;
-  padding-left: 1em;
-  font-size: 30px;
-
-  &:hover {
-    // opacity: 0.6;
-  }
-}
-
-.header-back-link {
-  text-decoration: none;
-  font-size: 36px;
-  color: color(base);
-  border: none;
-  box-shadow: none;
-
-  &:hover {
-    color: color(base);
-  }
-
-  @include respond-to(600) {
-    text-align: center;
-    width: 100%;
-  }
-
-  @include respond-to(500) {
-    // font-size: 40px;
-  }
-
 }

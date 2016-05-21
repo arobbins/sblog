@@ -4,7 +4,7 @@
 }
 
 .article-info {
-  font-size: rem($font-xxs);
+  font-size: rem($font-xs);
   margin-bottom: 0;
   padding-bottom: 5px;
   display: inline;
@@ -62,8 +62,7 @@
 
 .home .article-year,
 .home .article-month {
-  text-transform: none;
-  font-family: $font-secondary;
+  // text-transform: none;
 
   @include respond-to(400) {
     font-size: rem($font-xs);
@@ -72,9 +71,9 @@
 
 .article-year {
   margin: 2.5em 0 .6em;
-  font-size: rem(20px);
+  font-size: rem($font-xs);
   margin-bottom: 0;
-  padding-right: 10px;
+  padding-right: 3px;
   display: inline;
   width: auto;
   line-height: 1;
@@ -98,7 +97,7 @@
 .article-month {
   display: inline;
   width: auto;
-  font-size: rem(20px);
+  font-size: rem($font-xs);
   font-weight: 400;
   margin-top: 10px;
 }
@@ -106,11 +105,11 @@
 .article-divider {
   font-size: rem($font-xxs);
   position: relative;
-  left: -3px;
-  top: -2px;
+  left: -1px;
+  top: -1px;
 
-  @include respond-to(400) {
-    left: -2px;
-    top: -1px;
-  }
+  // @include respond-to(400) {
+  //   left: -2px;
+  //   top: -1px;
+  // }
 }

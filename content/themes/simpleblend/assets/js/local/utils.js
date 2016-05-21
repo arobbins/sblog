@@ -1,5 +1,7 @@
 (function($) {
 
+  var Tooltip = require('tether-tooltip');
+
   var Utils = (function() {
 
     var $images = $('.is-lazy'),
@@ -43,12 +45,32 @@
       }
     };
 
+    var addFormClasses = function addFormClasses() {
+      console.log('inside');
+      $('#chimpy_shortcode_1').submit(function(event) {
+        console.log('ready');
+        $(this).addClass('is-submitting');
+      });
+
+    };
+
+    var tooltipNewsletter = function() {
+      new Tooltip({
+        target: document.querySelector('.tooltip-newsletter'),
+        content: "I will <b>never</b> send you spam or sell your email address to any third-party.",
+        classes: 'tooltip-tether-arrows',
+        position: 'top left'
+      });
+    };
+
     return {
       lazyLoadImgs: lazyLoadImgs,
       responsifyVideos: responsifyVideos,
       responsifyTables: responsifyTables,
-      checkForIE: checkForIE
-    }
+      checkForIE: checkForIE,
+      addFormClasses: addFormClasses,
+      tooltipNewsletter: tooltipNewsletter
+    };
 
   })();
 

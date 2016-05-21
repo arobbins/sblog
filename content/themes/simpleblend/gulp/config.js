@@ -7,14 +7,14 @@ import browserSync from 'browser-sync';
 const config = {
   files: {
     html: './assets/**/*.html',
-    js: './assets/**/*.js',
+    js: './assets/js/local/*.js',
     css: './assets/css/local/**/*.scss',
     cssEntry: './assets/css/local/app.scss',
-    entry: './assets/app.js'
+    entry: './assets/js/local/app.js'
   },
   folders: {
     dest: './assets/css',
-    app: './app'
+    app: './assets/js'
   },
   names: {
     vendor: 'vendor.min.js',
@@ -29,6 +29,6 @@ const config = {
   ],
   bs: browserSync.create()
 
-}
+};
 
 export default config;

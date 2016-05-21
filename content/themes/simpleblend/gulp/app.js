@@ -26,8 +26,8 @@ gulp.task('build:app', () => {
   .pipe(sourcemaps.init())
     .pipe(uglify())
     .pipe(rename(config.names.app))
-  .pipe(sourcemaps.write(config.folders.dest))
-  .pipe(gulp.dest(config.folders.dest))
+  .pipe(sourcemaps.write(config.folders.app))
+  .pipe(gulp.dest(config.folders.app))
   .pipe(config.bs.stream());
 
 });

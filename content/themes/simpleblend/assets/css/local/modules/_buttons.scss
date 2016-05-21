@@ -1,0 +1,18 @@
+.btn,
+#chimpy_shortcode_submit {
+  padding: 0.4em 1.5em;
+  border: 1px solid color(base);
+  color: color(base);
+  background-color: transparent;
+  font-family: $font-primary;
+  font-size: $base;
+
+  &:hover {
+    color: white;
+    background-color: color(base);
+  }
+}
+
+.btn-primary {
+
+}

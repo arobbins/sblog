@@ -1,6 +1,11 @@
 
 <footer class="footer content-info l-col l-row-center" role="contentinfo">
 
+    <section class="form-wrapper l-contain l-center">
+      <p>Sign up to my mailing list to receive future content and specials. <span class="tooltip-newsletter"><i class="fa fa-question-circle-o"></i></span></p>
+      <?php chimpy_form(); ?>
+    </section>
+
     <p><span class="name">Andrew Robbins</span> <span class="title">Web Developer</span></p>
     <p><a href="https://simpleblend.net">Simpleblend.net</a></p>
     <p>

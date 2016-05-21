@@ -1,17 +1,7 @@
-(function($) {
+import Utils from './utils';
 
-  $(function() {
-
-    var Utils = require('./utils');
-
-    Utils.lazyLoadImgs();
-    Utils.responsifyVideos();
-    Utils.responsifyTables();
-
-    if(Utils.checkForIE()) {
-      $('body').addClass('is-ie');
-    }
-
-  });
-
-})(jQuery);
+Utils.lazyLoadImgs();
+Utils.responsifyVideos();
+Utils.responsifyTables();
+Utils.tooltipNewsletter();
+Utils.addFormClasses();

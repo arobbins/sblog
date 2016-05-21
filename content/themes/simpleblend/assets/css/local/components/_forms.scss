@@ -1,0 +1,189 @@
+input,
+.sky-form .input input,
+.sky-form .select select {
+  padding: 10px 20px;
+  line-height: 1.6;
+  border: 1px solid black;
+  background-color: transparent;
+  font-family: $font-primary;
+  font-size: $base;
+  height: auto;
+}
+
+.form-control {
+  margin-bottom: 1em;
+}
+
+
+.chimpy-reset {
+  font-family: $font-primary;
+}
+
+
+
+div.chimpy_signup_success div,
+div.chimpy_signup_shortcode_error div,
+div.chimpy_signup_success div {
+
+}
+
+
+.form-wrapper {
+  margin-bottom: 2em;
+}
+
+
+@keyframes loading {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
+
+.chimpy_signup_form {
+  display: flex;
+  position: relative;
+
+  @include respond-to(700) {
+    flex-direction: column;
+  }
+}
+
+
+
+div.chimpy_signup_processing {
+  position: absolute;
+  top: 0;
+  left: 0;
+  top: -67px;
+  left: 45%;
+  margin: 60px auto;
+  font-size: 5px;
+  // position: relative;
+  text-indent: -9999em;
+  border-top: 5px solid lighten(color(base), 70);
+  border-right: 5px solid lighten(color(base), 70);
+  border-bottom: 5px solid lighten(color(base), 70);
+  border-left: 5px solid color(base);
+  transform: translateZ(0);
+  animation: loading 0.4s infinite linear;
+  background-image: none;
+  background-color: transparent;
+  border-radius: 50%;
+  width: 54px;
+  height: 50px;
+
+  @include respond-to(700) {
+    top: -135px;
+  }
+}
+
+div.chimpy_signup_processing:after {
+  border-radius: 50%;
+  width: 54px;
+  height: 50px;
+}
+
+.sky-form footer,
+div.chimpy_status_underlay,
+.sky-form fieldset {
+  background-color: transparent;
+  padding: 0;
+}
+
+div.chimpy_status_underlay {
+  width: 82%;
+
+  @include respond-to(700) {
+    width: 100%;
+  }
+}
+
+.sky-form fieldset {
+  width: 100%;
+}
+
+.sky-form {
+  box-shadow: none;
+}
+
+.sky-form footer {
+  width: 22%;
+  padding: 0;
+  border: none;
+
+  @include respond-to(700) {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+#chimpy_shortcode_submit {
+  margin: 0 0 0 10px;
+}
+
+
+.sky-form footer button.button {
+  height: auto;
+  opacity: 1;
+  float: none;
+}
+
+
+.sky-form .input:hover input,
+.sky-form .select:hover select,
+.sky-form .textarea:hover textarea,
+.sky-form .radio:hover i,
+.sky-form .checkbox:hover i,
+.sky-form .toggle:hover i,
+.sky-form .input input:focus,
+.sky-form .select select:focus,
+.sky-form .textarea textarea:focus,
+.sky-form .radio input:focus + i,
+.sky-form .checkbox input:focus + i,
+.sky-form .toggle input:focus + i {
+  border-color: color(borders);
+}
+
+.sky-form .state-error + em {
+  margin-top: 15px;
+  font-size: $base;
+  color: white;
+  padding: 17px;
+  background-color: #f8a8a8;
+
+  @include respond-to(700) {
+    margin-bottom: 1em;
+    display: block !important;
+  }
+}
+
+div.chimpy_signup_success div {
+  background-color: #8ede99;
+  font-size: $base;
+  color: white;
+  padding: 10px;
+}
+
+div.chimpy_signup_success {
+  min-height: 52px;
+
+  @include respond-to(700) {
+    margin-bottom: 1em;
+  }
+}
+
+
+.is-submitting.sky-form fieldset {
+  display: block !important;
+  opacity: 0.2;
+}
+
+.is-submitting.sky-form footer button.button {
+  opacity: 0.2;
+}

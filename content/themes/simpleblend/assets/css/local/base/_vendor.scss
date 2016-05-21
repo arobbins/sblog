@@ -12,6 +12,12 @@
   justify-content: space-between;
 }
 
+.nc_socialPanel .nc_tweetContainer a.nc_tweet,
+.nc_socialPanel .totes .sw_count {
+  border: none;
+  box-shadow: none;
+}
+
 
 .tooltip-element.tooltip-open {
   padding: 10px 20px;
@@ -21,13 +27,18 @@
   width: 20%;
   position: relative;
 
-  @include respond-to(800) {
-    left: -200px !important;
+  @include respond-to(900) {
+    left: -280px !important;
+    width: 50%;
   }
 
   @include respond-to(500) {
-    left: -250px !important;
+    left: -270px !important;
     width: 100% !important;
+  }
+
+  @include respond-to(400) {
+    left: -190px !important;
   }
 
   @include shadow();

@@ -1,6 +1,6 @@
 .author-footer {
   padding: rem($space-l) 0 rem($space-m);
-  margin: rem($space-l) 0 rem($space-l*2);
+  margin: rem($space-l*2) 0 rem($space-l*2);
   border-top: 1px solid color(borders);
   border-bottom: 1px solid color(borders);
   width: 100%;
@@ -22,6 +22,9 @@
 }
 
 .author-contact {
+  top: 5px;
+  position: relative;
+
   @include respond-to(900) {
     justify-content: center;
     width: 100%;
@@ -39,6 +42,11 @@
   font-size: rem($font-xs);
   margin: 0 0 0 rem($space-m);
   font-family: $font-secondary;
+
+  a {
+    box-shadow: inset 0 -4px 0 #ddfeff;
+    border-bottom: 4px solid #ddfeff;
+  }
 
   @include respond-to(900) {
     text-align: center;
@@ -63,8 +71,8 @@
 }
 
 .author-footer-name {
-  margin: 0 rem($space-l / 2) 0 0;
-  font-size: rem($author-footer-name);
+  margin: 0 rem($space-l / 2) 10px 0;
+  font-size: rem($heading3);
 
   @include respond-to(900) {
     margin: 0;

@@ -57,3 +57,26 @@ function wpb_imagelink_setup() {
   }
 }
 add_action('admin_init', __NAMESPACE__ . '\\wpb_imagelink_setup', 10);
+
+
+//
+// Changing the default Wordpress login logo
+//
+function my_login_logo() { ?>
+  <style type="text/css">
+      #login h1 a, .login h1 a {
+        background-image: url(<?php echo get_stylesheet_directory_uri(); ?>/assets/imgs/logo-mark-dark.svg);
+        padding-bottom: 20px;
+        width: 320px;
+        height: 150px;
+        background-size: contain;
+      }
+  </style>
+<?php }
+add_action( 'login_enqueue_scripts', __NAMESPACE__ . '\\my_login_logo' );
+
+
+function my_login_logo_url() {
+  return home_url();
+}
+add_filter( 'login_headerurl', __NAMESPACE__ . '\\my_login_logo_url' );

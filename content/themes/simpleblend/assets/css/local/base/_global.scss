@@ -29,6 +29,7 @@ code, kbd, pre, samp {
 }
 
 ul, ol, dl {
+  font-family: $font-secondary;
   padding: 0;
   list-style-position: inside;
   margin: rem($space-s) 0 rem($space-s) rem($space-s);
@@ -57,7 +58,7 @@ dt {
 }
 
 .logo {
-  width: 40px;
+  width: 30px;
 }
 
 .logo-link {
@@ -68,4 +69,8 @@ dt {
     background-color: transparent;
   }
 
+}
+
+pre[class*=language-] {
+  margin-bottom: 1.5em;
 }

@@ -5,11 +5,11 @@
   @include respond-to(900) {
     margin: 0 auto;
     display: block;
-    width: 30%;
+    width: 20%;
   }
 
   @include respond-to(600) {
-    width: 50%;
+    width: 35%;
   }
 
 }
@@ -45,18 +45,6 @@
 
 .post-initial {
   text-transform: uppercase;
-}
-
-.single-post {
-
-  .post {
-    border-bottom: none;
-    margin-top: rem($space-m * 2);
-  }
-
-  .footer {
-    border-top: none;
-  }
 }
 
 .sidebar {
@@ -108,6 +96,7 @@
   .content {
     position: relative;
     left: 30px;
+    margin-top: 2em;
 
     @include respond-to(1000) {
       margin-top: rem($space-s);

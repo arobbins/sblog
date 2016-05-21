@@ -19,6 +19,11 @@ input,
   font-family: $font-primary;
 }
 
+.entry-content {
+  .chimpy-reset {
+    display: none;
+  }
+}
 
 
 div.chimpy_signup_success div,
@@ -30,6 +35,11 @@ div.chimpy_signup_success div {
 
 .form-wrapper {
   margin-bottom: 2em;
+
+  @include respond-to(500) {
+    margin-bottom: 3em;
+  }
+
 }
 
 

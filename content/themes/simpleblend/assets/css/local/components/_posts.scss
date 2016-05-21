@@ -5,9 +5,21 @@
 }
 
 .single-post {
+  margin-top: 6.5em;
+
+  @include respond-to(1100) {
+    margin-top: 1.5em;
+  }
+
+  .footer {
+    border-top: none;
+  }
+
   .post {
+    border-bottom: none;
+
     @include respond-to(1100) {
       margin-top: 0;
-    }    
+    }
   }
 }

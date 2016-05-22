@@ -46,7 +46,7 @@ ol {
 }
 
 li {
-  // margin-bottom: 1em;
+  margin-bottom: 1em;
 }
 
 hr {
@@ -73,4 +73,8 @@ dt {
 
 pre[class*=language-] {
   margin-bottom: 1.5em;
+}
+
+.aligncenter {
+  text-align: center;
 }

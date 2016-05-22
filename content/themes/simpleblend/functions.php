@@ -100,5 +100,5 @@ function posts_by_year() {
   krsort($years);
 
   return $years;
-  
+
 }

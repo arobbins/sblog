@@ -45,7 +45,7 @@
 
   a {
     box-shadow: inset 0 -4px 0 #ddfeff;
-    border-bottom: 4px solid #ddfeff;
+    border-bottom: 0px solid #ddfeff;
   }
 
   @include respond-to(900) {

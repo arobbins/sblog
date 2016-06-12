@@ -10,7 +10,7 @@ import pleeease from 'gulp-pleeease';
 import rename from "gulp-rename";
 
 gulp.task('css', () => {
-  return gulp.src(config.files.css)
+  return gulp.src(config.files.cssEntry)
     .pipe(sourcemaps.init())
       .pipe(sass())
       .pipe(pleeease())

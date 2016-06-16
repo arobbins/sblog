@@ -99,7 +99,6 @@
     margin-top: 2em;
 
     @include respond-to(1000) {
-      margin-top: rem($space-s);
       left: 0;
     }
   }

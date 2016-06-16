@@ -60,6 +60,14 @@ dt {
 
 .logo {
   width: 30px;
+
+  @include respond-to(1000) {
+    width: 40px;
+  }
+
+  @include respond-to(500) {
+    width: 30px;
+  }
 }
 
 .logo-link {

@@ -11,6 +11,12 @@
     margin: 1em 0;
   }
 
+  @include respond-to(1000) {
+    position: relative;
+    top: -15px;
+    left: 0px;
+  }
+
   p {
     margin: 0;
   }

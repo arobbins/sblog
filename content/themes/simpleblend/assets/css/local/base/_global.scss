@@ -65,6 +65,7 @@ dt {
 .logo-link {
 
   @include dim;
+  @include noUnderline;
 
   &:hover {
     background-color: transparent;

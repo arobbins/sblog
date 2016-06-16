@@ -9,9 +9,9 @@
     <p><span class="name">Andrew Robbins</span> <span class="title">Web Developer</span></p>
     <p><a href="https://simpleblend.net">Simpleblend.net</a></p>
     <p>
-      <a href="<?php the_field('theme_twitter', 'option');?>"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-      <a href="<?php the_field('theme_linkedin', 'option');?>"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
-      <a href="<?php the_field('theme_github', 'option');?>"><i class="fa fa-github" aria-hidden="true"></i></a>
+      <a href="<?php the_field('theme_twitter', 'option');?>" class="social-link"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+      <a href="<?php the_field('theme_linkedin', 'option');?>" class="social-link"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+      <a href="<?php the_field('theme_github', 'option');?>" class="social-link"><i class="fa fa-github" aria-hidden="true"></i></a>
     </p>
 
 </footer>

@@ -27,6 +27,7 @@ h1 {
   font-family: $font-primary;
   margin: 0 0 rem(10px) 0;
   line-height: 1.2;
+  background-position: 0 1.35em;
 
   @include respond-to(700) {
     font-size: rem($heading2);
@@ -45,15 +46,11 @@ h1 {
   font-family: $font-secondary;
 }
 
-.entry-content a {
-  box-shadow: inset 0 -5px 0 color(links);
-  border-bottom: 0px solid color(links);
-}
-
 h2 {
   font-size: rem($heading2);
   font-family: $font-primary;
   margin: 1em 0 rem(10px) 0;
+  background-position: 0 1.35em;
 
   @include respond-to(400) {
     font-size: rem($heading3);
@@ -64,6 +61,7 @@ h3 {
   font-size: rem($heading3);
   font-family: $font-primary;
   margin: 1em 0 rem(10px) 0;
+  background-position: 0 1.35em;
 
   @include respond-to(700) {
     font-size: rem($heading2);
@@ -80,10 +78,13 @@ h5,
 h6 {
   font-size: rem($heading3);
   margin: 1em 0 rem(10px) 0;
+  background-position: 0 1.35em;
 }
 
 
-a {
+a,
+.entry-content a {
+  text-decoration: none;
   color: color(base);
 
   @include underline();
@@ -101,7 +102,7 @@ blockquote {
   padding: 0 0 0 rem(35px);
   font-style: italic;
   border-left: 2px solid color(borders);
-  margin: 2em 0 2em 1.5em;
+  margin: 1.5em 0 1.5em 1.5em;
   position: relative;
   width: 120%;
   left: -14%;

@@ -16,9 +16,10 @@
   a {
     border: none;
     box-shadow: none;
-
-    @include dim();
+    background-position: 0 1.4em;
     
+    @include dim();
+
   }
 
   i {
@@ -33,7 +34,7 @@
       border-right: 1px solid color(base);
       height: 41px;
       margin: 0 1em;
-      margin-right: 18px;
+      margin-right: 26px;
     }
   }
 
@@ -49,4 +50,8 @@
 
 .footer-logo {
   width: rem($space-l);
+}
+
+.social-link {
+  @include noUnderline();
 }

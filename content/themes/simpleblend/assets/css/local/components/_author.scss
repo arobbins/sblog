@@ -44,8 +44,9 @@
   font-family: $font-secondary;
 
   a {
-    box-shadow: inset 0 -4px 0 color(links);
-    border-bottom: 0px solid color(links);
+    color: color(base);
+
+    @include underline();
   }
 
   @include respond-to(900) {

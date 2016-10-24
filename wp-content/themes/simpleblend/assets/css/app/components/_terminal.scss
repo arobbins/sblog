@@ -1,0 +1,28 @@
+.terminal {
+  display: none;
+  position: absolute;
+  bottom: 0;
+  top: 25px;
+  left: 32px;
+	margin: auto;
+  opacity: 0.1;
+}
+
+.terminal-arrow {
+  height: 30px;
+  width: 30px;
+  border: 1px solid color(dark-blue);
+  border-width: 10px 10px 0 0;
+  transform: rotate(45deg);
+  display: block;
+}
+
+.terminal-underline {
+  width: 30px;
+  height: 10px;
+  position: relative;
+  left: 50px;
+  top: -5px;
+  background-color: color(dark-blue);
+  display: block;
+}

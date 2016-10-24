@@ -1,0 +1,29 @@
+.component-promo {
+  padding: 0;
+  margin: 0 auto;
+  max-width: 900px;
+
+  @include device('max', 900) {
+    flex-direction: column;
+
+    .author-footer-bio {
+      display: block;
+      flex: none;
+      width: 100%;
+      padding-bottom: 0;
+    }
+
+    .author-contact {
+      margin-top: $gutter-m;
+    }
+
+  }
+
+  @include device('max', 500) {
+    .author-footer-bio {
+      @include ms-respond(font-size, -1);
+      padding-bottom: 0;
+    }
+  }
+
+}

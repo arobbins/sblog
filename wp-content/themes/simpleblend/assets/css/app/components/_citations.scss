@@ -1,0 +1,132 @@
+.citation {
+  display: none;
+  position: absolute;
+  top: 0;
+  width: 250px;
+  font-size: 12px;
+  text-align: left;
+
+  p {
+    line-height: 1.4;
+  }
+
+  &:nth-child(odd) {
+    right: -38%;
+  }
+
+  &:nth-child(even) {
+    left: -38%;
+  }
+
+  @include device('max', 1440) {
+    width: 200px;
+    font-size: 11px;
+
+    &:nth-child(odd) {
+      right: -30%;
+    }
+
+    &:nth-child(even) {
+      left: -30%;
+    }
+  }
+
+  @include device('max', 1300) {
+    // display: none !important;
+  }
+
+}
+
+.citation-num {
+  position: relative;
+  font-size: 14px;
+  top: -3px;
+  margin-left: 5px;
+  margin-right: 7px;
+  margin-top: 0;
+  background-color: color(dark-blue);
+  color: white;
+  height: 25px;
+  min-width: 25px;
+  display: inline-block;
+  text-align: center;
+  padding: .15em 7px;
+
+  &:hover {
+    cursor: help;
+  }
+}
+
+.citation-ref,
+.citation-content {
+  display: block;
+  float: left;
+  margin: 0;
+}
+
+.citation-ref {
+  width: 10%;
+  position: relative;
+  top: 5px;
+}
+
+.citation-content {
+  width: 90%;
+
+  @include device('max', 1300) {
+    a {
+      text-shadow: none;
+    }
+  }
+
+}
+
+
+.citation.animated {
+  animation-duration: 1.2s;
+}
+
+
+.citation-mobile {
+  position: static;
+  width: 100%;
+  float: left;
+  text-align: center;
+  margin: $gutter-m 0 $gutter-l;
+
+  .citation-ref {
+    display: none;
+  }
+
+  .citation-content {
+    width: 100%;
+    background-color: lighten(color(light-grey), 18);
+    padding: $gutter-s;
+  }
+
+}
+
+.citation-num-mobile {
+  display: inline;
+  vertical-align: middle;
+  top: -2px;
+  margin-right: 2em;
+  position: relative;
+  padding-bottom: 2px;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:after {
+    font-family: FontAwesome;
+    content: '\f0a6';
+    display: inline-block;
+    color: color(dark-blue);
+    position: absolute;
+    top: -7px;
+    right: -22px;
+    font-size: 20px;
+  }
+
+}

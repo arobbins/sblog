@@ -1,0 +1,28 @@
+.widget {
+  font-size: $font-s;
+  color: color(white);
+  position: relative;
+
+  &:not(.widget_sp_image) {
+    border-left: 1px solid color(white);
+    padding-left: $gutter-l;
+  }
+
+  &.widget_sp_image {
+    max-width: 350px;
+  }
+}
+
+.widget-binder-general-heading {
+  color: color(white);
+  text-transform: uppercase;
+  margin-bottom: $gutter-xs;
+}
+
+.widget-binder-general-icon {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  top: 0;
+  left: -35px;
+}

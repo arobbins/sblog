@@ -1,0 +1,131 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  height: auto;
+  width: 100%;
+  hyphens: auto;
+  -webkit-backface-visibility: hidden;
+  -moz-osx-font-smoothing: grayscale;
+  font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+
+body {
+  display: flex;
+  flex-flow: column nowrap;
+  box-sizing: border-box;
+  font-family: $font-primary;
+  font-weight: normal;
+  min-height: 100vh;
+  background-color: #FFF;
+  color: color(dark-grey);
+  font-size: $ms-base;
+  line-height: 1.414;
+  overflow-x: hidden;
+  position: relative;
+
+  @include device('min', 1800) {
+    font-size: 110%;
+  }
+
+  @include device('max', 700) {
+    font-size: 90%;
+  }
+
+  &.is-animated {
+    animation-duration: 0.2s;
+  }
+
+  * + * {
+    margin-top: $gutter-xs;
+  }
+
+  // Border box
+  *,
+  *:before, *:after {
+    box-sizing: inherit;
+  }
+
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+::selection {
+  background-color: color(success);
+  color: color(dark-blue);
+
+}
+
+
+pre[class*=language-] {
+
+  @include ms-respond(font-size, 0);
+
+  position: relative;
+  overflow: visible;
+  border-radius: 0;
+  padding-right: 0;
+  padding-left: 0;
+  width: 94.7%;
+  margin: 3em auto;
+  padding-top: 1.5em;
+  padding-bottom: 1.5em;
+  background-color: #f9f9f9;
+
+  &:before {
+    content: '';
+    height: 100%;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: -60%;
+    width: 60%;
+    z-index: -1;
+    background-color: #f9f9f9;
+  }
+
+  &:after {
+    content: '';
+    height: 100%;
+    display: block;
+    position: absolute;
+    top: 0;
+    right: -60%;
+    width: 60%;
+    z-index: -1;
+    background-color: #f9f9f9;
+
+  }
+
+  @include device('min', 1700) {
+    width: 100%;
+
+    &:before {
+      left: -70%;
+      width: 70%;
+    }
+
+    &:after {
+      right: -70%;
+      width: 70%;
+    }
+
+  }
+
+  @include device('max', 1100) {
+    overflow: scroll;
+    width: 100%;
+    padding: 1.5em;
+  }
+
+  @include device('max', 600) {
+    padding: $gutter-s;
+    width: 100%;
+  }
+
+}

@@ -1,0 +1,159 @@
+h1, h2, h3, h4 {
+  color: color(dark-blue);
+  font-family: $font-secondary;
+  text-align: center;
+  line-height: 1.1;
+
+  & + p {
+    margin-top: $gutter-xxs;
+  }
+
+}
+
+h1 {
+  @include ms-respond(font-size, 7);
+
+  // letter-spacing: 3px;
+  word-wrap: break-word;
+  text-align: center;
+  font-weight: bold;
+
+  @include device('max', 1500) {
+    font-size: ms(4);
+  }
+
+  @include device('max', 600) {
+    font-size: ms(3);
+  }
+}
+
+h2 {
+  @include ms-respond(font-size, 4);
+  margin-top: $gutter-s;
+  font-weight: bold;
+
+  @include device('max', 600) {
+    @include ms-respond(font-size, 2);
+  }
+}
+
+h3 {
+  font-size: ms(3);
+  margin-top: $gutter-s;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+h4 {
+  font-size: ms(2);
+  margin-top: $gutter-s;
+}
+
+h5 {
+  font-size: ms(1);
+  margin-top: $gutter-s;
+}
+
+h6 {
+  font-size: ms(0);
+  margin-top: $gutter-s;
+}
+
+ul, ol, dl {
+  @include ms-respond(font-size, 1);
+  line-height: 1.6;
+}
+
+dt {
+  // color: color(success);
+  // font-weight: bold;
+}
+
+dd {
+  margin-top: 0;
+  padding-left: $gutter-s;
+}
+
+ul, ol {
+  margin: $gutter-xs 0 $gutter-m 0;
+  padding-left: $gutter-s;
+  list-style: decimal;
+
+  li {
+    margin-top: 0;
+    margin-bottom: $gutter-s;
+  }
+}
+
+p {
+  @include ms-respond(font-size, 1);
+
+  word-break: break-word;
+  font-family: $font-primary;
+  line-height: 1.6;
+  font-weight: 100;
+
+  @include device('max', 600) {
+    @include ms-respond(font-size, 0);
+  }
+
+}
+
+blockquote,
+blockquote p {
+  @include ms-respond(font-size, 1);
+
+  font-family: $font-secondary;
+  margin: $gutter-m -#{$gutter-l};
+
+  @include device('max', 1100) {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+small,
+.font-small {
+  @include ms-respond(font-size, -1);
+}
+
+a {
+  color: color(dark-blue);
+  text-decoration: none;
+  background: linear-gradient(color(dark-blue), color(dark-blue));
+  background-size: 1px 1px; // fallback
+  background-size: 1px calc(3% + 1px);
+  background-repeat: repeat-x;
+  background-position: 0 96%;
+  position: relative;
+	text-shadow: 0 -5px #fff, // up
+							 5px 0 #fff, // right
+							 -5px 0 #fff; // left
+
+  &:hover {
+    // @include dim($opacity-dark);
+    background-color: color(success);
+    text-shadow: none;
+    background-size: 0;
+    background-position: 115%;
+
+    &:before {
+      content: '';
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      // padding: 1em;
+      background-color: color(success);
+    }
+  }
+
+}
+
+.error404 h1 {
+  @include ms-respond(font-size, 10);
+
+}

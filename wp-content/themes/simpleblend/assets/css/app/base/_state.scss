@@ -1,0 +1,121 @@
+// General
+.is-animated {
+  animation-delay: 0s;
+  animation-duration: 0.2s;
+  animation-fill-mode: both;
+}
+
+// Notices
+.notice {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  font-size: 20px;
+  padding: 1.2em;
+  z-index: 999999;
+  text-align: center;
+  margin-top: 0;
+
+  &.is-animated {
+    animation-duration: 2s;
+  }
+}
+
+.notice-success {
+  background-color: color(lightgreen);
+  color: white;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
+// Disabled
+.is-disabled {
+
+  &.is-loading {
+    &:before {
+      content: '';
+      position: absolute;
+      box-sizing: border-box;
+      z-index: 9;
+      border-radius: 100%;
+      animation: spin 0.6s infinite linear;
+      top: 37%;
+      left: 43%;
+      border: 2px solid #093d55;
+      border-top-color: #ddd;
+      width: 60px;
+      height: 60px;
+    }
+  }
+
+  &:after {
+    @include dim($opacity-light);
+
+    content: '';
+    width: 100%;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: white;
+  }
+
+  &:hover {
+    cursor: not-allowed !important;
+    // background-color: color(lightblue) !important;
+  }
+}
+
+.is-hidden {
+  display: none !important;
+  opacity: 0;
+  transition: background-color .2s ease;
+}
+
+.is-visible {
+  display: block !important;
+  // opacity: 1;
+  // transition: background-color .2s ease;
+}
+
+.spinner {
+  position: absolute;
+  top: 33%;
+  left: 6%;
+  margin: $gutter-s 0;
+  box-sizing: border-box;
+  z-index: 9;
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  border: 2px solid color(white);
+  border-top-color: color(green);
+  animation: spin 0.6s infinite linear;
+}
+
+.is-circle {
+  border-radius: 50%;
+}
+
+
+
+
+
+
+@keyframes blink-animation {
+  to {
+    visibility: hidden;
+  }
+}
+
+.is-blinking {
+  animation: blink-animation 1s steps(5, start) infinite;
+}

@@ -1,0 +1,36 @@
+.post {
+  margin: 0 auto;
+  max-width: 800px;
+  width: 100%;
+  position: relative;
+}
+
+.post-title-link {
+  text-decoration: none;
+  color: color(dark-blue);
+}
+
+.entry-content {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: justify;
+
+  a {
+    font-weight: bold;
+  }
+
+  p img {
+    margin: 0 auto;
+    display: block;
+  }
+}
+
+.aligncenter {
+  text-align: center;
+}
+
+.narrow-img {
+  max-width: 70%;
+  text-align: center;
+  margin: 0 auto;
+}

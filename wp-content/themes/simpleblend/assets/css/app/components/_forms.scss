@@ -1,0 +1,257 @@
+input,
+.sky-form .input input,
+.sky-form .select select,
+#chimpy_shortcode_submit {
+
+  @include ms-respond(font-size, 1);
+
+  font-family: $font-primary;
+  padding: $gutter-xs $gutter-s;
+  line-height: 1.6;
+  border: 1px solid color(dark-blue);
+  background-color: transparent;
+  height: auto;
+  font-weight: bold;
+
+  &::placeholder {
+    font-weight: normal;
+  }
+
+  &:focus,
+  &:active {
+    border-color: color(light-grey) !important;
+  }
+
+}
+
+#chimpy_shortcode_submit {
+  width: 65%;
+  text-transform: uppercase;
+  color: color(dark-blue);
+  font-family: $font-primary;
+  margin: 0 0 0 10px;
+
+  @include device('max', 900) {
+    width: auto;
+    min-width: 120px;
+    margin: $gutter-xs 0 0;
+  }
+
+  @include device('max', 600) {
+    width: 100%;
+    padding-right: 0;
+    padding-left: 0;
+    margin: $gutter-xs 0 0;
+  }
+
+  &:hover {
+    border-color: color(light-grey);
+  }
+
+  &:disabled {
+    color: color(light-grey);
+    border-color: color(light-grey);
+
+    &:hover {
+      cursor: not-allowed;
+    }
+  }
+
+}
+
+.form-control {
+  margin-bottom: 1em;
+}
+
+.chimpy-reset {
+  font-family: $font-primary;
+}
+
+.entry-content {
+  .chimpy-reset {
+    display: none;
+  }
+}
+
+
+.form-wrapper {
+  margin-bottom: 2em;
+
+  small {
+    display: block;
+    margin-bottom: $gutter-s;
+  }
+
+  @include device('max', 500) {
+    margin-bottom: 3em;
+  }
+
+}
+
+
+@keyframes loading {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
+
+.chimpy_signup_form {
+  display: flex;
+  position: relative;
+
+  @include device('max', 900) {
+    flex-direction: column;
+  }
+}
+
+div.chimpy_signup_processing {
+  position: absolute;
+  top: 0;
+  left: 0;
+  top: -53px;
+  left: 47%;
+  margin: 60px auto;
+  font-size: 4px;
+  text-indent: -9999em;
+  border-top: 4px solid color(success);
+  border-right: 4px solid color(success);
+  border-bottom: 4px solid color(success);
+  border-left: 4px solid color(dark-blue);
+  transform: translateZ(0);
+  animation: loading 0.6s infinite linear;
+  background-image: none;
+  background-color: transparent;
+  border-radius: 50%;
+  width: 54px;
+  height: 50px;
+
+  @include device('max', 700) {
+    top: -135px;
+  }
+
+}
+
+div.chimpy_signup_processing:after {
+  border-radius: 50%;
+  width: 54px;
+  height: 50px;
+}
+
+.sky-form footer,
+div.chimpy_status_underlay,
+.sky-form fieldset {
+  background-color: transparent;
+  padding: 0;
+}
+
+div.chimpy_status_underlay {
+  width: 78%;
+
+  @include device('max', 900) {
+    width: 100%;
+  }
+}
+
+.sky-form fieldset {
+  width: 100%;
+}
+
+.sky-form {
+  box-shadow: none;
+}
+
+.sky-form footer {
+  width: 22%;
+  padding: 0;
+  border: none;
+
+  @include device('max', 900) {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+  }
+}
+
+.sky-form footer button.button {
+  height: auto;
+  opacity: 1;
+  float: none;
+}
+
+
+.sky-form .input:hover input,
+.sky-form .select:hover select,
+.sky-form .textarea:hover textarea,
+.sky-form .radio:hover i,
+.sky-form .checkbox:hover i,
+.sky-form .toggle:hover i,
+.sky-form .input input:focus,
+.sky-form .select select:focus,
+.sky-form .textarea textarea:focus,
+.sky-form .radio input:focus + i,
+.sky-form .checkbox input:focus + i,
+.sky-form .toggle input:focus + i {
+  border-color: color(dark-blue);
+}
+
+.sky-form .state-error + em {
+  @include ms-respond(font-size, 0);
+
+  font-family: $font-primary;
+  margin-top: 15px;
+  color: white;
+  padding: $gutter-xs $gutter-s;
+  background-color: #f8a8a8;
+
+  @include device('max', 700) {
+    margin-bottom: 1em;
+    display: block !important;
+  }
+}
+
+div.chimpy_signup_success div,
+div.chimpy_signup_shortcode_error div {
+  height: 100%;
+}
+
+div.chimpy_signup_success div {
+  @include ms-respond(font-size, 1);
+
+  background-color: color(success);
+  color: color(dark-blue);
+  padding: 10px;
+}
+
+div.chimpy_signup_success {
+  min-height: 52px;
+  height: 100%;
+
+  @include device('max', 700) {
+    margin-bottom: 1em;
+  }
+}
+
+
+.is-submitting.sky-form fieldset {
+  display: block !important;
+  opacity: 0.2;
+}
+
+.is-submitting.sky-form footer button.button {
+  opacity: 0.2;
+}
+
+
+.tooltip-content {
+  @include shadow();
+
+  background: white;
+  padding: $gutter-s $gutter-m;
+  top: -15px;
+  position: relative;
+}

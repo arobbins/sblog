@@ -1,0 +1,24 @@
+.main {
+  margin: 0 auto;
+  max-width: 800px;
+}
+
+.home .main {
+  position: relative;
+  left: 7em;
+  top: -3em;
+
+  @include device('max', 1100) {
+    left: 0;
+    top: 0;
+    width: 100%;
+    flex: none;
+    display: block;
+  }
+
+}
+
+.error404 .main {
+  margin-top: $gutter-xxl;
+  text-align: center;
+}

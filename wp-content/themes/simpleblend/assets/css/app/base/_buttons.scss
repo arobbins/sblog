@@ -1,0 +1,57 @@
+.btn {
+  @include ms-respond(font-size, 0);
+
+  padding: 1em 2em;
+  border-radius: 25px;
+  font-weight: normal;
+  text-decoration: none;
+  text-transform: uppercase;
+  display: inline-block;
+  border-radius: 0;
+  border: none;
+  position: relative;
+  line-height: 1;
+  text-align: center;
+  color: color(dark-blue);
+  border: 1px solid color(dark-blue);
+
+  &:hover {
+    border-color: color(light-grey);
+  }
+
+  // &.is-disabled {
+  //   &:hover {
+  //     background-color: color(lightgreen);
+  //   }
+  // }
+
+}
+
+.btn-secondary {
+  // background-color: color(transparent);
+  // border: 2px solid color(orange);
+  // color: color(orange);
+
+  &:hover {
+    // color: color(orange);
+    // background-color: transparentize(color(orange), .94);
+  }
+}
+
+.btn-sm {
+  @include ms-respond(font-size, -1);
+}
+
+.btn-lg {
+  @include ms-respond(font-size, 1);
+}
+
+.btn-fixed {
+  max-width: 370px;
+  width: 370px;
+
+  @include device('max', 500) {
+    max-width: 300px;
+    width: 300px;
+  }
+}

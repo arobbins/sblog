@@ -1,0 +1,125 @@
+/*
+
+Colors
+
+*/
+$colors: (
+  dark-blue: rgba(17, 30, 40, 1),
+  dark-grey: rgba(55, 61, 63, 1),
+  light-grey: rgba(199, 199, 199, 1),
+  green: rgba(93, 224, 194, 1),
+  orange: rgba(230, 147, 45, 1),
+  white: rgba(255, 255, 255, 1),
+  black: rgba(0, 0, 0, 1),
+  success: rgba(179, 255, 197, 1),
+  notice: rgba(196, 236, 255, 1),
+  error: rgba(255, 182, 182, 1),
+  transparent: rgba(255, 255, 255, 0)
+);
+
+/*
+
+Breakpoints
+
+*/
+$breakpoints: (
+  400: #{em(400px)},
+  500: #{em(500px)},
+  600: #{em(600px)},
+  700: #{em(700px)},
+  800: #{em(800px)},
+  900: #{em(900px)},
+  1000: #{em(1000px)},
+  1100: #{em(1100px)},
+  1200: #{em(1200px)},
+  1300: #{em(1300px)},
+  1400: #{em(1400px)},
+  1440: #{em(1440px)},
+  1500: #{em(1500px)},
+  1600: #{em(1600px)},
+  1700: #{em(1700px)},
+  1800: #{em(1800px)},
+);
+
+
+/*
+
+Font Families
+
+*/
+$font-secondary: 'Bitter', helvetica, sans-serif;
+$font-primary: 'Open Sans', sans-serif;
+
+/*
+
+Scale
+
+*/
+$ms-base: 1em;
+$ms-ratio: 1.414;
+$ms-fluid: false;
+$ms-range:
+  1.250 500px,
+  1.250 1400px;
+
+/*
+
+Gutter Spacing
+
+*/
+$gutter-xxxxl: ms(7);
+$gutter-xxxl:  ms(6);
+$gutter-xxl:   ms(5);
+$gutter-xl:    ms(4);
+$gutter-l:     ms(3);
+$gutter-m:     ms(2);
+$gutter-s:     ms(1);
+$gutter-xs:    ms(0);
+$gutter-xxs:   ms(-1);
+
+
+/*
+
+Fonts
+
+*/
+$font-xxxl:    ms(7);
+$font-xxl:     ms(6);
+$font-xl:      ms(5);
+$font-l:       ms(4);
+$font-m:       ms(3);
+$font-s:       ms(2);
+$font-xs:      ms(1);
+$font-xxs:     ms(0);
+
+
+/*
+
+Misc
+
+*/
+$opacity-dark: 0.6;
+$opacity-light: 0.2;
+$site-max-width: 1600px;
+$container-width: calc(1100px / 100vw);
+$max-width: 1800px;
+$content-width-narrow: 800px;
+
+
+/*
+
+Grid
+
+*/
+$cols-1: 1;
+$cols-2: 2;
+$cols-3: 3;
+$cols-4: 4;
+$cols-5: 5;
+$cols-6: 6;
+$cols-7: 7;
+$cols-8: 8;
+$cols-9: 9;
+$cols-10: 10;
+$cols-11: 11;
+$cols-12: 12;

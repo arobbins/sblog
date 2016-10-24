@@ -1,0 +1,15 @@
+table {
+  width: 100%;
+  margin: $gutter-m 0;
+}
+
+td, th {
+  padding: $gutter-xs;
+  border: 1px solid color(dark-blue);
+}
+
+th {
+  background-color: color(success);
+  font-weight: bold;
+  text-transform: uppercase;
+}

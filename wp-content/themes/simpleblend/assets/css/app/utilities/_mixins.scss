@@ -1,0 +1,36 @@
+// Breakpoints
+@mixin device($size, $breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+
+    @if($size == 'max') {
+      @media (max-width: #{map-get($breakpoints, $breakpoint)}) {
+        @content;
+      }
+    } @else {
+      @media (min-width: #{map-get($breakpoints, $breakpoint)}) {
+        @content;
+      }
+    }
+
+  }
+
+  @else {
+    @warn "Unfortunately, no value could be retrieved from `#{$breakpoint}`. "
+        + "Please make sure it is defined in `$breakpoints` map.";
+  }
+}
+
+@mixin row($cols) {
+  flex: 0 0 calc((100% / #{$cols}));
+  max-width: calc((100% / #{$cols}));
+  width: calc((100% / #{$cols}));
+}
+
+@mixin dim($opacity) {
+  opacity: $opacity;
+}
+
+@mixin shadow() {
+  z-index: 9999;
+  box-shadow: 0px 17px 81px -19px rgba(128,128,128,1);
+}

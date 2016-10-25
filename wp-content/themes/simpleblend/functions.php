@@ -262,7 +262,7 @@ function mailinglist_signup() {
     }
 
   } else {
-    echo 'Nonce invalid';
+    echo 'Invalid Nonce';
     die();
 
   }

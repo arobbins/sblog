@@ -99,8 +99,6 @@ On form submission
 */
 function onFormSubmission() {
 
-  // var $form = $("#mailinglist-form");
-
   $("#mailinglist-form").validate({
 
     submitHandler: function(form, e) {
@@ -112,10 +110,7 @@ function onFormSubmission() {
       McSignUp()
         .done(function(data) {
 
-
-          console.log("Success: ", data);
-
-          if(data.code >= 400) {
+          if(data.code !== 200) {
             $(form).find('.mailinglist-error').addClass('is-visible');
             $(form).find('#mailinglist-email-error').append('<i class="fa fa-times-circle" aria-hidden="true"></i> Uh oh, we have an error! Looks like ' + data.message.title + '. Please try again');
             $(form).find('.spinner').removeClass('is-visible');
@@ -130,17 +125,12 @@ function onFormSubmission() {
             $(form).find('input').removeClass('is-disabled');
           }
 
-
         })
         .fail(function(jqXHR, textStatus) {
           $(form).find('.mailinglist-error').addClass('is-visible');
-          $(form).find('#mailinglist-email-error').append('Error!');
-
+          $(form).find('#mailinglist-email-error').append('Error! ' + textStatus);
           $(form).find('.spinner').removeClass('is-visible');
           $(form).find('input').removeClass('is-disabled');
-
-          console.log("textStatus: ", textStatus);
-          console.log("jqXHR: ", jqXHR);
 
         });
 
@@ -172,12 +162,7 @@ function onFormSubmission() {
 
     },
     errorPlacement: function(error, element) {
-
-      console.log("errorerror: ", error);
-      // $('#mailinglist-email').parent().removeClass('form-valid');
-      // $('.mailinglist-error').fadeIn('fast');
       error.appendTo($('.mailinglist-error'));
-
     }
 
   });

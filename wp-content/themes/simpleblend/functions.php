@@ -228,7 +228,7 @@ function mailinglist_signup() {
 
       $response = $client->request('POST', 'lists/5c6bd183d4/members', [
         'auth' => [
-          'arobbins', '255970dd153fe7b1d83bec1478cbaa74-us11'
+          'arobbins', '275cafe2706cafae258728fc0f11132d-us11'
         ],
         'json' => [
           'email_address' => $email,

@@ -268,12 +268,16 @@ div.chimpy_signup_success {
 
   &.valid {}
 
+  @include device('max', 800) {
+    width: 100%;
+  }
+
 }
 
 .form-control.form-valid {
   position: relative;
   border-radius: 50%;
-  
+
   &:before {
     @include ms-respond(font-size, 4);
 
@@ -291,15 +295,34 @@ div.chimpy_signup_success {
   }
 }
 
-#mailinglist-form .btn {
-  @include ms-respond(font-size, 1);
+#mailinglist-form {
 
-  font-weight: bold;
-  width: 20%;
-  margin: 0;
+  > .form-control {
+    @include device('max', 800) {
+      flex-direction: column;
+    }
+  }
 
-  &:hover {
-    cursor: pointer;
+  .btn {
+    @include ms-respond(font-size, 1);
+
+    font-weight: bold;
+    width: 20%;
+    margin: 0;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    @include device('max', 800) {
+      width: 140px;
+      margin-top: $gutter-xs;
+    }
+
+    @include device('max', 600) {
+      width: 100%;
+      margin-top: $gutter-xs;
+    }
   }
 }
 

@@ -27,3 +27,10 @@
   }
 
 }
+
+
+.header .component-promo .author-footer-bio {
+  @include device("max", 600) {
+    @include ms-respond(font-size, 0);
+  }
+}

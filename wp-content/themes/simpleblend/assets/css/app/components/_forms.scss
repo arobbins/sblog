@@ -61,6 +61,7 @@ input,
 
 .form-control {
   margin-bottom: 1em;
+  position: relative;
 }
 
 .chimpy-reset {
@@ -254,4 +255,82 @@ div.chimpy_signup_success {
   padding: $gutter-s $gutter-m;
   top: -15px;
   position: relative;
+}
+
+
+#mailinglist-email {
+  width: 77%;
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
+
+  &.valid {}
+
+}
+
+.form-control.form-valid {
+  position: relative;
+  border-radius: 50%;
+  
+  &:before {
+    @include ms-respond(font-size, 4);
+
+    border-radius: 50%;
+    content: '\f058';
+    display: block;
+    width: 50px;
+    height: 50px;
+    font-family: FontAwesome;
+    position: absolute;
+    top: -24px;
+    left: -32px;
+    background-color: white;
+    color: color(success);
+  }
+}
+
+#mailinglist-form .btn {
+  @include ms-respond(font-size, 1);
+
+  font-weight: bold;
+  width: 20%;
+  margin: 0;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+
+.mailinglist-messages {
+  width: 100%;
+  margin: 0;
+}
+
+.mailinglist-error.is-visible {
+  @include ms-respond(font-size, 1);
+
+  background-color: color(error);
+  display: block;
+  margin: 0;
+  padding: $gutter-xs $gutter-m;
+
+  .fa:before {
+    color: darken(color(error), 70);
+  }
+}
+
+.mailinglist-success.is-visible {
+  @include ms-respond(font-size, 1);
+
+  background-color: color(success);
+  display: block;
+  margin: 0;
+  padding: $gutter-xs $gutter-m;
+
+  .fa:before {
+    color: darken(color(success), 70);
+  }
 }

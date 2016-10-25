@@ -1,18 +1,7 @@
 <footer class="footer content-info l-col l-row-center" role="contentinfo">
 
     <?php echo get_template_part('components/separator/separator', 'controller'); ?>
-
-    <section class="form-wrapper l-center">
-      <p>Subscribe to my mailing list to receive future content and special offers <small>(I will never send spam or sell your email address to third-parties)</small></p>
-      <?php
-
-      echo do_shortcode('[mc4wp_form id="337"]');
-
-      // chimpy_form(); 
-
-
-      ?>
-    </section>
+    <?php echo get_template_part('components/mailinglist/mailinglist', 'controller'); ?>
 
     <p><span class="name">Andrew Robbins</span> <span class="title">Web Developer</span></p>
     <p><a href="https://simpleblend.net">Simpleblend.net</a></p>

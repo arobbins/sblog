@@ -37,40 +37,10 @@
 
 // Disabled
 .is-disabled {
-
-  &.is-loading {
-    &:before {
-      content: '';
-      position: absolute;
-      box-sizing: border-box;
-      z-index: 9;
-      border-radius: 100%;
-      animation: spin 0.6s infinite linear;
-      top: 37%;
-      left: 43%;
-      border: 2px solid #093d55;
-      border-top-color: #ddd;
-      width: 60px;
-      height: 60px;
-    }
-  }
-
-  &:after {
-    @include dim($opacity-light);
-
-    content: '';
-    width: 100%;
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    background-color: white;
-  }
+  @include dim($opacity-light);
 
   &:hover {
     cursor: not-allowed !important;
-    // background-color: color(lightblue) !important;
   }
 }
 
@@ -87,16 +57,17 @@
 }
 
 .spinner {
+  display: none;
   position: absolute;
-  top: 33%;
-  left: 6%;
+  top: -9px;
+  right: -4.45em;
   margin: $gutter-s 0;
   box-sizing: border-box;
   z-index: 9;
-  width: 20px;
-  height: 20px;
+  width: 50px;
+  height: 50px;
   border-radius: 100%;
-  border: 2px solid color(white);
+  border: 4px solid color(dark-blue);
   border-top-color: color(green);
   animation: spin 0.6s infinite linear;
 }

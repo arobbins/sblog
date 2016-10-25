@@ -89,6 +89,8 @@ function assets() {
     wp_enqueue_script('lazyload', 'https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js', ['jquery'], null, true);
     wp_enqueue_script('fitvid', 'https://cdnjs.cloudflare.com/ajax/libs/fitvids/1.1.0/jquery.fitvids.min.js', ['jquery'], null, true);
 
+    wp_enqueue_script('jquery-validation', 'http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js', ['jquery'], null, true);
+
     // App
     wp_enqueue_style('app-css', asset_path('/assets/css/app.min.css'), false, null);
     wp_enqueue_script('app-js', asset_path('/assets/js/app.min.js'), ['jquery'], null, true);

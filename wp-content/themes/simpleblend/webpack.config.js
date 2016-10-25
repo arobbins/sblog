@@ -1,3 +1,4 @@
+var webpack = require('webpack');
 var CommonsPlugin = new require("webpack/lib/optimize/CommonsChunkPlugin");
 
 module.exports = {

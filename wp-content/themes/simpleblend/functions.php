@@ -1,4 +1,12 @@
 <?php
+
+require 'vendor/autoload.php';
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7;
+use GuzzleHttp\Exception\ServerException;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\BadResponseException;
+
 /**
  * Sage includes
  *
@@ -17,7 +25,7 @@ $sage_includes = [
   'lib/config.php',                // Configuration
   'lib/assets.php',                // Scripts and stylesheets
   'lib/titles.php',                // Page titles
-  'lib/extras.php',                // Custom functions
+  'lib/extras.php'                 // Custom functions
 ];
 
 foreach ($sage_includes as $file) {
@@ -144,3 +152,122 @@ function deftly_mce_before_init_insert_formats($init_array) {
 
 }
 add_filter( 'tiny_mce_before_init', 'deftly_mce_before_init_insert_formats' );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
+// Fetching Mailchimp API Key
+//
+function mailchimp_auth_creds() {
+  return array('arobbins', '255970dd153fe7b1d83bec1478cbaa74-us11');
+}
+
+
+//
+// Fetching Mailchimp List ID
+//
+function mailinglist_get_list_id() {
+
+  echo '5c6bd183d4';
+  die();
+
+}
+
+add_action('wp_ajax_mailinglist_get_list_id', 'mailinglist_get_list_id');
+add_action('wp_ajax_nopriv_mailinglist_get_list_id', 'mailinglist_get_list_id');
+
+
+
+
+//
+// Fetching Mailchimp List
+//
+function mailinglist_signup() {
+
+  $email = $_POST['email'];
+  $nonce = $_POST['nonce'];
+
+  if(wp_verify_nonce($nonce, 'mailinglist_signup')) {
+
+    $resp = [];
+
+    try {
+      $client = new GuzzleHttp\Client(['base_uri' => 'https://us11.api.mailchimp.com/3.0/']);
+
+      $response = $client->request('POST', 'lists/5c6bd183d4/members', [
+        'auth' => [
+          'arobbins', '255970dd153fe7b1d83bec1478cbaa74-us11'
+        ],
+        'json' => [
+          'email_address' => $email,
+          "status" => "pending",
+        ]
+      ]);
+
+      $statusCode = $response->getStatusCode();
+
+      $resp['code'] = $statusCode;
+      $resp['message'] = json_decode($response->getBody());
+
+      echo json_encode($resp);
+      die();
+
+    } catch (GuzzleHttp\Exception\ClientException $e) {
+
+      $response = $e->getResponse();
+      $statusCode = $response->getStatusCode();
+      $message = $e->getMessage();
+
+      // print_r( json_encode($e->getMessage()) );
+      // echo $e->getMessage();
+
+      $resp['code'] = $statusCode;
+      $resp['message'] = json_decode($response->getBody());
+
+      echo json_encode($resp);
+      die();
+
+    }
+
+  } else {
+    echo 'Nonce invalid';
+    die();
+
+  }
+
+}
+
+add_action('wp_ajax_mailinglist_signup', 'mailinglist_signup');
+add_action('wp_ajax_nopriv_mailinglist_signup', 'mailinglist_signup');

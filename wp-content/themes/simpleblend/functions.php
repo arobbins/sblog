@@ -191,7 +191,7 @@ add_filter( 'tiny_mce_before_init', 'deftly_mce_before_init_insert_formats' );
 // Fetching Mailchimp API Key
 //
 function mailchimp_auth_creds() {
-  return array('arobbins', '255970dd153fe7b1d83bec1478cbaa74-us11');
+  return array('arobbins', '275cafe2706cafae258728fc0f11132d-us11');
 }
 
 

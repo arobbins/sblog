@@ -268,7 +268,7 @@ div.chimpy_signup_success {
 
   &.valid {}
 
-  @include device('max', 800) {
+  @include device('max', 1000) {
     width: 100%;
   }
 
@@ -314,16 +314,13 @@ div.chimpy_signup_success {
       cursor: pointer;
     }
 
-    @include device('max', 800) {
-      width: 140px;
-      margin-top: $gutter-xs;
-    }
-
-    @include device('max', 600) {
-      width: 100%;
+    @include device('max', 1000) {
+      width: auto;
+      align-self: flex-start;
       margin-top: $gutter-xs;
     }
   }
+
 }
 
 

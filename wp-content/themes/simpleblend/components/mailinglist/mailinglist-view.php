@@ -6,7 +6,7 @@
     <div class="form-control l-row">
       <input name="email" id="mailinglist-email" type="text" class="form-input" placeholder="Email address" />
       <?php wp_nonce_field('mailinglist_signup'); ?>
-      <input class="btn" type="submit" title="Send" value="Send" />
+      <input class="btn" type="submit" title="Sign up" value="Sign up" />
       <div class="spinner"></div>
     </div>
 

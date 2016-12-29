@@ -105,37 +105,63 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		return parseInt( $int, 10 );
 	}
 
+	function swp_trigger_events(event) {
+		var evt = $.Event(event);
+		$(window).trigger(evt);
+	}
+
 	/****************************************************************************
 
 		Fetch and Store Facebook Counts
 
 	****************************************************************************/
 	var swpPostData = {};
-	swp.fetchFacebookShares = function() {
-		var requestUrl = 'https://graph.facebook.com/?id=' + swp_post_url;
-		$.get( requestUrl, function( response ) {
-			//response = $.parseJSON(data);
-			var requestUrTwo = 'https://graph.facebook.com/?id=' + swp_post_url + '&fields=og_object{likes.summary(true),comments.summary(true)}';
-			$.get( requestUrTwo, function( responseTwo ) {
-				var shares, likes, comments, activity;
-
-				//responseTwo = $.parseJSON(data);
-				shares = absint( response.share.share_count );
-				likes = absint( responseTwo.og_object.likes.summary.total_count );
-				comments = absint( responseTwo.og_object.comments.summary.total_count );
-				activity = shares + likes + comments;
-				console.log( activity );
-
+	socialWarfarePlugin.fetchShares = function() {
+		/**
+		 * Run all the API calls
+		 */
+		$.when(
+			$.get('https://graph.facebook.com/?id=' + swp_post_url) ,
+			$.get('https://graph.facebook.com/?id=' + swp_post_url + '&fields=og_object{likes.summary(true),comments.summary(true)}') ,
+			( swp_post_recovery_url ? $.get('https://graph.facebook.com/?id=' + swp_post_recovery_url) : ''),
+			( swp_post_recovery_url ? $.get('https://graph.facebook.com/?id=' + swp_post_recovery_url + '&fields=og_object{likes.summary(true),comments.summary(true)}') : '')
+		)
+		.then( function(a, b, c, d) {
+			/**
+			 * Parse the responses, add up the activity, send the results to admin_ajax
+			 */
+			if( 'undefined' !== typeof a[0].share && 'undefined' !== typeof b[0].og_object ) {
+				var f1 = absint( a[0].share.share_count);
+				var f2 = absint( b[0].og_object.likes.summary.total_count );
+				var f3 = absint( b[0].og_object.comments.summary.total_count );
+				var fShares = f1 + f2 + f3;
+				if(swp_post_recovery_url) {
+					if (typeof c[0].share !== 'undefined') {
+						var f4 = absint( c[0].share.share_count);
+					} else {
+						var f4 = 0;
+					}
+					if (typeof d[0].og_object !== 'undefined') {
+						var f5 = absint( d[0].og_object.likes.summary.total_count );
+						var f6 = absint( d[0].og_object.comments.summary.total_count );
+					} else {
+						var f5 = 0, f6 = 0;
+					}
+					var fShares2 = f4 + f5 + f6;
+					if (fShares !== fShares2) {
+						fShares = fShares + fShares2;
+					}
+				}
 				swpPostData = {
 					action: 'swp_facebook_shares_update',
 					post_id: swp_post_id,
-					activity: activity
+					activity: fShares
 				};
 
 				$.post( swp_admin_ajax, swpPostData, function( response ) {
-					console.log( response );
+					console.log( 'Facebook Shares Response: ' + response );
 				});
-			});
+			}
 		});
 	}
 
@@ -146,20 +172,9 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 	 * @return none
 	 */
 	swp.activateHoverStates = function() {
-		var emphasize_icons = $('.nc_socialPanel:not(.nc_socialPanelSide)').attr('data-emphasize');
-		$('.nc_socialPanel:not(.nc_socialPanelSide)').each(function(){
-			var i = 1;
-			$(this).find('.nc_tweetContainer').each(function(){
-				if(i <= emphasize_icons) {
-					$(this).addClass('swp_emphasize');
-					var term_width = $(this).find('.swp_share').width();
-					var icon_width = $(this).find('i.sw').outerWidth();
-					$(this).find('.iconFiller').width(term_width + icon_width + 25 + 'px');
-				}
-				++i;
-			});
-		});
-		$('.nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer:not(.swp_emphasize)').on('mouseenter',function(){
+		swp_trigger_events('pre_activate_buttons');
+		$('.nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer:not(.swp_nohover)').on('mouseenter',function(){
+			swpRestoreSizes();
 			var term_width = $(this).find('.swp_share').outerWidth();
 			var icon_width = $(this).find('i.sw').outerWidth();
 			var container_width = $(this).width();
@@ -167,12 +182,14 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			$(this).find('.iconFiller').width(term_width + icon_width + 25 + 'px');
 			$(this).css({flex:percentage_change + ' 1 0%'});
 		});
-		$('.nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer:not(.swp_emphasize)').on('mouseleave',function(){
-			$(this).find('.iconFiller').removeAttr('style');
-			$(this).removeAttr('style');
+		$('.nc_socialPanel:not(.nc_socialPanelSide)').on('mouseleave',function() {
+			swpRestoreSizes();
 		});
 	}
-
+	function swpRestoreSizes() {
+		$('.nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer:not(.swp_nohover) .iconFiller').removeAttr('style');
+		$('.nc_socialPanel:not(.nc_socialPanelSide) .nc_tweetContainer:not(.swp_nohover)').removeAttr('style');
+	}
 	function createFloatBar() {
 		//if ( ! $( '.nc_socialPanelSide' ).length ) {
 			if( $( '.nc_wrapper' ).length ) {
@@ -268,27 +285,12 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 		}
 		if ( floatOption == 'floatBottom' || floatOption == 'floatTop' ) {
 			visible = false;
-			$( '.nc_socialPanel' ).not( '.nc_socialPanelSide, .nc_wrapper .nc_socialPanel' ).each(function() {
-				var thisOffset, thisHeight, screenBottom;
-
-				var index = $( '.nc_socialPanel' ).index( $( this ) );
-
-				// Fetch our base numbers
-				if ( typeof window.swpOffsets[index] == 'undefined' ) {
-					thisOffset   = $( this ).offset();
-					thisHeight   = $( this ).height();
-					screenBottom = thisOffset + thisHeight;
-					window.swpOffsets[index] = thisOffset;
-				} else {
-					thisOffset   = window.swpOffsets[index];
-					thisHeight   = $( this ).height();
-					screenBottom = thisOffset + thisHeight;
-				}
-
-				// Check if it's visible
-				if ( thisOffset.top + thisHeight > scrollPos && thisOffset.top < scrollPos + windowHeight ) {
-					visible = true;
-				}
+			$( '.nc_socialPanel' ).not( '.nc_socialPanelSide, .nc_floater' ).each(function() {
+					var thisOffset = $( this ).offset();
+					var thisHeight = $( this ).height();
+					if ( thisOffset.top + thisHeight > scrollPos && thisOffset.top < scrollPos + windowHeight ) {
+						visible = true;
+					}
 			});
 			if ( visible ) {
 				// Hide the Floating bar
@@ -304,6 +306,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				var newPadding, firstOffset;
 				// Show the floating bar
 				ncWrapper.show();
+				swp_trigger_events('floating_bar_revealed');
 
 				// Add some padding to the page so it fits nicely at the top or bottom
 				if ( floatOption == 'floatBottom' ) {
@@ -326,10 +329,9 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			swp.activateHoverStates();
 			handleWindowOpens();
 			$( window ).scrollTop();
-			$( window ).scroll( swp.throttle( 250, function() {
+			$( window ).scroll( swp.throttle( 50, function() {
 				floatingBarReveal();
 			}));
-
 			$( window ).trigger( 'scroll' );
 			$( '.nc_socialPanel' ).css( {'opacity':1} );
 		}
@@ -378,13 +380,13 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				pinDesc = $image.attr( 'alt' );
 			}
 
-			var bookmark = 'http://pinterest.com/pin/create/bookmarklet/?media=' + pinMedia + '&url=' + options.pageURL + '&is_video=false' + '&description=' + encodeURIComponent( pinDesc );
+			var bookmark = 'http://pinterest.com/pin/create/bookmarklet/?media=' + encodeURI( pinMedia ) + '&url=' + encodeURI( options.pageURL ) + '&is_video=false' + '&description=' + pinDesc;
 			var imageClasses = $image.attr( 'class' );
 			var imageStyle = $image.attr( 'style' );
 
 			$image.removeClass().attr( 'style', '' ).wrap( options.wrap );
 
-			$image.after( '<a href="' + encodeURI( bookmark ) + '" class="sw-pinit-button sw-pinit-' + swpPinIt.vLocation + ' sw-pinit-' + swpPinIt.hLocation + '">Save</a>' );
+			$image.after( '<a href="' + bookmark + '" class="sw-pinit-button sw-pinit-' + swpPinIt.vLocation + ' sw-pinit-' + swpPinIt.hLocation + '">Save</a>' );
 
 			$image.parent( '.sw-pinit' ).addClass( imageClasses ).attr( 'style', imageStyle );
 
@@ -402,10 +404,13 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 				return false;
 			}
 
+			console.log($(this));
+
 			if( $( this ).attr( 'data-link' ) ) {
 				event.preventDefault ? event.preventDefault() : ( event.returnValue = false );
 
 				var href = $( this ).attr( 'data-link' );
+				console.log(href);
 				var height, width, instance;
 
 				href = href.replace( '’', '\'' );
@@ -420,13 +425,26 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 
 				instance = window.open( href, '_blank', 'height=' + height + ',width=' + width );
 
+				if (typeof ga == "function" && true === swpClickTracking) {
+					var network = $(this).parents(".nc_tweetContainer").attr("data-network");
+					console.log(network + " Button Clicked");
+					ga("send", "event", "social_media", "swp_" + network + "_share" );
+				}
+
 				return false;
 			}
 		});
 	}
 
+	$( window ).on('load' , function() {
+		if ( 'undefined' !== typeof swpPinIt && swpPinIt.enabled ) {
+			pinitButton();
+		}
+	});
+
 	$( document ).ready( function() {
 		handleWindowOpens();
+		initShareButtons();
 
 		// Fetch the padding amount to make space later for the floating bars
 		window.bodyPaddingTop = absint( $( 'body' ).css( 'padding-top' ).replace( 'px', '' ) );
@@ -448,7 +466,7 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			}
 		}));
 
-		$( window ).trigger( 'resize' );
+		// $( window ).trigger( 'resize' );
 
 		$( document.body ).on( 'post-load', function() {
 			initShareButtons();
@@ -463,13 +481,14 @@ var socialWarfarePlugin = socialWarfarePlugin || {};
 			}, 105 );
 		}
 
-		if ( swpPinIt.enabled ) {
-			pinitButton();
+		if( isMobile.phone ) {
+			$('.swp_whatsapp').addClass('mobile');
 		}
 
-		if( isMobile.phone ) {
-			$('.swp_whatsapp').show();
-		}
+		// Hide empty containers
+	    if( 1 === $('.swp-content-locator').parent().children().length ) {
+	        $('.swp-content-locator').parent().hide();
+	    }
 
 	});
 })( this, jQuery );

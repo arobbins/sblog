@@ -1,7 +1,7 @@
 h1, h2, h3, h4 {
   color: color(dark-blue);
   font-family: $font-secondary;
-  text-align: center;
+  text-align: left;
   line-height: 1.1;
 
   & + p {
@@ -11,7 +11,7 @@ h1, h2, h3, h4 {
 }
 
 h1 {
-  @include ms-respond(font-size, 7);
+  @include ms-respond(font-size, 6);
 
   // letter-spacing: 3px;
   word-wrap: break-word;
@@ -75,13 +75,13 @@ dd {
 }
 
 ul, ol {
-  margin: $gutter-xs 0 $gutter-m 0;
-  padding-left: $gutter-s;
+  margin: 0 0 $gutter-m 0;
+  padding-left: $gutter-m;
   list-style: decimal;
 
   li {
     margin-top: 0;
-    margin-bottom: $gutter-s;
+    margin-bottom: 0;
   }
 }
 
@@ -156,4 +156,12 @@ a {
 .error404 h1 {
   @include ms-respond(font-size, 10);
 
+}
+
+em, i {
+  font-style: italic;
+}
+
+strong, b {
+  font-weight: bold;
 }

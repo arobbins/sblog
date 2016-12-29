@@ -186,6 +186,62 @@ We have a growing archive of <a href="https://warfareplugins.com/support" rel="f
 
 == Changelog ==
 
+= 2.2.0 (29 NOV 2016) =
+
+*Important:*
+
+* Social Warfare has been developed into a core free plugin with the ability to install addons for additional functionality. If you are a a premium user, you'll need to <a href="https://warfareplugins.com/updates/social-warfare-pro/social-warfare-pro.zip" target="_blank">download</a> and install the Social Warfare - Pro addon to immediately regain access to all premium features. Additional addons are currently under development and will be released in the near future.
+
+*Maintenance:*
+
+* Refactored all of the Open Graph and Twitter Card output logic.
+* Broke the meta tags into two filters. One creates the values. The second compiles them into HTML for output. This can allow people to hook in and change specific values on the fly via an add_filter() call.
+* Refactored all of the cache functions.
+* Added a function to clean out meta fields that are no longer used or needed.
+* Added a check for invalid responses from Facebook's API
+* Adjusted the default logic and fallback color system for the side custom color option.
+* Refactored the Pinterest image logic.
+* Add an undefined check for swpPinit to avoid JS notices in the admin area.
+* Fixed an undefined index notice.
+* Removed all non-public post types from the display locations settings.
+* Added a homepage specific location setting.
+* Added a function to make the plugin not duplicate share counts when duplicating a post via the Duplicate Post plugin.
+* Consolidated some functions and files for more consistent organization.
+* Fixed Google Click/Event Tracking
+* Modify the hover pin so it's not created until after all images have finished loading.
+* Fixed the raw share text from sometimes showing up in excerpts.
+* Make the buttons not output on posts embedded into other posts (like embedded recipes).
+* Patch to prevent buttons from being added to a post more than once.
+* Remove the "active" index to prevent certain notices.
+* Fixed custom color outlines on hover.
+* Fixed an issue with double dividers on the admin options page.
+* Fixed an issue that would sometimes cause Facebook counts to disappear.
+* Fixed the http/https share recovery for pages.
+
+= 2.1.3 (4 NOV 2016) =
+
+*Maintenance:*
+
+* Updated how the registration check determines if it's been 30 days since the last check.
+* Fixed an alignment issue with the pin hover button for Internet Explorer.
+* Updated how the facebook cache rebuild works when the plugin is set to the legacy cache rebuild method.
+
+= 2.1.2 (2 NOV 2016) =
+
+*Maintenance:*
+
+* Fixed the "New Post" bug.
+* Improved registration logic.
+* Improved the cache rebuild logic.
+* Fixed a CSS alignment bug for IE.
+* Adjusted the debounce frequency for scroll events.
+* Modified how the floating bars hide and reveal.
+* Added compatibility for Grid plugin.
+* Make all the link filters return modified arrays. This allows for multiple hooks to be added.
+* Added the share recovery feature to the Facebook counts.
+* Make the Facebook share recovery detect and filter out exact matches.
+* Updated the alignment of the button icons and labels.
+
 = 2.1.1 (26 OCT 2016) =
 
 The 2.1.0 update fixed a ton of issues, but it also introduced a few bugs as well. We've been getting your reports and working as quickly as possible around the clock to get these fixed. This should fix almost everything that has been reported so far.

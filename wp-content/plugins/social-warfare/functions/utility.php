@@ -8,21 +8,6 @@
  * @since     2.1.0
  */
 
-/**
- * Get the current site's URL.
- *
- * @since  2.1.0
- * @return string The current site's URL.
- */
-function swp_get_site_url() {
-	$domain = site_url();
-
-	if ( is_multisite() ) {
-		$domain = network_site_url();
-	}
-
-	return $domain;
-}
 
 /**
  *  Round a number to the appropriate thousands.
@@ -172,3 +157,180 @@ function _swp_is_debug( $type = 'all' ) {
 
 	return (bool) apply_filters( 'swp_is_debug', $debug );
 }
+
+/**
+ * A function to clean up the available buttons Array
+ *
+ * @since 2.1.4
+ * @param Array $options The options Array
+ * @return Array $options The modified options array
+ */
+function swp_buttons_cleanup( $options ) {
+	if(isset($options['content']['active'])) {
+		unset($options['content']['active']);
+	}
+	return $options;
+}
+add_filter( 'swp_button_options', 'swp_buttons_cleanup', 999 );
+
+/**
+ * A function to recursively search arrays
+ *
+ * @since  1.0.0
+ * @access public
+ * @param  string $needle   The needle
+ * @param  string $haystack The haystack
+ * @return string/bool Return the key if found or false if nothing is found
+ */
+function recursive_array_search( $needle, $haystack ) {
+	foreach ( $haystack as $key => $value ) {
+		$current_key = $key;
+		if ( $needle === $value or (is_array( $value ) && recursive_array_search( $needle,$value ) !== false) ) {
+			return $current_key;
+		}
+	}
+	return false;
+}
+
+/**
+ * A function to gethe current URL of a page
+ *
+ * @since  1.0.0
+ * @return string The URL of the current page
+ */
+function swp_get_current_url() {
+	$page_url = 'http';
+	if ( $_SERVER['HTTPS'] == 'on' ) {$page_url .= 's';}
+	$page_url .= '://';
+	$page_url .= $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+	$page_url = strtok( $page_url, '?' );
+
+	return $page_url;
+}
+/**
+ * A function to disable the buttons on subtitles
+ *
+ * @return bool false
+ */
+function swp_disable_subs() {
+	return false;
+}
+
+/**
+ * Convert curly quotes to straight quotes
+ *
+ * @since  1.4.0
+ * @param  string $content A string of text to be filtered
+ * @return string $content The modified string of text
+ */
+function convert_smart_quotes( $content ) {
+	$content = str_replace( '"', '\'', $content );
+	$content = str_replace( '&#8220;', '\'', $content );
+	$content = str_replace( '&#8221;', '\'', $content );
+	$content = str_replace( '&#8216;', '\'', $content );
+	$content = str_replace( '&#8217;', '\'', $content );
+	return $content;
+}
+
+/**
+ * A function to make removing hooks easier
+ *
+ * @since  1.4.0
+ * @access public
+ * @param  string  $hook_name   The name of the hook
+ * @param  string  $method_name The name of the method
+ * @param  integer $priority    The hook priority
+ * @return boolean false
+ */
+function swp_remove_filter( $hook_name = '', $method_name = '', $priority = 0 ) {
+	global $wp_filter;
+
+	// Take only filters on right hook name and priority
+	if ( ! isset( $wp_filter[ $hook_name ][ $priority ] ) || ! is_array( $wp_filter[ $hook_name ][ $priority ] ) ) {
+		return false;
+	}
+
+	// Loop on filters registered
+	foreach ( (array) $wp_filter[ $hook_name ][ $priority ] as $unique_id => $filter_array ) {
+		// Test if filter is an array ! (always for class/method)
+		if ( isset( $filter_array['function'] ) && is_array( $filter_array['function'] ) ) {
+			// Test if object is a class and method is equal to param !
+			if ( is_object( $filter_array['function'][0] ) && get_class( $filter_array['function'][0] ) && $filter_array['function'][1] == $method_name ) {
+				unset( $wp_filter[ $hook_name ][ $priority ][ $unique_id ] );
+			}
+		}
+	}
+
+	return false;
+}
+
+/**
+ * Get the SWP supported post types.
+ *
+ * @return array $types A list of post type names.
+ */
+function swp_get_post_types() {
+	$types = get_post_types(
+		array(
+			'public'   => true,
+			'_builtin' => false,
+		),
+		'names'
+	);
+
+	$types[] = 'page';
+	$types[] = 'post';
+
+	return (array) apply_filters( 'swp_post_types', $types );
+}
+
+/**
+ * A function to add options to the admin options page
+ *
+ * @since  2.1.4
+ * @access public
+ * @param  array  $sw_options The array of current options
+ * @param  string $tabName    The name of the tab being modified
+ * @param  string $optionName The name of the option that the new option will be inserted next to.
+ * @param  array  $option     The array of information about the new option being added
+ * @param  string $position   Add the new option 'before' or 'after' the needle. Default => 'after'
+ * @return array  $sw_options The modified array of options
+ */
+ function swp_insert_option( $sw_options , $tabName , $optionName , $newOptionArray , $position = 'after' ) {
+
+ 	// Locate the index of the option you want to insert next to
+     $keyIndex = array_search( $optionName, array_keys( $sw_options['options'][$tabName] ) );
+
+	 if('after' === $position) {
+		 ++$keyIndex;
+	 }
+
+     // Split the array at the location of the option above
+     $first_array = array_splice ( $sw_options['options'][$tabName] , 0 , $keyIndex );
+
+     // Merge the two parts of the split array with your option added in the middle
+     $sw_options['options'][$tabName] = array_merge (
+         $first_array,
+         $newOptionArray,
+         $sw_options['options'][$tabName]
+     );
+
+     // Return the option array or the world will explode
+     return $sw_options;
+
+ }
+
+/**
+ * A function to notify premium users about installing the pro addon
+ *
+ * @since  2.2.0
+ * @return void
+ */
+function swp_premium_update_notification() {
+	global $swp_user_options;
+
+    if(!empty($swp_user_options['premiumCode']) && !defined('SWPP_PLUGIN_DIR')):
+		echo '<div class="update-nag notice is-dismissable"><p>' . __( '<b>Important:</b> We’ve made <a href="https://warfareplugins.com/social-warfare-2-2/" target="_blank">some changes</a> to how your Social Warfare premium license is applied. In order to continue getting all the Pro features you love, please <a href="https://warfareplugins.com/updates/social-warfare-pro/social-warfare-pro.zip">download the Social Warfare - Pro</a> plugin. Once installed, all of your premium features will be immediately restored.', 'social-warfare' ) . '</p></div>';
+	endif;
+ }
+ add_action( 'admin_notices', 'swp_premium_update_notification' );

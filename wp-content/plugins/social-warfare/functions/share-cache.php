@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * Register and output header meta tags
+ *
+ * @package   SocialWarfare\Functions
+ * @copyright Copyright (c) 2016, Warfare Plugins, LLC
+ * @license   GPL-3.0+
+ * @since     1.0.0
+ */
+
+defined( 'WPINC' ) || die;
+
 add_filter( 'query_vars', 'swp_add_query_vars' );
 /**
  * Register custom query vars.
@@ -31,11 +42,15 @@ function swp_cache_rebuild_rel_canonical( $info ) {
 }
 
 /**
- * **************************************************************
- *                                                                *
- *          CACHe CHECKING FUNCTION         			 			 *
- *                                                                *
- ******************************************************************/
+ * Cache checking function
+ *
+ * @since  1.0.0
+ * @access public
+ * @param  integer  $post_id The post ID
+ * @param  boolean $output  Does the caller require a response output
+ * @param  boolean $ajax    Is this being called from Ajax
+ * @return boolean true/false The status of wether the cache is fresh or not
+ */
 function swp_is_cache_fresh( $post_id, $output = false, $ajax = false ) {
 	global $swp_user_options;
 
@@ -87,10 +102,11 @@ function swp_is_cache_fresh( $post_id, $output = false, $ajax = false ) {
 
 add_action( 'wp_ajax_swp_cache_trigger', 'swp_cache_rebuild' );
 add_action( 'wp_ajax_nopriv_swp_cache_trigger', 'swp_cache_rebuild' );
+
 /**
  * Rebuild the share cache.
  *
- * @since  unkown
+ * @since  1.0.0
  * @global $wpdb
  * @return void
  */
@@ -99,43 +115,49 @@ function swp_cache_rebuild() {
 
 	$post_id = absint( $_POST['post_id'] );
 
-	// Bail if we already have fresh cache.
+	/**
+	 *  Bail if we already have fresh cache and this request is invalid.
+	 *
+	 */
 	if ( swp_is_cache_fresh( $post_id , true , true ) ) {
 		wp_send_json_error();
 		die();
 	}
 
-	// Force the cache trigger on.
+	/**
+	 *  Force the cache trigger on.
+	 *
+	 */
 	set_query_var( 'swp_cache', 'rebuild' );
 
-	// Fetch new shares
+	/**
+	 * Fetch new share counts via the various API's
+	 *
+	 * @var integer $post_id The ID of the post
+	 */
 	$shares = get_social_warfare_shares( $post_id );
 
-	// Update Bitly links
+	/**
+	 * Update Bitly links in case anything has changed with the permalink
+	 *
+	 */
 	foreach ( $shares as $key => $value ) :
 		swp_process_url( get_permalink( $post_id ) , $key , $post_id );
 	endforeach;
 
-	// Update the Pinterest image
-	$array['imageID'] = get_post_meta( $post_id , 'nc_pinterestImage' , true );
-	if ( $array['imageID'] ) :
-		$array['imageURL'] = wp_get_attachment_url( $array['imageID'] );
-		delete_post_meta( $post_id,'swp_pinterest_image_url' );
-		update_post_meta( $post_id,'swp_pinterest_image_url',$array['imageURL'] );
-	endif;
+	/**
+	 * Recheck the image URL's and then store the values
+	 * in the meta fields so that they are autoloaded with the postID
+	 * to prevent the extra queries during page loads.
+	 */
+	swp_cache_rebuild_pin_image($post_id);
+	swp_cache_rebuild_og_image($post_id);
 
-	// Update the Twitter username
-	$user_twitter_handle = get_the_author_meta( 'swp_twitter' , swp_get_author( $post_id ) );
-	if ( $user_twitter_handle ) :
-		delete_post_meta( $post_id,'swp_twitter_username' );
-		update_post_meta( $post_id,'swp_twitter_username',$user_twitter_handle );
-	else :
-		delete_post_meta( $post_id,'swp_twitter_username' );
-	endif;
+	// Remove any meta fields that we used to use, but no longer use.
+	swp_cache_remove_unused_fields($post_id);
 
-	// Update the cache timestamp
-	delete_post_meta( $post_id , 'swp_cache_timestamp' );
-	update_post_meta( $post_id , 'swp_cache_timestamp' , floor( ( ( date( 'U' ) / 60 ) / 60 ) ) );
+	// Reset the timestamp
+	swp_cache_reset_timestamp($post_id);
 
 	// Return the share count
 	wp_send_json( $shares );
@@ -144,14 +166,117 @@ function swp_cache_rebuild() {
 	wp_die();
 }
 
-add_action( 'wp_ajax_swp_facebook_shares_update', 'swp_facebook_shares_update' );
-add_action( 'wp_ajax_nopriv_swp_facebook_shares_update', 'swp_facebook_shares_update' );
+/**
+ * A function to reset the cache timestamp with the current time
+ *
+ * @since 2.1.4
+ * @access public
+ * @param integer $post_id The Post's ID
+ * @return void
+ */
+function swp_cache_reset_timestamp($post_id) {
+	delete_post_meta( $post_id , 'swp_cache_timestamp' );
+	update_post_meta( $post_id , 'swp_cache_timestamp' , floor( ( ( date( 'U' ) / 60 ) / 60 ) ) );
+}
+
+/**
+ * A function to delete the current timestamp
+ *
+ * @since 2.1.4
+ * @return void
+ */
+function swp_cache_delete_timestamp() {
+	delete_post_meta( get_the_ID() , 'swp_cache_timestamp' );
+}
+add_action( 'save_post', 'swp_cache_delete_timestamp' );
+add_action( 'save_post', 'swp_cache_store_autoloads' );
+
+/**
+ * A function to store all the fields for autoloading
+ *
+ * @since 2.1.4
+ * @return void
+ */
+function swp_cache_store_autoloads() {
+	$post_id = get_the_ID();
+	if( 'publish' === get_post_status( $post_id ) ):
+		swp_cache_rebuild_pin_image($post_id);
+		swp_cache_rebuild_og_image($post_id);
+	endif;
+}
+/**
+ * Open Graph Image
+ *
+ * Convert the open graph image ID to a URL and store it in a meta field
+ * because then the URL will be autoloaded with the post preventing the
+ * need for an additional database query during page loads.
+ *
+ * @since  2.1.4
+ * @access public
+ * @param  integer $post_id The ID of the post
+ * @return void
+ */
+function swp_cache_rebuild_og_image($post_id) {
+
+	// Check if an OG image has been declared
+	$image_id = get_post_meta( $post_id , 'nc_ogImage' , true );
+	if ( $image_id ):
+
+		$cur_image_url = get_post_meta( $post_id , 'swp_open_graph_image_url' , true );
+		$new_image_url = wp_get_attachment_url( $image_id );
+
+		// No need to update the DB if the url hasn't changed
+		if( $cur_image_url !== $new_image_url ):
+
+			$image_data = wp_get_attachment_image_src( $image_id , 'full' );
+			delete_post_meta( $post_id , 'swp_open_graph_image_data' );
+			update_post_meta( $post_id , 'swp_open_graph_image_data' , json_encode( $image_data ) );
+
+			delete_post_meta( $post_id,'swp_open_graph_image_url' );
+			update_post_meta( $post_id,'swp_open_graph_image_url' , $new_image_url );
+
+		endif;
+	else:
+		delete_post_meta( $post_id,'swp_open_graph_image_url' );
+	endif;
+}
+/**
+ * Pinterest Image
+ *
+ * Convert the pinterest image ID to a URL and store it in a meta field
+ * because then the URL will be autoloaded with the post preventing the
+ * need for an additional database query during page loads.
+ *
+ * @since  2.1.4
+ * @access public
+ * @param  integer $post_id The ID of the post
+ * @return void
+ */
+function swp_cache_rebuild_pin_image($post_id) {
+
+	// Check if a custom pinterest image has been declared
+	$pin_image_id = get_post_meta( $post_id , 'nc_pinterestImage' , true );
+	if ( $pin_image_id ) :
+		$pin_image_url = wp_get_attachment_url( $pin_image_id );
+		$cur_image_url = get_post_meta( $post_id , 'swp_pinterest_image_url' , true );
+
+		// No need to update the database if the image URL has not changed
+		if($pin_image_url !== $cur_image_url):
+			delete_post_meta( $post_id,'swp_pinterest_image_url' );
+			update_post_meta( $post_id,'swp_pinterest_image_url' , $pin_image_url );
+		endif;
+	endif;
+}
+
 /**
  * Update Facebook share counts.
  *
- * @since  unknown
+ * @since  2.1.0
  * @return void
  */
+
+add_action( 'wp_ajax_swp_facebook_shares_update', 'swp_facebook_shares_update' );
+add_action( 'wp_ajax_nopriv_swp_facebook_shares_update', 'swp_facebook_shares_update' );
 function swp_facebook_shares_update() {
 	$post_id = $_POST['post_id'];
 	$activity = $_POST['activity'];
@@ -168,41 +293,8 @@ function swp_facebook_shares_update() {
 	wp_die();
 }
 
-add_action( 'save_post', 'swp_reset_cache_timestamp' );
-/**
- * A function to reset the cache timestamp on a post after the cache is rebuilt.
- *
- * @since  2.0.0
- * @param  integer $post_id The ID of the post to be reset.
- * @return void
- */
-function swp_reset_cache_timestamp( $post_id ) {
-	delete_post_meta( $post_id,'swp_cache_timestamp' );
-
-	// Chache the og_image URL.
-	$image_id = get_post_meta( $post_id , 'nc_ogImage' , true );
-
-	if ( $image_id ) :
-		$image_url = wp_get_attachment_url( $image_id );
-		delete_post_meta( $post_id,'swp_open_graph_image_url' );
-		update_post_meta( $post_id,'swp_open_graph_image_url',$image_url );
-	else :
-		$image_url = wp_get_attachment_url( get_post_thumbnail_id( $post_id ) );
-		delete_post_meta( $post_id,'swp_open_thumbnail_url' );
-		update_post_meta( $post_id,'swp_open_thumbnail_url' , $image_url );
-		delete_post_meta( $post_id,'swp_open_graph_image_url' );
-	endif;
-
-	// Update the Pinterest image
-	$array['imageID'] = get_post_meta( $post_id , 'nc_pinterestImage' , true );
-	if ( $array['imageID'] ) :
-		$array['imageURL'] = wp_get_attachment_url( $array['imageID'] );
-		delete_post_meta( $post_id,'swp_pinterest_image_url' );
-		update_post_meta( $post_id,'swp_pinterest_image_url',$array['imageURL'] );
-	endif;
-}
-
 add_filter( 'swp_footer_scripts' , 'swp_output_cache_trigger' );
+
 /**
  * Trigger cache rebuild.
  *
@@ -213,13 +305,33 @@ add_filter( 'swp_footer_scripts' , 'swp_output_cache_trigger' );
  */
 function swp_output_cache_trigger( $info ) {
 
-	// Bail early if we're not on a single page or we have fresh cache.
-	if ( ! is_singular() || swp_is_cache_fresh( get_the_ID(), true ) ) {
-		return $info;
+	if( $info['swp_user_options']['recover_shares'] == true ) {
+		$alternateURL = swp_get_alt_permalink( $info['postID'] );
+		$alternateURL = apply_filters( 'swp_recovery_filter',$alternateURL );
+	} else {
+		$alternateURL = false;
 	}
 
 	// Bail if we're not using the newer cache method.
-	if ( 'legacy' === $info['swp_user_options']['cacheMethod'] ) {
+	if ( 'legacy' === $info['swp_user_options']['cacheMethod'] && is_singular() ) {
+		ob_start(); ?>
+
+		var swp_buttons_exist = !!document.getElementsByClassName( 'nc_socialPanel' );
+		if ( swp_buttons_exist ) {
+			swp_admin_ajax = '<?php echo admin_url( 'admin-ajax.php' ); ?>';
+			swp_post_id='<?php echo $info['postID']; ?>';
+			swp_post_url='<?php echo get_permalink(); ?>';
+			swp_post_recovery_url = '<?php echo $alternateURL; ?>';
+			socialWarfarePlugin.fetchShares();
+		}
+
+		<?php
+		$info['footer_output'] = ob_get_clean();
+		return $info;
+	}
+
+	// Bail early if we're not on a single page or we have fresh cache.
+	if ( (! is_singular() || swp_is_cache_fresh( get_the_ID(), true )) && 'rebuild' !== get_query_var( 'swp_cache' ) ) {
 		return $info;
 	}
 
@@ -231,6 +343,7 @@ function swp_output_cache_trigger( $info ) {
 	// Trigger the cache rebuild.
 	if ( 'rebuild' === get_query_var( 'swp_cache' ) || false === swp_is_cache_fresh( get_the_ID(), true ) ) {
 		ob_start();
+
 		?>
 		swp_admin_ajax = '<?php echo admin_url( 'admin-ajax.php' ); ?>';
 		var swp_buttons_exist = !!document.getElementsByClassName( 'nc_socialPanel' );
@@ -244,13 +357,31 @@ function swp_output_cache_trigger( $info ) {
 					console.log(response);
 				});
 			});
+			swp_post_id='<?php echo $info['postID']; ?>';
+			swp_post_url='<?php echo get_permalink(); ?>';
+			swp_post_recovery_url = '<?php echo $alternateURL; ?>';
+			socialWarfarePlugin.fetchShares();
 		}
-		swp_post_id='<?php echo $info['postID']; ?>';
-		swp_post_url='<?php echo get_permalink(); ?>';
-		socialWarfarePlugin.fetchFacebookShares();
 		<?php
-		$info['footer_output'] = ob_get_clean();
+		$info['footer_output'] .= ob_get_clean();
 	}
 
 	return $info;
+}
+
+/**
+ * A function to remove fields that we no longer use
+ *
+ * @since  2.1.4
+ * @param  integer $post_id The post ID
+ * @return void
+ */
+function swp_cache_remove_unused_fields($post_id){
+	delete_post_meta( $post_id, 'sw_fb_author' );
+	delete_post_meta( $post_id, 'sw_open_graph_image_url' );
+	delete_post_meta( $post_id, 'sw_open_graph_image_data' );
+	delete_post_meta( $post_id, 'sw_open_thumbnail_url' );
+	delete_post_meta( $post_id, 'swp_open_thumbnail_url' );
+	delete_post_meta( $post_id, 'sw_pinterest_image_url' );
+	delete_post_meta( $post_id, 'swp_twitter_username' );
 }

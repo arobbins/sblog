@@ -19,6 +19,10 @@ trait InstallUtils
         if (defined('WP_CLI') && WP_CLI) {
             $this->updateOptions(['enable' => '1']);
         }
+        if (IS_PRO && (!$this->options['pro_update_username'] || !$this->options['pro_update_password'])) {
+            $configure_pro_updater_url = add_query_arg(urlencode_deep(['page' => GLOBAL_NS, GLOBAL_NS.'_configure_pro_updater' => 1]), network_admin_url('/admin.php')).'#'.SLUG_TD.'-configure-pro-updater';
+            $this->enqueueMainNotice('<form method="post" action="'.esc_url($configure_pro_updater_url).'" style="margin:.5em 0;">'.sprintf(__('<strong>IMPORTANT:</strong> To be notified when a new version of %1$s is available, please &nbsp; %2$s', 'comet-cache'), esc_html(NAME), '<button type="submit" class="button" style="vertical-align:middle;">'.__('Configure Pro Update Credentials', 'comet-cache').'</button>').'</form>', ['class' => 'notice notice-info', 'push_to_top' => true, 'persistent' => true, 'persistent_key' => 'configure-pro-updater', 'dismissable' => true]);
+        }
         if (!$this->options['welcomed'] && !$this->options['enable']) {
             $settings_url = add_query_arg(urlencode_deep(['page' => GLOBAL_NS]), network_admin_url('/admin.php'));
             $this->enqueueMainNotice(sprintf(__('<strong>%1$s</strong> successfully installed! :-) <strong>Please <a href="%2$s">enable caching and review options</a>.</strong>', 'comet-cache'), esc_html(NAME), esc_attr($settings_url)), ['push_to_top' => true]);
@@ -31,6 +35,7 @@ trait InstallUtils
         $this->addWpHtaccess();
         $this->addAdvancedCache();
         $this->updateBlogPaths();
+        
         $this->autoClearCache();
     }
 
@@ -44,26 +49,36 @@ trait InstallUtils
     public function checkVersion()
     {
         $prev_version = $this->options['version'];
+
         if (version_compare($prev_version, VERSION, '>=')) {
             return; // Nothing to do; up-to-date.
         }
-        $this->options = $this->getOptions(false, true); // Don't discard options not present in $this->default_options, and DO force-pull options directly from get_site_option()
+        $this->options = $this->getOptions(false, true);
+        // Don't discard options not present in $this->default_options,
+        // and DO force-pull options directly from get_site_option().
 
-        $this->updateOptions(['version' => VERSION], false); // Retain all options in database for VS Upgrade routine
+        $this->updateOptions(['version' => VERSION], false);
+        // Retain all options in database for VS Upgrade routine.
 
         new Classes\VsUpgrades($prev_version);
 
-        $this->updateOptions(['version' => VERSION], true); // Discard options not present in $this->default_options
+        $this->updateOptions(['version' => VERSION], true);
+        // Discard options not present in $this->default_options.
 
         if ($this->options['enable']) {
             $this->addWpCacheToWpConfig();
             $this->addWpHtaccess();
             $this->addAdvancedCache();
             $this->updateBlogPaths();
+            
         }
         $this->wipeCache(); // Fresh start now.
 
         $this->enqueueMainNotice(sprintf(__('<strong>%1$s:</strong> detected a new version of itself. Recompiling w/ latest version... wiping the cache... all done :-)', 'comet-cache'), esc_html(NAME)), ['push_to_top' => true]);
+
+        $this->dismissMainNotice('pro_update_error');
+        $this->dismissMainNotice('new-lite-version-available');
+        $this->dismissMainNotice('new-pro-version-available');
     }
 
     /**
@@ -95,11 +110,9 @@ trait InstallUtils
 
         if (!defined('WP_UNINSTALL_PLUGIN')) {
             return; // Disallow.
-        }
-        if (empty($GLOBALS[GLOBAL_NS.'_uninstalling'])) {
+        } elseif (empty($GLOBALS[GLOBAL_NS.'_uninstalling'])) {
             return; // Not uninstalling.
-        }
-        if (!current_user_can($this->uninstall_cap)) {
+        } elseif (!current_user_can($this->uninstall_cap)) {
             return; // Extra layer of security.
         }
         $this->removeWpCacheFromWpConfig();
@@ -141,38 +154,27 @@ trait InstallUtils
     {
         if (!$this->options['enable']) {
             return ''; // Nothing to do.
-        }
-        if (!($wp_config_file = $this->findWpConfigFile())) {
+        } elseif (!($wp_config_file = $this->findWpConfigFile())) {
             return ''; // Unable to find `/wp-config.php`.
-        }
-        if (!is_readable($wp_config_file)) {
+        } elseif (!is_readable($wp_config_file)) {
             return ''; // Not possible.
-        }
-        if (!($wp_config_file_contents = file_get_contents($wp_config_file))) {
+        } elseif (!($wp_config_file_contents = file_get_contents($wp_config_file))) {
             return ''; // Failure; could not read file.
-        }
-        if (!($wp_config_file_contents_no_whitespace = php_strip_whitespace($wp_config_file))) {
+        } elseif (!($wp_config_file_contents_no_whitespace = php_strip_whitespace($wp_config_file))) {
             return ''; // Failure; file empty
-        }
-        if (preg_match('/\bdefine\s*\(\s*([\'"])WP_CACHE\\1\s*,\s*(?:\-?[1-9][0-9\.]*|true|([\'"])(?:[^0\'"]|[^\'"]{2,})\\2)\s*\)\s*;/ui', $wp_config_file_contents_no_whitespace)) {
+        } elseif (preg_match('/\bdefine\s*\(\s*([\'"])WP_CACHE\\1\s*,\s*(?:\-?[1-9][0-9\.]*|true|([\'"])(?:[^0\'"]|[^\'"]{2,})\\2)\s*\)\s*;/ui', $wp_config_file_contents_no_whitespace)) {
             return $wp_config_file_contents; // It's already in there; no need to modify this file.
-        }
-        if (!($wp_config_file_contents = $this->removeWpCacheFromWpConfig())) {
+        } elseif (!($wp_config_file_contents = $this->removeWpCacheFromWpConfig())) {
             return ''; // Unable to remove previous value.
-        }
-        if (!($wp_config_file_contents = preg_replace('/^\s*(\<\?php|\<\?)\s+/ui', '${1}'."\n"."define( 'WP_CACHE', true );"."\n", $wp_config_file_contents, 1))) {
+        } elseif (!($wp_config_file_contents = preg_replace('/^\s*(\<\?php|\<\?)\s+/ui', '${1}'."\n"."define( 'WP_CACHE', true );"."\n", $wp_config_file_contents, 1))) {
             return ''; // Failure; something went terribly wrong here.
-        }
-        if (mb_strpos($wp_config_file_contents, "define( 'WP_CACHE', true );") === false) {
+        } elseif (mb_strpos($wp_config_file_contents, "define( 'WP_CACHE', true );") === false) {
             return ''; // Failure; unable to add; unexpected PHP code.
-        }
-        if (defined('DISALLOW_FILE_MODS') && DISALLOW_FILE_MODS) {
+        } elseif (defined('DISALLOW_FILE_MODS') && DISALLOW_FILE_MODS) {
             return ''; // We may NOT edit any files.
-        }
-        if (!is_writable($wp_config_file)) {
+        } elseif (!is_writable($wp_config_file)) {
             return ''; // Not possible.
-        }
-        if (!file_put_contents($wp_config_file, $wp_config_file_contents)) {
+        } elseif (!file_put_contents($wp_config_file, $wp_config_file_contents)) {
             return ''; // Failure; could not write changes.
         }
         return $wp_config_file_contents;
@@ -190,35 +192,25 @@ trait InstallUtils
     {
         if (!($wp_config_file = $this->findWpConfigFile())) {
             return ''; // Unable to find `/wp-config.php`.
-        }
-        if (!is_readable($wp_config_file)) {
+        } elseif (!is_readable($wp_config_file)) {
             return ''; // Not possible.
-        }
-        if (!($wp_config_file_contents = file_get_contents($wp_config_file))) {
+        } elseif (!($wp_config_file_contents = file_get_contents($wp_config_file))) {
             return ''; // Failure; could not read file.
-        }
-        if (!($wp_config_file_contents_no_whitespace = php_strip_whitespace($wp_config_file))) {
+        } elseif (!($wp_config_file_contents_no_whitespace = php_strip_whitespace($wp_config_file))) {
             return ''; // Failure; file empty
-        }
-        if (!preg_match('/([\'"])WP_CACHE\\1/ui', $wp_config_file_contents_no_whitespace)) {
+        } elseif (!preg_match('/([\'"])WP_CACHE\\1/ui', $wp_config_file_contents_no_whitespace)) {
             return $wp_config_file_contents; // Already gone.
-        }
-        if (preg_match('/\bdefine\s*\(\s*([\'"])WP_CACHE\\1\s*,\s*(?:0|FALSE|NULL|([\'"])0?\\2)\s*\)\s*;/ui', $wp_config_file_contents_no_whitespace) && !is_writable($wp_config_file)) {
+        } elseif (preg_match('/\bdefine\s*\(\s*([\'"])WP_CACHE\\1\s*,\s*(?:0|FALSE|NULL|([\'"])0?\\2)\s*\)\s*;/ui', $wp_config_file_contents_no_whitespace) && !is_writable($wp_config_file)) {
             return $wp_config_file_contents; // It's already disabled, and since we can't write to this file let's let this slide.
-        }
-        if (!($wp_config_file_contents = preg_replace('/\bdefine\s*\(\s*([\'"])WP_CACHE\\1\s*,\s*(?:\-?[0-9\.]+|TRUE|FALSE|NULL|([\'"])[^\'"]*\\2)\s*\)\s*;/ui', '', $wp_config_file_contents))) {
+        } elseif (!($wp_config_file_contents = preg_replace('/\bdefine\s*\(\s*([\'"])WP_CACHE\\1\s*,\s*(?:\-?[0-9\.]+|TRUE|FALSE|NULL|([\'"])[^\'"]*\\2)\s*\)\s*;/ui', '', $wp_config_file_contents))) {
             return ''; // Failure; something went terribly wrong here.
-        }
-        if (preg_match('/([\'"])WP_CACHE\\1/ui', $wp_config_file_contents)) {
+        } elseif (preg_match('/([\'"])WP_CACHE\\1/ui', $wp_config_file_contents)) {
             return ''; // Failure; perhaps the `/wp-config.php` file contains syntax we cannot remove safely.
-        }
-        if (defined('DISALLOW_FILE_MODS') && DISALLOW_FILE_MODS) {
+        } elseif (defined('DISALLOW_FILE_MODS') && DISALLOW_FILE_MODS) {
             return ''; // We may NOT edit any files.
-        }
-        if (!is_writable($wp_config_file)) {
+        } elseif (!is_writable($wp_config_file)) {
             return ''; // Not possible.
-        }
-        if (!file_put_contents($wp_config_file, $wp_config_file_contents)) {
+        } elseif (!file_put_contents($wp_config_file, $wp_config_file_contents)) {
             return ''; // Failure; could not write changes.
         }
         return $wp_config_file_contents;
@@ -245,8 +237,7 @@ trait InstallUtils
     {
         if (!$this->options['enable']) {
             return; // Nothing to do.
-        }
-        if (!empty($_REQUEST[GLOBAL_NS])) {
+        } elseif (!empty($_REQUEST[GLOBAL_NS])) {
             return; // Skip on plugin actions.
         }
         $cache_dir                 = $this->cacheDir();
@@ -286,20 +277,20 @@ trait InstallUtils
 
         if (is_file($advanced_cache_file) && !is_writable($advanced_cache_file)) {
             return false; // Not possible to create.
-        }
-        if (!is_file($advanced_cache_file) && !is_writable(dirname($advanced_cache_file))) {
+        } elseif (!is_file($advanced_cache_file) && !is_writable(dirname($advanced_cache_file))) {
             return false; // Not possible to create.
-        }
-        if (!is_file($advanced_cache_template) || !is_readable($advanced_cache_template)) {
+        } elseif (!is_file($advanced_cache_template) || !is_readable($advanced_cache_template)) {
             return false; // Template file is missing; or not readable.
-        }
-        if (!($advanced_cache_contents = file_get_contents($advanced_cache_template))) {
+        } elseif (!($advanced_cache_contents = file_get_contents($advanced_cache_template))) {
             return false; // Template file is missing; or is not readable.
         }
         $possible_advanced_cache_constant_key_values = array_merge(
             $this->options, // The following additional keys are dynamic.
             [
                 'cache_dir' => $this->basePathTo($this->cache_sub_dir),
+
+                
+
                 
             ]
         );
@@ -313,10 +304,11 @@ trait InstallUtils
                 case 'exclude_hosts': // Converts to regex (caSe insensitive).
                 case 'exclude_uris': // Converts to regex (caSe insensitive).
                 case 'exclude_client_side_uris': // Converts to regex (caSe insensitive).
+                case 'ignore_get_request_vars': // Converts to regex (caSe insensitive).
                 case 'exclude_refs': // Converts to regex (caSe insensitive).
                 case 'exclude_agents': // Converts to regex (caSe insensitive).
 
-                    
+                
 
                     $_value = "'".$this->escSq($this->lineDelimitedPatternsToRegex($_value))."'";
 
@@ -336,8 +328,7 @@ trait InstallUtils
                 $_value,
                 $advanced_cache_contents
             );
-        }
-        unset($_option, $_value, $_values, $_response); // Housekeeping.
+        } // unset($_option, $_value, $_values, $_response); // Housekeeping.
 
         if (mb_strpos(PLUGIN_FILE, WP_CONTENT_DIR) === 0) {
             $plugin_file = "WP_CONTENT_DIR.'".$this->escSq(str_replace(WP_CONTENT_DIR, '', PLUGIN_FILE))."'";
@@ -397,11 +388,9 @@ trait InstallUtils
 
         if (!is_file($advanced_cache_file)) {
             return true; // Already gone.
-        }
-        if (is_readable($advanced_cache_file) && filesize($advanced_cache_file) === 0) {
+        } elseif (is_readable($advanced_cache_file) && filesize($advanced_cache_file) === 0) {
             return true; // Already gone; i.e. it's empty already.
-        }
-        if (!is_writable($advanced_cache_file)) {
+        } elseif (!is_writable($advanced_cache_file)) {
             return false; // Not possible.
         }
         /* Empty the file only. This way permissions are NOT lost in cases where
@@ -465,11 +454,9 @@ trait InstallUtils
     {
         if (!$this->options['enable']) {
             return; // Nothing to do.
-        }
-        if (!is_multisite()) {
+        } elseif (!is_multisite()) {
             return; // N/A.
-        }
-        if (!empty($_REQUEST[GLOBAL_NS])) {
+        } elseif (!empty($_REQUEST[GLOBAL_NS])) {
             return; // Skip on plugin actions.
         }
         $cache_dir       = $this->cacheDir();
@@ -499,8 +486,7 @@ trait InstallUtils
 
         if (!$this->options['enable']) {
             return $value; // Nothing to do.
-        }
-        if (!is_multisite()) {
+        } elseif (!is_multisite()) {
             return $value; // N/A.
         }
         $cache_dir       = $this->cacheDir();
@@ -508,7 +494,8 @@ trait InstallUtils
 
         $cache_lock = $this->cacheLock();
 
-        clearstatcache();
+        clearstatcache(); // Clear `stat()` cache.
+
         if (!file_exists($cache_dir)) {
             mkdir($cache_dir, 0775, true);
         }
@@ -529,7 +516,7 @@ trait InstallUtils
                 if (!$_path || $_path === '/') {
                     unset($paths[$_key]); // Exclude main site.
                 }
-            }
+            } // Must unset iteration by reference here.
             unset($_key, $_path); // Housekeeping.
 
             file_put_contents($blog_paths_file, serialize($paths));
@@ -538,6 +525,8 @@ trait InstallUtils
 
         return $value; // Pass through untouched (always).
     }
+
+    
 
     /**
      * Deletes base directory.

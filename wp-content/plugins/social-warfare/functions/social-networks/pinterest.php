@@ -87,47 +87,20 @@ function swp_pinterest_button_html( $array ) {
 			$pi = get_post_meta( $array['postID'] , 'nc_pinterestImage' , true );
 
 			// Pinterest Username
-			$pinterest_username = $array['options']['pinterestID'];
-			if ( isset( $pinterest_username ) && $pinterest_username != '' ) :
-				$pu = ' via @' . str_replace( '@','',$pinterest_username );
+			if ( !empty( $array['options']['pinterestID'] ) ) :
+				$pu = ' via @' . str_replace( '@' , '' , $array['options']['pinterestID'] );
 			else :
 				$pu = '';
 			endif;
 
-			if ( swp_is_cache_fresh( $array['postID'] ) == false ) :
-
-				// Check if an image ID has been provided
-				$array['imageID'] = get_post_meta( $array['postID'] , 'nc_pinterestImage' , true );
-				if ( $array['imageID'] ) :
-					$array['imageURL'] = wp_get_attachment_url( $array['imageID'] );
-					delete_post_meta( $array['postID'],'swp_pinterest_image_url' );
-					update_post_meta( $array['postID'],'swp_pinterest_image_url',$array['imageURL'] );
-					// else:
-					// $array['imageURL'] = wp_get_attachment_url( get_post_thumbnail_id( $array['postID'] ) );
-					// delete_post_meta($array['postID'],'swp_pinterest_image_url');
-				endif;
-
-			else :
-
-				// Check if we have a cached Open Graph Image URL
-				$array['imageURL'] = get_post_meta( $array['postID'] , 'swp_pinterest_image_url' , true );
-
-				// If not, let's check to see if we have an ID to generate one
-				if ( ! $array['imageURL'] ) :
-
-					// Check for an Open Graph Image ID
-					$array['imageID'] = get_post_meta( $array['postID'] , 'nc_pinterestImage' , true );
-					if ( $array['imageID'] ) :
-
-						// If we find one, let's convert it to a link and cache it for next time
-						$array['imageURL'] = wp_get_attachment_url( $array['imageID'] );
-						delete_post_meta( $array['postID'],'swp_pinterest_image_url' );
-						update_post_meta( $array['postID'],'swp_pinterest_image_url',$array['imageURL'] );
-					else :
-
-						// If we don't find one, let's see if we can use a post thumbnail
-						$array['imageURL'] = wp_get_attachment_url( get_post_thumbnail_id( $array['postID'] ) );
-					endif;
+			$array['imageURL'] = false;
+			$image_url = get_post_meta( $array['postID'] , 'swp_pinterest_image_url' , true );
+			if( !empty( $image_url ) ):
+				$array['imageURL'] = $image_url;
+			else:
+				$thumbnail_url = wp_get_attachment_url( get_post_thumbnail_id( $array['postID'] ) );
+				if( !empty( $thumbnail_url ) ):
+					$array['imageURL'] = $thumbnail_url;
 				endif;
 			endif;
 
@@ -142,7 +115,13 @@ function swp_pinterest_button_html( $array ) {
 			$title = strip_tags( get_the_title( $array['postID'] ) );
 			$title = str_replace( '|','',$title );
 
-			if ( $pi != '' && is_swp_registered() ) :
+			if( function_exists('is_swp_registered') ):
+				$swp_registration = is_swp_registered();
+			else:
+				$swp_registration = false;
+			endif;
+
+			if ( $pi != '' && true === $swp_registration ) :
 				$a = '<a rel="nofollow" data-link="https://pinterest.com/pin/create/button/?url=' . $pinterestLink . '' . $pi . '&description=' . ($pd != '' ? urlencode( html_entity_decode( $pd . $pu, ENT_COMPAT, 'UTF-8' ) ) : urlencode( html_entity_decode( $title . $pu, ENT_COMPAT, 'UTF-8' ) )) . '" class="nc_tweet" data-count="0">';
 			else :
 				$a = '<a rel="nofollow" onClick="var e=document.createElement(\'script\');e.setAttribute(\'type\',\'text/javascript\');e.setAttribute(\'charset\',\'UTF-8\');e.setAttribute(\'src\',\'//assets.pinterest.com/js/pinmarklet.js?r=\'+Math.random()*99999999);document.body.appendChild(e);" class="nc_tweet noPop">';

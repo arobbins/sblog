@@ -5,7 +5,7 @@
   width: 100%;
 
   .component-promo {
-    margin-top: 0;
+    margin-top: $gutter-xxs;
   }
 
   @include device("max", 900) {

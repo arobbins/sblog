@@ -20,7 +20,7 @@ class MenuPageOptions extends MenuPage
         global $is_nginx; // WP global for web server checks below.
         global $is_apache; // WP global for web server checks below.
 
-        echo '<form id="plugin-menu-page" class="plugin-menu-page" method="post" enctype="multipart/form-data"'.
+        echo '<form id="plugin-menu-page" class="plugin-menu-page" method="post" enctype="multipart/form-data" autocomplete="off"'.
              ' action="'.esc_attr(add_query_arg(urlencode_deep(['page' => GLOBAL_NS, '_wpnonce' => wp_create_nonce()]), self_admin_url('/admin.php'))).'">'."\n";
 
         /* ----------------------------------------------------------------------------------------- */
@@ -30,11 +30,11 @@ class MenuPageOptions extends MenuPage
         if (is_multisite()) {
             echo '<button type="button" class="plugin-menu-page-wipe-cache" style="float:right; margin-left:15px;" title="'.esc_attr(__('Wipe Cache (Start Fresh); clears the cache for all sites in this network at once!', 'comet-cache')).'"'.
                  '  data-action="'.esc_attr(add_query_arg(urlencode_deep(['page' => GLOBAL_NS, '_wpnonce' => wp_create_nonce(), GLOBAL_NS => ['wipeCache' => '1']]), self_admin_url('/admin.php'))).'">'.
-                 '  '.__('Wipe', 'comet-cache').' <img src="'.esc_attr($this->plugin->url('/src/client-s/images/wipe.png')).'" style="width:16px; height:16px;" /></button>'."\n";
+                 '  '.__('Wipe', 'comet-cache').' <img src="'.esc_attr($this->plugin->url('/src/client-s/images/wipe.png')).'" style="width:16px; height:16px; display:inline-block;" /></button>'."\n";
         }
         echo '   <button type="button" class="plugin-menu-page-clear-cache" style="float:right;" title="'.esc_attr(__('Clear Cache (Start Fresh)', 'comet-cache').((is_multisite()) ? __('; affects the current site only.', 'comet-cache') : '')).'"'.
              '      data-action="'.esc_attr(add_query_arg(urlencode_deep(['page' => GLOBAL_NS, '_wpnonce' => wp_create_nonce(), GLOBAL_NS => ['clearCache' => '1']]), self_admin_url('/admin.php'))).'">'.
-             '      '.__('Clear', 'comet-cache').' <img src="'.esc_attr($this->plugin->url('/src/client-s/images/clear.png')).'" style="width:16px; height:16px;" /></button>'."\n";
+             '      '.__('Clear', 'comet-cache').' <img src="'.esc_attr($this->plugin->url('/src/client-s/images/clear.png')).'" style="width:16px; height:16px; display:inline-block;" /></button>'."\n";
 
         echo '   <button type="button" class="plugin-menu-page-restore-defaults"'.// Restores default options.
              '      data-confirmation="'.esc_attr(__('Restore default plugin options? You will lose all of your current settings! Are you absolutely sure about this?', 'comet-cache')).'"'.
@@ -79,30 +79,16 @@ class MenuPageOptions extends MenuPage
 
         if (IS_PRO) {
             echo '<div class="plugin-menu-page-version">'."\n";
-            echo '  '.sprintf(__('%1$s&trade; Pro v%2$s', 'comet-cache'), esc_html(NAME), esc_html(VERSION))."\n";
-
-            if ($this->plugin->options['latest_pro_version'] && version_compare(VERSION, $this->plugin->options['latest_pro_version'], '<')) {
-                if (!$this->plugin->options['pro_update_username'] || !$this->plugin->options['pro_update_password']) {
-                    echo '(<a href="#" style="font-weight:bold;" onclick="alert(\''.sprintf(__('A username and license key are required to complete an upgrade. See: %1$s → Plugin Options → \\\'Authentication for Automatic Updates\\\'. Enter the required details and try again.', 'comet-cache'), NAME).'\'); return false;">'.__('update available', 'comet-cache').'</a>)'."\n";
-                } else {
-                    echo '(<a href="'.esc_attr(self_admin_url('/update-core.php')).'" style="font-weight:bold;">'.__('update available', 'comet-cache').'</a>)'."\n";
-                }
-            } else {
-                echo '(<a href="'.esc_attr('https://cometcache.com/changelog/').'" target="_blank">'.__('changelog', 'comet-cache').'</a>)'."\n";
-            }
+            echo    sprintf(__('%1$s&trade; Pro v%2$s', 'comet-cache'), esc_html(NAME), esc_html(VERSION))."\n";
+            echo    '(<a href="'.esc_attr('https://cometcache.com/changelog/').'" target="_blank">'.__('changelog', 'comet-cache').'</a>)'."\n";
             echo '</div>'."\n";
         } else { // For the lite version (default behavior).
             echo '<div class="plugin-menu-page-version">'."\n";
-            echo '  '.sprintf(__('%1$s&trade; v%2$s', 'comet-cache'), esc_html(NAME), esc_html(VERSION))."\n";
-
-            if ($this->plugin->options['latest_lite_version'] && version_compare(VERSION, $this->plugin->options['latest_lite_version'], '<')) {
-                echo '(<a href="'.esc_attr(self_admin_url('/plugins.php')).'" style="font-weight:bold;">'.__('update available', 'comet-cache').'</a>)'."\n";
-            } else {
-                echo '(<a href="'.esc_attr('http://cometcache.com/changelog-lite/').'" target="_blank">'.__('changelog', 'comet-cache').'</a>)'."\n";
-            }
+            echo    sprintf(__('%1$s&trade; v%2$s', 'comet-cache'), esc_html(NAME), esc_html(VERSION))."\n";
+            echo    '(<a href="'.esc_attr('http://cometcache.com/changelog-lite/').'" target="_blank">'.__('changelog', 'comet-cache').'</a>)'."\n";
             echo '</div>'."\n";
         }
-        echo '   <img src="'.$this->plugin->url('/src/client-s/images/options-'.(IS_PRO ? 'pro' : 'lite').'.png').'" alt="'.esc_attr(__('Plugin Options', 'comet-cache')).'" />'."\n";
+        echo '    <img src="'.$this->plugin->url('/src/client-s/images/options-'.(IS_PRO ? 'pro' : 'lite').'.png').'" alt="'.esc_attr(__('Plugin Options', 'comet-cache')).'" />'."\n";
 
         echo '<div style="clear:both;"></div>'."\n";
 
@@ -177,6 +163,11 @@ class MenuPageOptions extends MenuPage
             echo '   <i class="si si-thumbs-down"></i> '.__('Failed to remove your <code>/wp-content/advanced-cache.php</code> file. Most likely a permissions error. Please delete (or empty the contents of) this file: <code>/wp-content/advanced-cache.php</code>.', 'comet-cache')."\n";
             echo '</div>'."\n";
         }
+        if (!empty($_REQUEST[GLOBAL_NS.'_ua_info_dir_population_failure'])) {
+            echo '<div class="plugin-menu-page-notice error">'."\n";
+            echo '   <i class="si si-thumbs-down"></i> '.sprintf(__('Failed to populate User-Agent detection files for Mobile-Adaptive Mode. User-Agent detection files are pulled from a remote location so you\'ll always have the most up-to-date information needed for accurate detection. However, it appears the remote source of this information is currently unvailable. Please wait 15 minutes, then try saving your %1$s options again.', 'comet-cache'), esc_html(NAME))."\n";
+            echo '</div>'."\n";
+        }
         if (!IS_PRO && $this->plugin->isProPreview()) {
             echo '<div class="plugin-menu-page-notice info">'."\n";
             echo '<a href="'.add_query_arg(urlencode_deep(['page' => GLOBAL_NS]), self_admin_url('/admin.php')).'" class="pull-right" style="margin:0 0 15px 25px; float:right; font-variant:small-caps; text-decoration:none;">'.__('close', 'comet-cache').' <i class="si si-eye-slash"></i></a>'."\n";
@@ -208,8 +199,7 @@ class MenuPageOptions extends MenuPage
         echo '   </a>'."\n";
 
         echo '   <div class="plugin-menu-page-panel-body'.((!$this->plugin->options['enable']) ? ' open' : '').' clearfix">'."\n";
-        echo '      <img src="'.esc_attr($this->plugin->url('/src/client-s/images/tach.png')).'" style="float:right; width:100px; margin-left:1em;" />'."\n";
-        echo '      <p style="float:right; font-size:120%; font-weight:bold;">'.sprintf(__('%1$s&trade; = SPEED<em>!!</em>', 'comet-cache'), esc_html(NAME)).'</p>'."\n";
+        echo '      <p class="speed"><img src="'.esc_attr($this->plugin->url('/src/client-s/images/tach.png')).'" style="float:right; width:100px; margin-left:1em;" />'.sprintf(__('%1$s&trade; = SPEED<em>!!</em>', 'comet-cache'), esc_html(NAME)).'</p>'."\n";
         echo '      <p><label class="switch-primary"><input type="radio" name="'.esc_attr(GLOBAL_NS).'[saveOptions][enable]" value="1"'.checked($this->plugin->options['enable'], '1', false).' /> '.sprintf(__('Yes, enable %1$s&trade;', 'comet-cache'), esc_html(NAME)).' <i class="si si-magic si-flip-horizontal"></i></label> &nbsp;&nbsp;&nbsp; <label><input type="radio" name="'.esc_attr(GLOBAL_NS).'[saveOptions][enable]" value="0"'.checked($this->plugin->options['enable'], '0', false).' /> '.__('No, disable.', 'comet-cache').'</label></p>'."\n";
         echo '      <p class="info" style="font-family:\'Georgia\', serif; font-size:110%; margin-top:1.5em;">'.sprintf(__('<strong>HUGE Time-Saver:</strong> Approx. 95%% of all WordPress sites running %1$s, simply enable it here; and that\'s it :-) <strong>No further configuration is necessary (really).</strong> All of the other options (down below) are already tuned for the BEST performance on a typical WordPress installation. Simply enable %1$s here and click "Save All Changes". If you get any warnings please follow the instructions given. Otherwise, you\'re good <i class="si si-smile-o"></i>. This plugin is designed to run just fine like it is. Take it for a spin right away; you can always fine-tune things later if you deem necessary.', 'comet-cache'), esc_html(NAME)).'</p>'."\n";
         echo '      <hr />'."\n";
@@ -230,13 +220,13 @@ class MenuPageOptions extends MenuPage
         /* ----------------------------------------------------------------------------------------- */
 
         if (IS_PRO || $this->plugin->isProPreview()) {
-            echo '<div class="plugin-menu-page-panel">'."\n";
+            echo '<div class="plugin-menu-page-panel" id="'.esc_attr(SLUG_TD.'-configure-pro-updater').'">'."\n";
 
-            echo '   <a href="#" class="plugin-menu-page-panel-heading'.(!IS_PRO ? ' pro-preview-feature' : '').'">'."\n";
+            echo '   <a href="#" class="plugin-menu-page-panel-heading'.(!empty($_REQUEST[GLOBAL_NS.'_configure_pro_updater']) ? ' open' : '').'" data-pro-version-only="'.(!IS_PRO ? __('pro version only', 'comet-cache') : '').'">'."\n";
             echo '      <i class="si si-sign-in"></i> '.__('Update Credentials', 'comet-cache')."\n";
             echo '   </a>'."\n";
 
-            echo '   <div class="plugin-menu-page-panel-body clearfix">'."\n";
+            echo '   <div class="plugin-menu-page-panel-body'.(!empty($_REQUEST[GLOBAL_NS.'_configure_pro_updater']) ? ' open' : '').' clearfix">'."\n";
 
             echo '      <i class="si si-user si-4x" style="float:right; margin: 0 0 0 25px;"></i>'."\n";
 
@@ -249,10 +239,19 @@ class MenuPageOptions extends MenuPage
             echo '      <h3>'.sprintf(__('License Key', 'comet-cache'), esc_html(NAME)).'</h3>'."\n";
             echo '      <p><input type="password" name="'.esc_attr(GLOBAL_NS).'[saveOptions][pro_update_password]" value="'.esc_attr($this->plugin->options['pro_update_password']).'" autocomplete="new-password" /></p>'."\n";
 
+            if ((!defined('DISALLOW_FILE_MODS') || !DISALLOW_FILE_MODS) && !apply_filters('automatic_updater_disabled', defined('AUTOMATIC_UPDATER_DISABLED') && AUTOMATIC_UPDATER_DISABLED)) {
+                // See: <http://jas.xyz/2gFcnPd> and note that `automatic_updater_disabled` is a core filter.
+                echo '      <hr />'."\n";
+                echo '      <h3>'.__('Automatic Background Updates', 'comet-cache').'</h3>'."\n";
+                echo '      <p>'.sprintf(__('Enable this if you\'d like %1$s to download and install bug fixes and security updates automatically in the background. Requires a valid license key in the field above.', 'comet-cache'), esc_html(NAME)).'</p>'."\n";
+                echo '      <p><select name="'.esc_attr(GLOBAL_NS).'[saveOptions][pro_auto_update_enable]" autocomplete="off">'."\n";
+                echo '            <option value="0"'.selected($this->plugin->options['pro_auto_update_enable'], '0', false).'>'.sprintf(__('No, I\'ll wait for an update notification in my dashboard.', 'comet-cache'), esc_html(NAME)).'</option>'."\n";
+                echo '            <option value="1"'.selected($this->plugin->options['pro_auto_update_enable'], '1', false).'>'.sprintf(__('Yes, enable automatic background updates.', 'comet-cache'), esc_html(NAME)).'</option>'."\n";
+                echo '         </select></p>'."\n";
+            }
             echo '      <hr />'."\n";
             echo '      <h3>'.__('Beta Program', 'comet-cache').'</h3>'."\n";
             echo '      <p>'.sprintf(__('If you would like to participate in our beta program and receive new features and bug fixes before they are released to the public, %1$s can include Release Candidates when checking for automatic updates. Release Candidates are almost-ready-for-production and have already been through many internal test runs. Our team runs the latest Release Candidate on all of our production sites, but that doesn\'t mean you\'ll want to do the same. :-) Please report any issues with Release Candidates on <a href="https://github.com/websharks/comet-cache/issues/" target="_blank">GitHub</a>.', 'comet-cache'), esc_html(NAME)).'</p>'."\n";
-
             echo '      <p><select name="'.esc_attr(GLOBAL_NS).'[saveOptions][pro_update_check_stable]" autocomplete="off">'."\n";
             echo '            <option value="1"'.selected($this->plugin->options['pro_update_check_stable'], '1', false).'>'.sprintf(__('No, do not check for Release Candidates; I only want public releases.', 'comet-cache'), esc_html(NAME)).'</option>'."\n";
             echo '            <option value="0"'.selected($this->plugin->options['pro_update_check_stable'], '0', false).'>'.sprintf(__('Yes, check for Release Candidates; I want to help with testing.', 'comet-cache'), esc_html(NAME)).'</option>'."\n";
@@ -296,7 +295,7 @@ class MenuPageOptions extends MenuPage
         if (IS_PRO || $this->plugin->isProPreview()) {
             echo '<div class="plugin-menu-page-panel">'."\n";
 
-            echo '   <a href="#" class="plugin-menu-page-panel-heading'.(!IS_PRO ? ' pro-preview-feature' : '').'">'."\n";
+            echo '   <a href="#" class="plugin-menu-page-panel-heading" data-pro-version-only="'.(!IS_PRO ? __('pro version only', 'comet-cache') : '').'">'."\n";
             echo '      <i class="si si-broom"></i> '.__('Manual Cache Clearing', 'comet-cache')."\n";
             echo '   </a>'."\n";
 
@@ -321,7 +320,6 @@ class MenuPageOptions extends MenuPage
                 echo '      <p style="margin-top:2px;">'.sprintf(__('In a Multisite Network, each child site can clear its own cache. If you want child sites to see the "Clear Cache" button in their WordPress Admin Bar, you can specify a comma-delimited list of <a href="http://cometcache.com/r/wp-roles-caps/" target="_blank">Roles and/or Capabilities</a> that are allowed. For example, if I want Administrators to be capable of clearing the cache from their Admin Bar, I could enter <code>administrator</code> here. If I also want to allow Editors, I can use a comma-delimited list: <code>administrator,editor</code>. Or, I could use a single Capability of: <code>edit_others_posts</code>; which covers both Administrators &amp; Editors at the same time.', 'comet-cache'), esc_html(NAME)).'</p>'."\n";
                 echo '      <p style="margin-bottom:0;"><input type="text" name="'.esc_attr(GLOBAL_NS).'[saveOptions][cache_clear_admin_bar_roles_caps]" value="'.esc_attr($this->plugin->options['cache_clear_admin_bar_roles_caps']).'" /></p>'."\n";
                 echo '      <p style="margin-top:0;">'.sprintf(__('<strong>Note:</strong> As a security measure, in addition to the Role(s) and/or Capabilities that you list here, each child site owner must also have the ability to <code>%1$s</code>.', 'comet-cache'), esc_html(IS_PRO ? $this->plugin->clear_min_cap : 'edit_posts')).'</p>'."\n";
-                echo '      </select></p>'."\n";
                 echo '  </div>'."\n";
             } else {
                 echo '  <div class="plugin-menu-page-panel-if-enabled -cache-clear-admin-bar-roles-caps">'."\n";
@@ -329,7 +327,6 @@ class MenuPageOptions extends MenuPage
                 echo '      <p style="margin-top:2px;">'.sprintf(__('If you want others to see the "Clear Cache" button in their WordPress Admin Bar, you can specify a comma-delimited list of <a href="http://cometcache.com/r/wp-roles-caps/" target="_blank">Roles and/or Capabilities</a> that are allowed. For example, if I want Editors to be capable of clearing the cache from their Admin Bar, I could enter <code>editor</code> here. If I also want to allow Authors, I can use a comma-delimited list: <code>editor,author</code>. Or, I could use a single Capability of: <code>publish_posts</code>; which covers both Editors &amp; Authors at the same time.', 'comet-cache'), esc_html(NAME)).'</p>'."\n";
                 echo '      <p style="margin-bottom:0;"><input type="text" name="'.esc_attr(GLOBAL_NS).'[saveOptions][cache_clear_admin_bar_roles_caps]" value="'.esc_attr($this->plugin->options['cache_clear_admin_bar_roles_caps']).'" /></p>'."\n";
                 echo '      <p style="margin-top:0;">'.sprintf(__('<strong>Note:</strong> As a security measure, in addition to the Role(s) and/or Capabilities that you list here, each user must also have the ability to <code>%1$s</code>.', 'comet-cache'), esc_html(IS_PRO ? $this->plugin->clear_min_cap : 'edit_posts')).'</p>'."\n";
-                echo '      </select></p>'."\n";
                 echo '  </div>'."\n";
             }
             if ($this->plugin->functionIsPossible('opcache_reset')) {
@@ -371,7 +368,7 @@ class MenuPageOptions extends MenuPage
 
         echo '<div class="plugin-menu-page-panel'.(!IS_PRO && $this->plugin->isProPreview() ? ' pro-preview' : '').'">'."\n";
 
-        echo '   <a href="#" class="plugin-menu-page-panel-heading'.((!IS_PRO && $this->plugin->isProPreview()) ? ' pro-preview-additional-features' : '').'">'."\n";
+        echo '   <a href="#" class="plugin-menu-page-panel-heading" data-additional-pro-features="'.(!IS_PRO && $this->plugin->isProPreview() ? __('additional pro features', 'comet-cache') : '').'">'."\n";
         echo '      <i class="si si-server"></i> '.__('Automatic Cache Clearing', 'comet-cache')."\n";
         echo '   </a>'."\n";
 
@@ -381,9 +378,9 @@ class MenuPageOptions extends MenuPage
         echo '      <img src="'.esc_attr($this->plugin->url('/src/client-s/images/auto-clear-ss.png')).'" class="screenshot" />'."\n";
         echo '      <p>'.sprintf(__('This is built into the %1$s plugin; i.e., this functionality is "always on". If you edit a Post/Page (or delete one), %1$s will automatically clear the cache file(s) associated with that content. This way a new updated version of the cache will be created automatically the next time this content is accessed. Simple updates like this occur each time you make changes in the Dashboard, and %1$s will notify you of these as they occur. %1$s monitors changes to Posts (of any kind, including Pages), Categories, Tags, Links, Themes (even Users), and more.', 'comet-cache'), esc_html(NAME)).'</p>'."\n";
         if (IS_PRO || $this->plugin->isProPreview()) {
-            echo '  <div class="'.(!IS_PRO ? 'pro-preview-feature' : '').'">'."\n";
+            echo '  <div data-pro-version-only="'.(!IS_PRO ? __('pro version only', 'comet-cache') : '').'">'."\n";
             echo '      <p><select name="'.esc_attr(GLOBAL_NS).'[saveOptions][change_notifications_enable]" class="-no-if-enabled" style="width:auto;">'."\n";
-            echo '          <option value="1"'.selected($this->plugin->options['change_notifications_enable'], '1', false).'>'.sprintf(__('Yes, enable %1$s notifications in the Dashboard when changes are detected &amp; one or more cache files are cleared automatically.', 'comet-cache'), esc_html(NAME)).'</option>'."\n";
+            echo '          <option value="1"'.selected($this->plugin->options['change_notifications_enable'], '1', false).'>'.sprintf(__('Yes, enable %1$s notifications in the Dashboard when cache files are cleared automatically.', 'comet-cache'), esc_html(NAME)).'</option>'."\n";
             echo '          <option value="0"'.selected($this->plugin->options['change_notifications_enable'], '0', false).'>'.sprintf(__('No, I don\'t want to know (don\'t really care) what %1$s is doing behind-the-scene.', 'comet-cache'), esc_html(NAME)).'</option>'."\n";
             echo '      </select></p>'."\n";
             echo '  </div>'."\n";
@@ -462,7 +459,7 @@ class MenuPageOptions extends MenuPage
         echo '            <option value="0"'.selected($this->plugin->options['cache_clear_xml_sitemaps_enable'], '0', false).'>'.__('No, my site doesn\'t use any XML Sitemaps and/or I prefer NOT to clear the cache for XML Sitemaps.', 'comet-cache').'</option>'."\n";
         echo '         </select></p>'."\n";
         echo '      <div class="plugin-menu-page-panel-if-enabled -cache-clear-xml-sitemap-patterns">'."\n";
-        echo '          <p>'.__('<strong style="font-size:110%;">XML Sitemap Patterns...</strong> A default value of <code>/sitemap**.xml</code> covers all XML Sitemaps for most installations. However, you may customize this further if you deem necessary. <strong>Please list one pattern per line.</strong> These XML Sitemap Pattern searches are performed against the <a href="https://gist.github.com/jaswsinc/338b6eb03a36c048c26f" target="_blank">REQUEST_URI</a>. A wildcard <code>**</code> character can also be used when necessary; e.g., <code>/sitemap**.xml</code> (where <code>**</code> = 0 or more characters of any kind, including <code>/</code> slashes). Other special characters include: <code>*</code> = 0 or more characters that are NOT a slash <code>/</code>; <code>^</code> = beginning of the string; <code>$</code> = end of the string. To learn more about this syntax, please see <a href="http://cometcache.com/r/watered-down-regex-syntax/" target="_blank">this KB article</a>.', 'comet-cache').'</p>'."\n";
+        echo '          <p>'.__('<strong style="font-size:110%;">XML Sitemap Patterns (one per line):</strong> A default value of <code>/sitemap**.xml</code> covers all XML Sitemaps for most installations. However, you may customize this further if you deem necessary. Please list one pattern per line. XML Sitemap Pattern searches are performed against the <a href="https://gist.github.com/jaswsinc/338b6eb03a36c048c26f" target="_blank">REQUEST_URI</a>. A wildcard <code>**</code> (double asterisk) can be used when necessary; e.g., <code>/sitemap**.xml</code>. Note that <code>**</code> = 0 or more characters of any kind, including <code>/</code> slashes. <code>*</code> (a single asterisk) means 0 or more characters that are NOT a slash <code>/</code>. Your patterns must match from beginning to end; i.e., the special chars: <code>^</code> (beginning of string) and <code>$</code> (end of the string) are always on for these patterns (i.e., applied internally). For that reason, if you want to match part of a URI, use <code>**</code> to match anything before and/or after the fragment you\'re searching for. For example, <code>**/sitemap**.xml</code> will match any URI containing <code>/sitemap</code> (anywhere), so long as the URI also ends with <code>.xml</code>. On the other hand, <code>/sitemap*.xml</code> will only match URIs that begin with <code>/sitemap</code>, and it will only match URIs ending in <code>.xml</code> in that immediate directory — bypassing any inside nested sub-directories. To learn more about this syntax, please see <a href="http://cometcache.com/r/watered-down-regex-syntax/" target="_blank">this KB article</a>.', 'comet-cache').'</p>'."\n";
         echo '          <p><textarea name="'.esc_attr(GLOBAL_NS).'[saveOptions][cache_clear_xml_sitemap_patterns]" rows="5" spellcheck="false" class="monospace">'.format_to_edit($this->plugin->options['cache_clear_xml_sitemap_patterns']).'</textarea></p>'."\n";
         if (is_multisite()) {
             echo '      <p class="info" style="display:block; margin-top:-15px;">'.__('In a Multisite Network, each child blog (whether it be a sub-domain, a sub-directory, or a mapped domain); will automatically change the leading <code>http://[sub.]domain/[sub-directory]</code> used in pattern matching. In short, there is no need to add sub-domains or sub-directories for each child blog in these patterns. Please include only the <a href="https://gist.github.com/jaswsinc/338b6eb03a36c048c26f" target="_blank">REQUEST_URI</a> (i.e., the path) which leads to the XML Sitemap on all child blogs in the network.', 'comet-cache').'</p>'."\n";
@@ -471,11 +468,11 @@ class MenuPageOptions extends MenuPage
 
         if (IS_PRO || $this->plugin->isProPreview()) {
             echo '      <hr />'."\n";
-            echo '      <h3 class="'.(!IS_PRO ? 'pro-preview-feature' : '').'">'.__('Misc. Auto-Clear Options', 'comet-cache').'</h3>'."\n";
-            echo '      <h4 style="margin-bottom:0;">'.__('Auto-Clear a List of Custom URLs Too?', 'comet-cache').'</h4>'."\n";
-            echo '      <p style="margin-top:2px;">'.sprintf(__('When you update a Post/Page, approve a Comment, or make other changes where %1$s can detect that a Post/Page cache should be cleared to keep your site up-to-date; then %1$s will also clear a list of custom URLs that you list here. <strong>Please list one URL per line.</strong> A wildcard <code>*</code> character can also be used when necessary; e.g., <code>https://example.com/category/abc-followed-by-*</code>, (where <code>*</code> = 0 or more characters that are NOT a slash <code>/</code>). Other special characters include: <code>**</code> = 0 or more characters of any kind, including <code>/</code> slashes; <code>^</code> = beginning of the string; <code>$</code> = end of the string. To learn more about this syntax, please see <a href ="http://cometcache.com/r/watered-down-regex-syntax/" target="_blank">this KB article</a>.', 'comet-cache'), esc_html(NAME)).'</p>'."\n";
+            echo '      <h3 data-pro-version-only="'.(!IS_PRO ? __('pro version only', 'comet-cache') : '').'">'.__('Misc. Auto-Clear Options', 'comet-cache').'</h3>'."\n";
+            echo '      <h4 style="margin-bottom:0;">'.__('Auto-Clear Custom URL Patterns Too?', 'comet-cache').'</h4>'."\n";
+            echo '      <p style="margin-top:2px;">'.sprintf(__('<strong>Auto-Clear Custom URL Patterns (one per line):</strong> When you update a Post/Page, approve a Comment, etc., %1$s will detect that a Post/Page cache should be cleared to keep your site up-to-date. When this occurs, %1$s can also clear a list of custom URLs that you enter here. Please list one URL per line. A wildcard <code>*</code> character can be used when necessary; e.g., <code>https://example.com/category/abc/**</code>. Note that <code>**</code> (double asterisk) means 0 or more characters of any kind, including <code>/</code> slashes. <code>*</code> (a single asterisk) means 0 or more characters that are NOT a slash <code>/</code>. Your patterns must match from beginning to end; i.e., the special chars: <code>^</code> (beginning of string) and <code>$</code> (end of the string) are always on for these patterns (i.e., applied internally). For that reason, if you want to match part of a URL, use <code>**</code> to match anything before and/or after the fragment you\'re searching for. For example, <code>https://**/category/abc/**</code> will find all URLs containing <code>/category/abc/</code> (anywhere); whereas <code>https://*/category/abc/*</code> will match URLs on any domain, but the path must then begin with <code>/category/abc/</code> and the pattern will only match paths in that immediate directory — bypassing any additional paths in sub-directories. To learn more about this syntax, please see <a href="http://cometcache.com/r/watered-down-regex-syntax/" target="_blank">this KB article</a>.', 'comet-cache'), esc_html(NAME)).'</p>'."\n";
             echo '      <p><textarea name="'.esc_attr(GLOBAL_NS).'[saveOptions][cache_clear_urls]" spellcheck="false" wrap="off" rows="5">'.format_to_edit($this->plugin->options['cache_clear_urls']).'</textarea></p>'."\n";
-            echo '      <p class="info" style="display:block;">'.__('<strong>Note:</strong> Relative URLs (e.g., <code>/name-of-post</code>) should NOT be used. Each entry above should start with <code>http://</code> or <code>https://</code> and include a fully qualified domain name.', 'comet-cache').'</p>'."\n";
+            echo '      <p class="info" style="display:block;">'.__('<strong>Note:</strong> Relative URLs (e.g., <code>/name-of-post</code>) should NOT be used. Each entry above should start with <code>http://</code> or <code>https://</code> and include a fully qualified domain name (or wildcard characters in your pattern that will match the domain).', 'comet-cache').'</p>'."\n";
         }
         echo '   </div>'."\n";
 
@@ -486,7 +483,7 @@ class MenuPageOptions extends MenuPage
         if (IS_PRO || $this->plugin->isProPreview()) {
             echo '<div class="plugin-menu-page-panel">'."\n";
 
-            echo '   <a href="#" class="plugin-menu-page-panel-heading'.(!IS_PRO ? ' pro-preview-feature' : '').'">'."\n";
+            echo '   <a href="#" class="plugin-menu-page-panel-heading" data-pro-version-only="'.(!IS_PRO ? __('pro version only', 'comet-cache') : '').'">'."\n";
             echo '      <i class="si si-pie-chart"></i> '.__('Cache-Related Statistics', 'comet-cache')."\n";
             echo '   </a>'."\n";
 
@@ -516,7 +513,6 @@ class MenuPageOptions extends MenuPage
                 echo '          <p style="margin-top:2px;">'.sprintf(__('In a Multisite Network, each child site has stats of its own. If you want child sites to see cache-related stats in their WordPress Admin Bar, you can specify a comma-delimited list of <a href="http://cometcache.com/r/wp-roles-caps/" target="_blank">Roles and/or Capabilities</a> that are allowed to see stats. For example, if I want the Administrator to see stats in their Admin Bar, I could enter <code>administrator</code> here. If I also want to show stats to Editors, I can use a comma-delimited list: <code>administrator,editor</code>. Or, I could use a single Capability of: <code>edit_others_posts</code>; which covers both Administrators &amp; Editors at the same time.', 'comet-cache'), esc_html(NAME)).'</p>'."\n";
                 echo '          <p style="margin-bottom:0;"><input type="text" name="'.esc_attr(GLOBAL_NS).'[saveOptions][stats_admin_bar_roles_caps]" value="'.esc_attr($this->plugin->options['stats_admin_bar_roles_caps']).'" /></p>'."\n";
                 echo '          <p style="margin-top:0;">'.sprintf(__('<strong>Note:</strong> As a security measure, in addition to the Role(s) and/or Capabilities that you list here, each child site owner must also have the ability to <code>%1$s</code>.', 'comet-cache'), esc_html(IS_PRO ? $this->plugin->stats_min_cap : 'edit_posts')).'</p>'."\n";
-                echo '          </select></p>'."\n";
                 echo '      </div>'."\n";
             } else {
                 echo '      <div class="plugin-menu-page-panel-if-enabled -stats-admin-bar-roles-caps">'."\n";
@@ -524,7 +520,6 @@ class MenuPageOptions extends MenuPage
                 echo '          <p style="margin-top:2px;">'.sprintf(__('If you want others to see cache-related stats in their WordPress Admin Bar, you can specify a comma-delimited list of <a href="http://cometcache.com/r/wp-roles-caps/" target="_blank">Roles and/or Capabilities</a> that are allowed to see stats. For example, if I want Editors to see stats in their Admin Bar, I could enter <code>editor</code> here. If I also want to show stats to Authors, I can use a comma-delimited list: <code>editor,author</code>. Or, I could use a single Capability of: <code>publish_posts</code>; which covers both Editors &amp; Authors at the same time.', 'comet-cache'), esc_html(NAME)).'</p>'."\n";
                 echo '          <p style="margin-bottom:0;"><input type="text" name="'.esc_attr(GLOBAL_NS).'[saveOptions][stats_admin_bar_roles_caps]" value="'.esc_attr($this->plugin->options['stats_admin_bar_roles_caps']).'" /></p>'."\n";
                 echo '          <p style="margin-top:0;">'.sprintf(__('<strong>Note:</strong> As a security measure, in addition to the Role(s) and/or Capabilities that you list here, each user must also have the ability to <code>%1$s</code>.', 'comet-cache'), esc_html(IS_PRO ? $this->plugin->stats_min_cap : 'edit_posts')).'</p>'."\n";
-                echo '          </select></p>'."\n";
                 echo '      </div>'."\n";
             }
             echo '      </div>'."\n";
@@ -552,7 +547,7 @@ class MenuPageOptions extends MenuPage
 
         echo '<div class="plugin-menu-page-panel'.(!IS_PRO && $this->plugin->isProPreview() ? ' pro-preview' : '').'">'."\n";
 
-        echo '   <a href="#" class="plugin-menu-page-panel-heading'.((!IS_PRO && $this->plugin->isProPreview()) ? ' pro-preview-additional-features' : '').'">'."\n";
+        echo '   <a href="#" class="plugin-menu-page-panel-heading" data-additional-pro-features="'.(!IS_PRO && $this->plugin->isProPreview() ? __('additional pro features', 'comet-cache') : '').'">'."\n";
         echo '      <i class="si si-clock-o"></i> '.__('Cache Expiration Time', 'comet-cache')."\n";
         echo '   </a>'."\n";
 
@@ -581,7 +576,7 @@ class MenuPageOptions extends MenuPage
             $_sys_getloadavg_unavailable = ($this->plugin->isProPreview() ? false : !$this->plugin->sysLoadAverages());
             echo '  <div>'."\n";
             echo '      <hr />'."\n";
-            echo '      <h3 class="'.(!IS_PRO ? 'pro-preview-feature' : '').'" style="'.($_sys_getloadavg_unavailable ? 'opacity: 0.5;' : '').'">'.__('Disable Cache Expiration If Server Load Average is High?', 'comet-cache').'</h3>'."\n";
+            echo '      <h3 data-pro-version-only="'.(!IS_PRO ? __('pro version only', 'comet-cache') : '').'" style="'.($_sys_getloadavg_unavailable ? 'opacity: 0.5;' : '').'">'.__('Disable Cache Expiration If Server Load Average is High?', 'comet-cache').'</h3>'."\n";
             echo '      <p style="'.($_sys_getloadavg_unavailable ? 'opacity: 0.5;' : '').'">'.sprintf(__('If you have high traffic at certain times of the day, %1$s can be told to check the current load average via <a href="http://cometcache.com/r/system-load-average-via-php/" target="_blank"><code>sys_getloadavg()</code></a>. If your server\'s load average has been high in the last 15 minutes or so, cache expiration is disabled automatically to help reduce stress on the server; i.e., to avoid generating a new version of the cache while the server is very busy.', 'comet-cache'), esc_html(NAME)).'</p>'."\n";
             echo '      <p style="'.($_sys_getloadavg_unavailable ? 'opacity: 0.5;' : '').'">'.sprintf(__('To enable this functionality you should first determine what a high load average is for your server. If you log into your machine via SSH you can run the <code>top</code> command to get a feel for what a high load average looks like. Once you know the number, you can enter it in the field below; e.g., <code>1.05</code> might be a high load average for a server with one CPU. See also: <a href="http://cometcache.com/r/understanding-load-average/" target="_blank">Understanding Load Average</a>', 'comet-cache'), esc_html(NAME)).'</p>'."\n";
             echo '      <p><input '.($_sys_getloadavg_unavailable ? 'disabled' : '').' type="text" name="'.esc_attr(GLOBAL_NS).'[saveOptions][cache_max_age_disable_if_load_average_is_gte]" value="'.esc_attr($this->plugin->options['cache_max_age_disable_if_load_average_is_gte']).'" /></p>'."\n";
@@ -635,16 +630,16 @@ class MenuPageOptions extends MenuPage
         if (IS_PRO || $this->plugin->isProPreview()) {
             echo '<div class="plugin-menu-page-panel'.(!IS_PRO ? ' pro-preview' : '').'">'."\n";
 
-            echo '   <a href="#" class="plugin-menu-page-panel-heading'.(!IS_PRO ? ' pro-preview-feature' : '').'">'."\n";
+            echo '   <a href="#" class="plugin-menu-page-panel-heading" data-pro-version-only="'.(!IS_PRO ? __('pro version only', 'comet-cache') : '').'">'."\n";
             echo '      <i class="si si-octi-organization"></i> '.__('Logged-In Users', 'comet-cache')."\n";
             echo '   </a>'."\n";
 
             echo '   <div class="plugin-menu-page-panel-body clearfix">'."\n";
             echo '      <i class="si si-group si-4x" style="float:right; margin: 0 0 0 25px;"></i>'."\n";
             echo '      <h3>'.__('Caching Enabled for Logged-In Users &amp; Comment Authors?', 'comet-cache').'</h3>'."\n";
-            echo '      <p>'.__('This should almost ALWAYS be set to <code>No</code>. Most sites will NOT want to cache content generated while a user is logged-in. Doing so could result in a cache of dynamic content generated specifically for a particular user, where the content being cached may contain details that pertain only to the user that was logged-in when the cache was generated. Imagine visiting a website that says you\'re logged-in as Billy Bob (but you\'re not Billy Bob; NOT good). In short, do NOT turn this on unless you know what you\'re doing.', 'comet-cache').'</p>'."\n";
+            echo '      <p>'.__('This should almost always be set to <code>No</code>. Most sites don\'t cache content generated while a user is logged-in. Doing so could result in a cache of dynamic content generated specifically for a particular user, where the content being cached may contain details that pertain only to the user that was logged-in when the cache was generated. In short, don\'t turn this on unless you know what you\'re doing. Note also that most sites get most (sometimes all) of their traffic from users who <em>are not</em> logged-in. When a user <em>is</em> logged-in, disabling the cache is generally a good idea because a logged-in user has a session open with your site. The content they view should remain very dynamic in this scenario.', 'comet-cache').'</p>'."\n";
             echo '      <i class="si si-sitemap si-4x" style="float:right; margin: 0 0 0 25px;"></i>'."\n";
-            echo '      <p>'.sprintf(__('<strong>Exception (Membership Sites):</strong> If you run a site with many users and the majority of your traffic comes from users who ARE logged-in, please choose: <code>Yes (maintain separate cache)</code>. %1$s will operate normally; but when a user is logged-in, the cache is user-specific. %1$s will intelligently refresh the cache when/if a user submits a form on your site with the GET or POST method. Or, if you make changes to their account (or another plugin makes changes to their account); including user <a href="http://codex.wordpress.org/Function_Reference/update_user_option" target="_blank">option</a>|<a href="http://codex.wordpress.org/Function_Reference/update_user_meta" target="_blank">meta</a> additions, updates &amp; deletions too. However, please note that enabling this feature (e.g., user-specific cache entries); will eat up MUCH more disk space. That being said, the benefits of this feature for most sites will outweigh the disk overhead (e.g., it\'s NOT an issue in most cases). Unless you are short on disk space (or you have MANY thousands of users), the disk overhead is neglible.', 'comet-cache'), esc_html(NAME)).'</p>'."\n";
+            echo '      <p>'.sprintf(__('<strong>Exception (Membership Sites):</strong> If you run a site with many users and the majority of your traffic comes from users who <em>are</em> logged-in, choose: <code>Yes (maintain separate cache)</code>. %1$s will operate normally, but when a user is logged-in the cache is user-specific. %1$s will intelligently refresh the cache when/if a user submits a form on your site with the GET or POST method. Or, if you make changes to their account (or another plugin makes changes to their account); including user <a href="http://codex.wordpress.org/Function_Reference/update_user_option" target="_blank">option</a>|<a href="http://codex.wordpress.org/Function_Reference/update_user_meta" target="_blank">meta</a> additions, updates &amp; deletions too. However, please note that enabling this feature (i.e., user-specific cache entries) will eat up much more disk space. That being said, the benefits of this feature for most sites will outweigh the disk overhead; i.e., it\'s not an issue in most cases. In other words, unless you\'re short on disk space, or you have thousands of users, the disk overhead is neglible.', 'comet-cache'), esc_html(NAME)).'</p>'."\n";
             echo '      <p><select name="'.esc_attr(GLOBAL_NS).'[saveOptions][when_logged_in]" data-toggle="enable-disable" data-enabled-strings="1,postload" data-target=".-logged-in-users-options">'."\n";
             echo '            <option value="0"'.(!IS_PRO ? '' : selected($this->plugin->options['when_logged_in'], '0', false)).'>'.__('No, do NOT cache; or serve a cache file when a user is logged-in (safest option).', 'comet-cache').'</option>'."\n";
             echo '            <option value="postload"'.(!IS_PRO ? ' selected' : selected($this->plugin->options['when_logged_in'], 'postload', false)).'>'.__('Yes, and maintain a separate cache for each user (recommended for membership sites).', 'comet-cache').'</option>'."\n";
@@ -656,25 +651,26 @@ class MenuPageOptions extends MenuPage
             if ($this->plugin->options['when_logged_in'] === '1' && $this->plugin->applyWpFilters(GLOBAL_NS.'_when_logged_in_no_admin_bar', true)) {
                 echo '<p class="warning">'.sprintf(__('<strong>Warning:</strong> Whenever you enable caching for logged-in users (without a separate cache for each user), the WordPress Admin Bar <em>must</em> be disabled to prevent one user from seeing another user\'s details in the Admin Bar. <strong>Given your current configuration, %1$s will automatically hide the WordPress Admin Bar on the front-end of your site.</strong>', 'comet-cache'), esc_html(NAME)).'</p>'."\n";
             }
-            echo '      <p class="info">'.__('<strong>Note:</strong> For most sites, the majority of their traffic (if not all of their traffic) comes from visitors who are not logged in, so disabling the cache for logged-in users is NOT ordinarily a performance issue. When a user IS logged-in, disabling the cache is considered ideal, because a logged-in user has a session open with your site; and the content they view should remain very dynamic in this scenario.', 'comet-cache').'</p>'."\n";
-            echo '      <p class="info">'.sprintf(__('<strong>Note:</strong> This setting includes some users who AREN\'T actually logged into the system, but who HAVE authored comments recently. %1$s includes comment authors as part of it\'s logged-in user check. This way comment authors will be able to see updates to the comment thread immediately; and, so that any dynamically-generated messages displayed by your theme will work as intended. In short, %1$s thinks of a comment author as a logged-in user, even though technically they are not. ~ Users who gain access to password-protected Posts/Pages are also included.', 'comet-cache'), esc_html(NAME)).'</p>'."\n";
+            echo '      <p class="info">'.sprintf(__('<strong>Note:</strong> %1$s includes comment authors as part of it\'s logged-in user check. This way comment authors will be able to see updates to comment threads immediately. And, so that any dynamically-generated messages displayed by your theme will work as intended. In short, %1$s thinks of a comment author as a logged-in user, even though technically they are not. Users who gain access to password-protected Posts/Pages are also considered by the logged-in user check.', 'comet-cache'), esc_html(NAME)).'</p>'."\n";
+
             echo '      <hr />'."\n";
+
             echo '      <div class="plugin-menu-page-panel-if-enabled -logged-in-users-options">'."\n";
+            echo '        <h3>'.__('Cache Pages Containing Nonce Values in Markup?', 'comet-cache').'</h3>'."\n";
+            echo '        <p>'.sprintf(__('This should almost always be set to <code>Yes</code>. WordPress injects Nonces (<a href="https://cometcache.com/r/numbers-used-once-nonce/" target="_blank" rel="external">numbers used once</a>) into the markup on any given page that a logged-in user lands on. These Nonce values are generally used to improve security when actions are taken by a user; e.g., posting a form or clicking a link that performs an action. If you set this to <code>No</code>, any page containing an Nonce will bypass the cache and be served dynamically (a performance hit). Even the Admin Bar in WordPress injects Nonce values. That\'s reason enough to leave this at the default value of <code>Yes</code>; i.e., so Nonce values in the markup don\'t result in a cache bypass. In short, don\'t set this to <code>No</code> unless you know what you\'re doing.', 'comet-cache'), esc_html(NAME)).'</p>'."\n";
+            echo '        <p><select name="'.esc_attr(GLOBAL_NS).'[saveOptions][cache_nonce_values_when_logged_in]">'."\n";
+            echo '           <option value="1"'.selected($this->plugin->options['cache_nonce_values_when_logged_in'], '1', false).'>'.__('Yes, for logged-in users, intelligently cache pages containing Nonce values (recommended).', 'comet-cache').'</option>'."\n";
+            echo '           <option value="0"'.selected($this->plugin->options['cache_nonce_values_when_logged_in'], '0', false).'>'.__('No, for logged-in users, refuse to cache pages containing Nonce values.', 'comet-cache').'</option>'."\n";
+            echo '           </select></p>'."\n";
+            echo '        <p class="info">'.sprintf(__('<strong>Note:</strong> Nonce values in WordPress have a limited lifetime. They can expire just 12 hours after they were first generated. For this reason, %1$s will automatically force cache files containing Nonce values to expire once they are 12+ hours old; i.e., a new request for an expired page containing Nonce values will be rebuilt automatically, generating new Nonces that will continue to operate as expected. This rule is enforced no matter what your overall Cache Expiration Time is set to.', 'comet-cache'), esc_html(NAME)).'</p>'."\n";
+            echo '        <hr />'."\n";
             echo '        <h3>'.__('Static CDN Filters Enabled for Logged-In Users &amp; Comment Authors?', 'comet-cache').'</h3>'."\n";
-            echo '        <p>'.__('While this defaults to a value of <code>No</code>, it should almost always be set to <code>Yes</code>. This value defaults to <code>No</code> only because Logged-In User caching (see above) defaults to <code>No</code> and setting this value to <code>Yes</code> by default can cause confusion for some users. Once you understand that Static CDN Filters can be applied safely for all visitors (logged-in or not logged-in), please choose <code>Yes</code> in the dropdown below. If you are not using Static CDN Filters, the value below is ignored.', 'comet-cache').'</p>'."\n";
+            echo '        <p>'.__('While this defaults to a value of <code>No</code>, it should almost always be set to <code>Yes</code>. This value defaults to <code>No</code> only because Logged-In User caching (see above) defaults to <code>No</code> and setting this value to <code>Yes</code> by default can cause confusion for some site owners. Once you understand that Static CDN Filters can be applied safely for all visitors (logged-in or not logged-in), please choose <code>Yes</code> in the dropdown below. If you are not using Static CDN Filters, the value below is ignored.', 'comet-cache').'</p>'."\n";
             echo '        <p><select name="'.esc_attr(GLOBAL_NS).'[saveOptions][cdn_when_logged_in]">'."\n";
             echo '              <option value="0"'.selected($this->plugin->options['cdn_when_logged_in'], '0', false).'>'.__('No, disable Static CDN Filters when a user is logged-in.', 'comet-cache').'</option>'."\n";
             echo '                <option value="postload"'.selected($this->plugin->options['cdn_when_logged_in'], 'postload', false).'>'.__('Yes, enable Static CDN Filters for logged-in users (recommended) .', 'comet-cache').'</option>'."\n";
             echo '          </select></p>'."\n";
             echo '        <p class="info">'.__('<strong>Note:</strong> Static CDN Filters serve <em>static</em> resources. Static resources, are, simply put, static. Thus, it is not a problem to cache these resources for any visitor (logged-in or not logged-in). To avoid confusion, this defaults to a value of <code>No</code>, and we ask that you set it to <code>Yes</code> on your own so that you\'ll know to expect this behavior; i.e., that static resources will always be served from the CDN (logged-in or not logged-in) even though Logged-In User caching may be disabled above.', 'comet-cache').'</p>'."\n";
-            echo '        <hr />'."\n";
-            echo '        <h3>'.__('Disable the Admin Toolbar for Logged-In Users &amp; Comment Authors?', 'comet-cache').'</h3>'."\n";
-            echo '        <p>'.__('When Logged-In User caching is enabled above, it is recommended that you disable the WordPress Admin Toolbar for logged-in users (on the front-end of the site) because the Toolbar is generally NOT cache-compatible. If you want Comet Cache to automatically disable the Toolbar for logged-in users, you can choose that option below. Or, if you use another plugin to control the Admin Toolbar you can leave this option disabled.', 'comet-cache').'</p>'."\n";
-            echo '        <p><select name="'.esc_attr(GLOBAL_NS).'[saveOptions][when_logged_in_admin_bar]">'."\n";
-            echo '              <option value="0"'.selected($this->plugin->options['when_logged_in_admin_bar'], '0', false).'>'.__('Yes, disable the Admin Toolbar for all logged-in users (recommended option).', 'comet-cache').'</option>'."\n";
-            echo '                <option value="1"'.selected($this->plugin->options['when_logged_in_admin_bar'], '1', false).'>'.__('No, don\'t disable the Admin Toolbar for logged-in users.', 'comet-cache').'</option>'."\n";
-            echo '          </select></p>'."\n";
-            echo '        <p class="info">'.__('<strong>Note:</strong> If you don\'t disable the Admin Toolbar for logged-in users that will cause WordPress Nonce values to appear in the page source; nonce values are generally NOT cache-compatible. Please see <a href="https://cometcache.com/r/kb-article-what-are-wordpress-nonces-and-why-are-they-not-cache-compatible/" target="_blank">this article</a> for details.', 'comet-cache').'</p>'."\n";
             echo '        <hr />'."\n";
             echo '        <h3>'.__('Enable HTML Compression for Logged-In Users?', 'comet-cache').'</h3>'."\n";
             echo '        <p>'.__('Disabled by default. This setting is only applicable when HTML Compression is enabled. HTML Compression should remain disabled for logged-in users because the user-specific cache has a much shorter Time To Live (TTL) which means their cache is likely to expire more quickly than a normal visitor. Rebuilding the HTML Compressor cache is time-consuming and doing it too frequently will actually slow things down for them. For example, if you\'re logged into the site as a user and you submit a form, that triggers a clearing of the cache for that user, including the HTML Compressor cache. Lots of little actions you take can result in a clearing of the cache. This shorter TTL is not ideal when running the HTML Compressor because it does a deep analysis of the page content and the associated resources in order to intelligently compress things. For logged-in users, it is better to skip that extra work and just cache the HTML source as-is, avoiding that extra overhead. In short, do NOT turn this on unless you know what you\'re doing.', 'comet-cache').'</p>'."\n";
@@ -689,22 +685,33 @@ class MenuPageOptions extends MenuPage
         }
         /* ----------------------------------------------------------------------------------------- */
 
-        echo '<div class="plugin-menu-page-panel">'."\n";
+        echo '<div class="plugin-menu-page-panel'.(!IS_PRO && $this->plugin->isProPreview() ? ' pro-preview' : '').'">'."\n";
 
-        echo '   <a href="#" class="plugin-menu-page-panel-heading">'."\n";
+        echo '   <a href="#" class="plugin-menu-page-panel-heading" data-additional-pro-features="'.(!IS_PRO && $this->plugin->isProPreview() ? __('additional pro features', 'comet-cache') : '').'">'."\n";
         echo '      <i class="si si-question-circle"></i> '.__('GET Requests', 'comet-cache')."\n";
         echo '   </a>'."\n";
 
         echo '   <div class="plugin-menu-page-panel-body clearfix">'."\n";
+
         echo '      <i class="si si-question-circle si-4x" style="float:right; margin: 0 0 0 25px;"></i>'."\n";
         echo '      <h3>'.__('Caching Enabled for GET (Query String) Requests?', 'comet-cache').'</h3>'."\n";
-        echo '      <p>'.__('This should almost ALWAYS be set to <code>No</code>. UNLESS, you\'re using unfriendly Permalinks. In other words, if all of your URLs contain a query string (e.g., <code>/?key=value</code>); you\'re using unfriendly Permalinks. Ideally, you would refrain from doing this; and instead, update your Permalink options immediately; which also optimizes your site for search engines. That being said, if you really want to use unfriendly Permalinks, and ONLY if you\'re using unfriendly Permalinks, you should set this to <code>Yes</code>; and don\'t worry too much, the sky won\'t fall on your head :-)', 'comet-cache').'</p>'."\n";
+        echo '      <p>'.__('This should almost always be set to <code>No</code>. UNLESS, you\'re using unfriendly Permalinks; i.e., if all of your URLs contain a query string (like <code>?p=123</code>). In such a case, you should set this option to <code>Yes</code>. However, it\'s better to update your Permalink options and use friendly Permalinks, which also optimizes your site for search engines. Again, if you\'re using friendly Permalinks (recommended) you can leave this at the default value of <code>No</code>.', 'comet-cache').'</p>'."\n";
         echo '      <p><select name="'.esc_attr(GLOBAL_NS).'[saveOptions][get_requests]">'."\n";
         echo '            <option value="0"'.selected($this->plugin->options['get_requests'], '0', false).'>'.__('No, do NOT cache (or serve a cache file) when a query string is present.', 'comet-cache').'</option>'."\n";
         echo '            <option value="1"'.selected($this->plugin->options['get_requests'], '1', false).'>'.__('Yes, I would like to cache URLs that contain a query string.', 'comet-cache').'</option>'."\n";
         echo '         </select></p>'."\n";
-        echo '      <p class="info">'.__('<strong>Note:</strong> POST requests (i.e., forms with <code>method=&quot;post&quot;</code>) are always excluded from the cache, which is the way it should be. Any <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html" target="_blank">POST/PUT/DELETE</a> request should NEVER (ever) be cached. CLI (and self-serve) requests are also excluded from the cache (always). A CLI request is one that comes from the command line; commonly used by CRON jobs and other automated routines. A self-serve request is an HTTP connection established from your site -› to your site. For instance, a WP Cron job, or any other HTTP request that is spawned not by a user, but by the server itself.', 'comet-cache').'</p>'."\n";
-        echo '      <p class="info">'.sprintf(__('<strong>Advanced Tip:</strong> If you are NOT caching GET requests (recommended), but you DO want to allow some special URLs that include query string parameters to be cached; you can add this special parameter to any URL <code>?%2$sAC=1</code>. This tells %1$s that it\'s OK to cache that particular URL, even though it contains query string arguments. If you ARE caching GET requests and you want to force %1$s to NOT cache a specific request, you can add this special parameter to any URL <code>?%2$sAC=0</code>.', 'comet-cache'), esc_html(NAME), esc_html(mb_strtolower(SHORT_NAME))).'</p>'."\n";
+        echo '      <p class="info">'.sprintf(__('<strong>Advanced Tip:</strong> If you are not caching GET requests (recommended), but you <em>do</em> want to allow some special URLs that include query string parameters to be cached, you can add this special parameter to any URL <code>?%2$sAC=1</code>. This tells %1$s that it\'s OK to cache that particular URL, even though it contains query string arguments. If you <em>are</em> caching GET requests and you want to force %1$s to <em>not</em> cache a specific request, you can add this special parameter to any URL <code>?%2$sAC=0</code>.', 'comet-cache'), esc_html(NAME), esc_html(mb_strtolower(SHORT_NAME))).'</p>'."\n";
+        echo '      <p style="font-style:italic;">'.__('<strong>Other Request Types:</strong> POST requests (i.e., forms with <code>method=&quot;post&quot;</code>) are always excluded from the cache, which is the way it should be. Any <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html" target="_blank">POST/PUT/DELETE</a> request should never, ever be cached. CLI and self-serve requests are also excluded from the cache automatically. A CLI request is one that comes from the command line; commonly used by CRON jobs and other automated routines. A self-serve request is an HTTP connection established from your site, to your site. For instance, a WP Cron job, or any other HTTP request that is spawned not by a user, but by the server itself.', 'comet-cache').'</p>'."\n";
+
+        if (IS_PRO || $this->plugin->isProPreview()) {
+            echo '<div>'."\n";
+            echo    '<hr />'."\n";
+            echo    '<h3 data-pro-version-only="'.(!IS_PRO ? __('pro version only', 'comet-cache') : '').'">'.__('List of GET Variable Names to Ignore', 'comet-cache').'</h3>'."\n";
+            echo    '<p>'.__('You can enter one variable name per line. Each of the variable names that you list here will be ignored entirely; i.e., not considered when caching any given page, and not considered when serving any page that is already cached. For example, many sites use Google Analytics and there are <a href="https://cometcache.com/r/google-analytics-variables/" target="_blank" rel="external">GET request variables used by Google Analytics</a>, which are read by client-side JavaScript only. Those GET variables can be ignored altogether when it comes to the cache algorithm — speeding up your site even further.', 'comet-cache').'</p>'."\n";
+            echo    '<p><textarea name="'.esc_attr(GLOBAL_NS).'[saveOptions][ignore_get_request_vars]" rows="5" spellcheck="false" class="monospace">'.format_to_edit($this->plugin->options['ignore_get_request_vars']).'</textarea></p>'."\n";
+            echo    '<p style="font-style:italic;">'.__('A wildcard <code>*</code> character can also be used when necessary; e.g., <code>utm_*</code> (where <code>*</code> = 0 or more characters that are NOT a slash <code>/</code>). To learn more about this syntax, please see <a href ="http://cometcache.com/r/watered-down-regex-syntax/" target="_blank">this KB article</a>.', 'comet-cache').'</p>'."\n";
+            echo '</div>'."\n";
+        }
         echo '   </div>'."\n";
 
         echo '</div>'."\n";
@@ -736,7 +743,7 @@ class MenuPageOptions extends MenuPage
         echo '<div class="plugin-menu-page-panel">'."\n";
 
         echo '   <a href="#" class="plugin-menu-page-panel-heading">'."\n";
-        echo '      <i class="si si-feed"></i> '.__('RSS, RDF, and Atom Feeds', 'comet-cache')."\n";
+        echo '      <i class="si si-feed"></i> '.__('Feed Caching', 'comet-cache')."\n";
         echo '   </a>'."\n";
 
         echo '   <div class="plugin-menu-page-panel-body clearfix">'."\n";
@@ -758,12 +765,10 @@ class MenuPageOptions extends MenuPage
             ((defined('SUBDOMAIN_INSTALL') && SUBDOMAIN_INSTALL) || $this->plugin->canConsiderDomainMapping());
 
         if ($this->plugin->applyWpFilters(GLOBAL_NS.'_exclude_hosts_option_enable', $exclude_hosts_option_enable)) {
-            // Display option panel for Host Exclusion Patterns.
-
             echo '<div class="plugin-menu-page-panel">'."\n";
 
             echo '   <a href="#" class="plugin-menu-page-panel-heading">'."\n";
-            echo '      <i class="si si-ban"></i> '.__('Host Exclusion Patterns', 'comet-cache')."\n";
+            echo '      <i class="si si-ban"></i> '.__('Host Exclusions', 'comet-cache')."\n";
             echo '   </a>'."\n";
 
             echo '   <div class="plugin-menu-page-panel-body clearfix">'."\n";
@@ -784,7 +789,7 @@ class MenuPageOptions extends MenuPage
         echo '<div class="plugin-menu-page-panel">'."\n";
 
         echo '   <a href="#" class="plugin-menu-page-panel-heading">'."\n";
-        echo '      <i class="si si-ban"></i> '.__('URI Exclusion Patterns', 'comet-cache')."\n";
+        echo '      <i class="si si-ban"></i> '.__('URI Exclusions', 'comet-cache')."\n";
         echo '   </a>'."\n";
 
         echo '   <div class="plugin-menu-page-panel-body clearfix">'."\n";
@@ -806,7 +811,7 @@ class MenuPageOptions extends MenuPage
         echo '<div class="plugin-menu-page-panel">'."\n";
 
         echo '   <a href="#" class="plugin-menu-page-panel-heading">'."\n";
-        echo '      <i class="si si-ban"></i> '.__('HTTP Referrer Exclusion Patterns', 'comet-cache')."\n";
+        echo '      <i class="si si-ban"></i> '.__('HTTP Referrer Exclusions', 'comet-cache')."\n";
         echo '   </a>'."\n";
 
         echo '   <div class="plugin-menu-page-panel-body clearfix">'."\n";
@@ -824,7 +829,7 @@ class MenuPageOptions extends MenuPage
         echo '<div class="plugin-menu-page-panel">'."\n";
 
         echo '   <a href="#" class="plugin-menu-page-panel-heading">'."\n";
-        echo '      <i class="si si-ban"></i> '.__('User-Agent Exclusion Patterns', 'comet-cache')."\n";
+        echo '      <i class="si si-ban"></i> '.__('User-Agent Exclusions', 'comet-cache')."\n";
         echo '   </a>'."\n";
 
         echo '   <div class="plugin-menu-page-panel-body clearfix">'."\n";
@@ -842,7 +847,7 @@ class MenuPageOptions extends MenuPage
         if (IS_PRO || $this->plugin->isProPreview()) {
             echo '<div class="plugin-menu-page-panel'.(!IS_PRO ? ' pro-preview' : '').'">'."\n";
 
-            echo '   <a href="#" class="plugin-menu-page-panel-heading'.(!IS_PRO ? ' pro-preview-feature' : '').'">'."\n";
+            echo '   <a href="#" class="plugin-menu-page-panel-heading" data-pro-version-only="'.(!IS_PRO ? __('pro version only', 'comet-cache') : '').'">'."\n";
             echo '      <i class="si si-sitemap"></i> '.__('Auto-Cache Engine', 'comet-cache')."\n";
             echo '   </a>'."\n";
 
@@ -896,7 +901,7 @@ class MenuPageOptions extends MenuPage
         if (IS_PRO || $this->plugin->isProPreview()) {
             echo '<div class="plugin-menu-page-panel'.(!IS_PRO ? ' pro-preview' : '').'">'."\n";
 
-            echo '   <a href="#" class="plugin-menu-page-panel-heading'.(!IS_PRO ? ' pro-preview-feature' : '').'">'."\n";
+            echo '   <a href="#" class="plugin-menu-page-panel-heading" data-pro-version-only="'.(!IS_PRO ? __('pro version only', 'comet-cache') : '').'">'."\n";
             echo '      <i class="si si-html5"></i> '.__('HTML Compression', 'comet-cache')."\n";
             echo '   </a>'."\n";
 
@@ -910,7 +915,6 @@ class MenuPageOptions extends MenuPage
             echo '            <option value="0"'.(!IS_PRO ? '' : selected($this->plugin->options['htmlc_enable'], '0', false)).'>'.__('No, do NOT compress HTML/CSS/JS code at runtime.', 'comet-cache').'</option>'."\n";
             echo '            <option value="1"'.(!IS_PRO ? ' selected' : selected($this->plugin->options['htmlc_enable'], '1', false)).'>'.__('Yes, I want to compress HTML/CSS/JS for blazing fast speeds.', 'comet-cache').'</option>'."\n";
             echo '         </select></p>'."\n";
-            echo '      <p class="info" style="display:block;">'.__('<strong>Note:</strong> This is experimental. Please <a href="https://github.com/websharks/comet-cache/issues" target="_blank">report issues here</a>.', 'comet-cache').'</p>'."\n";
             echo '      <hr />'."\n";
             echo '      <div class="plugin-menu-page-panel-if-enabled -htmlc-options">'."\n";
             echo '         <h3>'.__('HTML Compression Options', 'comet-cache').'</h3>'."\n";
@@ -947,6 +951,10 @@ class MenuPageOptions extends MenuPage
             echo '               <option value="1"'.selected($this->plugin->options['htmlc_compress_html_code'], '1', false).'>'.__('Yes, compress (remove extra whitespace) in the final HTML code too.', 'comet-cache').'</option>'."\n";
             echo '               <option value="0"'.selected($this->plugin->options['htmlc_compress_html_code'], '0', false).'>'.__('No, do not compress the final HTML code.', 'comet-cache').'</option>'."\n";
             echo '            </select></p>'."\n";
+            echo '         <p><select name="'.esc_attr(GLOBAL_NS).'[saveOptions][htmlc_amp_exclusions_enable]" autocomplete="off">'."\n";
+            echo '               <option value="1"'.selected($this->plugin->options['htmlc_amp_exclusions_enable'], '1', false).'>'.__('Yes, auto-detect AMP (Accelerated Mobile Pages) and selectively disable incompatible features.', 'comet-cache').'</option>'."\n";
+            echo '               <option value="0"'.selected($this->plugin->options['htmlc_amp_exclusions_enable'], '0', false).'>'.__('No, do not auto-detect AMP (Accelerated Mobile Pages) and selectively disable incompatible features', 'comet-cache').'</option>'."\n";
+            echo '            </select></p>'."\n";
             echo '         <hr />'."\n";
             echo '         <h3>'.__('CSS Exclusion Patterns?', 'comet-cache').'</h3>'."\n";
             echo '         <p>'.__('Sometimes there are special cases when a particular CSS file should NOT be consolidated or compressed in any way. This is where you will enter those if you need to (one per line). Searches are performed against the <code>&lt;link href=&quot;&quot;&gt;</code> value, and also against the contents of any inline <code>&lt;style&gt;</code> tags (caSe insensitive). A wildcard <code>*</code> character can also be used when necessary; e.g., <code>xy*-framework</code> (where <code>*</code> = 0 or more characters that are NOT a slash <code>/</code>). Other special characters include: <code>**</code> = 0 or more characters of any kind, including <code>/</code> slashes; <code>^</code> = beginning of the string; <code>$</code> = end of the string. To learn more about this syntax, please see <a href ="http://cometcache.com/r/watered-down-regex-syntax/" target="_blank">this KB article</a>.', 'comet-cache').'</p>'."\n";
@@ -976,12 +984,12 @@ class MenuPageOptions extends MenuPage
         if (IS_PRO || $this->plugin->isProPreview()) {
             echo '<div class="plugin-menu-page-panel'.(!IS_PRO ? ' pro-preview' : '').'">'."\n";
 
-            echo '   <a href="#" class="plugin-menu-page-panel-heading'.(!IS_PRO ? ' pro-preview-feature' : '').'">'."\n";
+            echo '   <a href="#" class="plugin-menu-page-panel-heading" data-pro-version-only="'.(!IS_PRO ? __('pro version only', 'comet-cache') : '').'">'."\n";
             echo '      <i class="si si-cloud"></i> '.__('Static CDN Filters', 'comet-cache')."\n";
             echo '   </a>'."\n";
 
             echo '   <div class="plugin-menu-page-panel-body clearfix">'."\n";
-            echo '   <button type="button" class="plugin-menu-page-clear-cdn-cache" style="float:right; margin:0 0 1em 1em;" title="'.esc_attr(__('Clear CDN Cache (Bump CDN Invalidation Counter)', 'comet-cache')).'">'.__('Clear CDN Cache', 'comet-cache').' <img src="'.esc_attr($this->plugin->url('/src/client-s/images/clear.png')).'" style="width:16px; height:16px;" /></button>'."\n";
+            echo '   <button type="button" class="plugin-menu-page-clear-cdn-cache" style="float:right; margin:0 0 1em 1em;" title="'.esc_attr(__('Clear CDN Cache (Bump CDN Invalidation Counter)', 'comet-cache')).'">'.__('Clear CDN Cache', 'comet-cache').' <img src="'.esc_attr($this->plugin->url('/src/client-s/images/clear.png')).'" style="width:16px; height:16px; display:inline-block;" /></button>'."\n";
             echo '      <h3>'.__('Enable Static CDN Filters (e.g., MaxCDN/CloudFront)?', 'comet-cache').'</h3>'."\n";
             echo '      <p>'.sprintf(__('This feature allows you to serve some and/or ALL static files on your site from a CDN of your choosing. This is made possible through content/URL filters exposed by WordPress and implemented by %1$s. All it requires is that you setup a CDN host name sourced by your WordPress installation domain. You enter that CDN host name below and %1$s will do the rest! Super easy, and it doesn\'t require any DNS changes either. :-) Please <a href="http://cometcache.com/r/static-cdn-filters-general-instructions/" target="_blank">click here</a> for a general set of instructions.', 'comet-cache'), esc_html(NAME)).'</p>'."\n";
             echo '      <p>'.__('<strong>What\'s a CDN?</strong> It\'s a Content Delivery Network (i.e., a network of optimized servers) designed to cache static resources served from your site (e.g., JS/CSS/images and other static files) onto it\'s own servers, which are located strategically in various geographic areas around the world. Integrating a CDN for static files can dramatically improve the speed and performance of your site, lower the burden on your own server, and reduce latency associated with visitors attempting to access your site from geographic areas of the world that might be very far away from the primary location of your own web servers.', 'comet-cache').'</p>'."\n";
@@ -1078,7 +1086,7 @@ class MenuPageOptions extends MenuPage
         if ($is_apache || $this->plugin->isProPreview()) {
             echo '<div class="plugin-menu-page-panel'.(!IS_PRO && $this->plugin->isProPreview() ? ' pro-preview' : '').'">'."\n";
 
-            echo '   <a href="#" class="plugin-menu-page-panel-heading'.((!IS_PRO && $this->plugin->isProPreview()) ? ' pro-preview-additional-features' : '').'">'."\n";
+            echo '   <a href="#" class="plugin-menu-page-panel-heading" data-additional-pro-features="'.(!IS_PRO && $this->plugin->isProPreview() ? __('additional pro features', 'comet-cache') : '').'">'."\n";
             echo '      <i class="si si-server"></i> '.__('Apache Optimizations', 'comet-cache')."\n";
             echo '   </a>'."\n";
 
@@ -1108,10 +1116,9 @@ class MenuPageOptions extends MenuPage
                 echo '      <hr />'."\n";
                 echo '      <p class="warning" style="display:block;">'.sprintf(__('<a href="%1$s">Enable the Pro Preview</a> to see <strong>Leverage Browser Caching</strong>, <strong>Enforce Canonical URLs</strong>, and more!', 'comet-cache'), esc_attr(add_query_arg(urlencode_deep(['page' => GLOBAL_NS, GLOBAL_NS.'_pro_preview' => '1']), self_admin_url('/admin.php')))).'</p>'."\n";
             }
-
             if (IS_PRO || $this->plugin->isProPreview()) {
                 echo '      <hr />'."\n";
-                echo '      <h3 class="'.(!IS_PRO ? 'pro-preview-feature' : '').'">'.__('Leverage Browser Caching?', 'comet-cache').'</h3>'."\n";
+                echo '      <h3 data-pro-version-only="'.(!IS_PRO ? __('pro version only', 'comet-cache') : '').'">'.__('Leverage Browser Caching?', 'comet-cache').'</h3>'."\n";
                 echo '      <p>'.__('<a href="https://cometcache.com/r/google-developers-http-caching/" target="_blank">Browser Caching</a> is highly recommended. When loading a single page, downloading all of the resources for that page may require multiple roundtrips between the browser and server, which delays processing and may block rendering of page content. This also incurs data costs for the visitor. With browser caching, your server tells the visitor\'s browser that it is allowed to cache static resources for a certain amount of time (Google recommends 1 week and that\'s what Comet Cache uses).', 'comet-cache').'</p>'."\n";
                 echo '      <p>'.__('In WordPress, \'Page Caching\' is all about server-side performance (reducing the amount of time it takes the server to generate the page content). With Comet Cache installed, you\'re drastically reducing page generation time. However, you can make a visitor\'s experience ​<em>even faster</em>​ when you leverage browser caching too. When this option is enabled, the visitor\'s browser will cache static resources from each page and reuse those cached resources on subsequent page loads. In this way, future visits to the same page will not require additional connections to your site to download static resources that the visitor\'s browser has already cached.', 'comet-cache').'</p>'."\n";
                 echo '      <p><select name="'.esc_attr(GLOBAL_NS).'[saveOptions][htaccess_browser_caching_enable]" data-target=".-htaccess-browser-caching-enable-options">'."\n";
@@ -1124,10 +1131,9 @@ class MenuPageOptions extends MenuPage
                 echo '        <pre class="code"><code>'.esc_html($this->plugin->fillReplacementCodes(file_get_contents(dirname(__DIR__).'/templates/htaccess/browser-caching-enable.txt'))).'</code></pre>'."\n";
                 echo '      </div>'."\n";
             }
-
             if ((IS_PRO && !empty($GLOBALS['wp_rewrite']->permalink_structure)) || $this->plugin->isProPreview()) {
                 echo '      <hr />'."\n";
-                echo '      <h3 class="'.(!IS_PRO ? 'pro-preview-feature' : '').'">'.__('Enforce Canonical URLs?', 'comet-cache').'</h3>'."\n";
+                echo '      <h3 data-pro-version-only="'.(!IS_PRO ? __('pro version only', 'comet-cache') : '').'">'.__('Enforce Canonical URLs?', 'comet-cache').'</h3>'."\n";
                 echo '      <p>'.__('Permalinks (URLs) leading to Posts/Pages on your site (based on your WordPress Permalink Settings) '.($GLOBALS['wp_rewrite']->use_trailing_slashes ? 'require a <code>.../trailing-slash/</code>' : 'do not require a <code>.../trailing-slash</code>').'. Ordinarily, WordPress enforces this by redirecting a request for '.($GLOBALS['wp_rewrite']->use_trailing_slashes ? '<code>.../something</code>' : '<code>.../something/</code>').', to '.($GLOBALS['wp_rewrite']->use_trailing_slashes ? '<code>.../something/</code>' : '<code>.../something</code>').', thereby forcing the final location to match your Permalink configuration. However, whenever you install a plugin like Comet Cache, much of WordPress (including this automatic redirection) is out of the picture when the cached copy of a page is being served. So enabling this option will add rules to your <code>.htaccess</code> file that make Apache aware of your WordPess Permalink configuration. Apache can do what WordPress normally would, only much more efficiently.', 'comet-cache').'</p>'."\n";
                 echo '      <p><select name="'.esc_attr(GLOBAL_NS).'[saveOptions][htaccess_enforce_canonical_urls]" data-target=".-htaccess-enforce-canonical-urls-options">'."\n";
                 echo '            <option value="0"'.(!IS_PRO ? '' : selected($this->plugin->options['htaccess_enforce_canonical_urls'], '0', false)).'>'.__('No, do NOT enforce canonical URLs (or I\'ll update my configuration manually; see below)', 'comet-cache').'</option>'."\n";
@@ -1143,10 +1149,9 @@ class MenuPageOptions extends MenuPage
                 }
                 echo '      </div>'."\n";
             }
-
             if ((IS_PRO && $this->plugin->options['cdn_enable']) || $this->plugin->isProPreview()) {
                 echo '      <hr />'."\n";
-                echo '      <h3 class="'.(!IS_PRO ? 'pro-preview-feature' : '').'">'.__('Send Access-Control-Allow-Origin Header?', 'comet-cache').'</h3>'."\n";
+                echo '      <h3 data-pro-version-only="'.(!IS_PRO ? __('pro version only', 'comet-cache') : '').'">'.__('Send Access-Control-Allow-Origin Header?', 'comet-cache').'</h3>'."\n";
                 if ($this->plugin->options['cdn_enable'] && !$this->plugin->options['htaccess_access_control_allow_origin']) {
                     echo '        <p class="warning" style="display:block;">'.__('<strong>Warning:</strong> Send Access-Control-Allow-Origin Header has been disabled below but <strong>Comet Cache → Plugin Options → Static CDN Filters</strong> are enabled. We recommend configuring your server to send the <code>Access-Control-Allow-Origin</code> header to avoid <a href="https://cometcache.com/r/kb-article-what-are-cross-origin-request-blocked-cors-errors/" target="_blank">CORS errors</a> when a CDN is configured.', 'comet-cache').'</p>'."\n";
                 }
@@ -1164,13 +1169,57 @@ class MenuPageOptions extends MenuPage
             echo '   </div>'."\n";
             echo '</div>'."\n";
         }
-
-               /* ----------------------------------------------------------------------------------------- */
+        /* ----------------------------------------------------------------------------------------- */
 
         if (IS_PRO || $this->plugin->isProPreview()) {
             echo '<div class="plugin-menu-page-panel'.(!IS_PRO ? ' pro-preview' : '').'">'."\n";
 
-            echo '   <a href="#" class="plugin-menu-page-panel-heading'.(!IS_PRO ? ' pro-preview-feature' : '').'">'."\n";
+            echo '   <a href="#" class="plugin-menu-page-panel-heading" data-pro-version-only="'.(!IS_PRO ? __('pro version only', 'comet-cache') : '').'">'."\n";
+            echo '      <i class="si si-tablet"></i> '.__('Mobile Mode', 'comet-cache')."\n";
+            echo '   </a>'."\n";
+
+            echo '   <div class="plugin-menu-page-panel-body clearfix">'."\n";
+            echo '      <h3>'.__('<i class="si si-tablet"></i> <i class="si si-mobile"></i> Enable Mobile-Adaptive Mode?', 'comet-cache').'</h3>'."\n";
+            echo '      <p>'.__('<em><strong>Tip:</strong> Generally speaking, you should only enable this if your WordPress theme uses an \'Adaptive\' design, as opposed to a design that\'s \'Responsive\'—the way most WordPress themes are built.', 'comet-cache').'</em></p>'."\n";
+            echo '      <p><select name="'.esc_attr(GLOBAL_NS).'[saveOptions][mobile_adaptive_salt_enable]" data-target=".-mobile-adaptive-options">'."\n";
+            echo '          <option value="0"'.(!IS_PRO ? '' : selected($this->plugin->options['mobile_adaptive_salt_enable'], '0', false)).'>'.__('No, my theme is Responsive; i.e., not Adaptive.', 'comet-cache').'</option>'."\n";
+            echo '          <option value="1"'.(!IS_PRO ? ' selected' : selected($this->plugin->options['mobile_adaptive_salt_enable'], '1', false)).'>'.__('Yes, create multiple cache variations based on mobile device type.', 'comet-cache').'</option>'."\n";
+            echo '      </select></p>'."\n";
+
+            if (!version_compare(PHP_VERSION, '5.6', '>=')) {
+                echo '<p class="error">'.sprintf(__('<strong>PHP Version:</strong> This feature requires PHP v5.6 (or higher). You\'re currently running PHP v%1$s. Please contact your web hosting company for assistance.', 'comet-cache'), esc_html(PHP_VERSION)).'</p>'."\n";
+            }
+
+            echo '      <h4 style="margin-bottom:0;">'.__('What\'s the Difference Between Responsive and Adaptive?', 'comet-cache').'</h4>'."\n";
+            echo '      <p>'.__('Responsive and Adaptive designs both attempt to optimize the user experience across different devices, adjusting for different viewport sizes, resolutions, usage contexts, control mechanisms, and so on. Responsive design (common for WordPress sites) works on the principle of flexibility — a single fluid website that can look good on any device. Responsive websites use media queries, flexible grids, and responsive images to create a user experience that flexes and changes based on a multitude of factors. If you have a Responsive theme, you probably do NOT need to enable Mobile-Adaptive Mode.', 'comet-cache').'</p>'."\n";
+            echo '      <p>'.sprintf(__('<strong>Adaptive design</strong> detects the device and other features, and then it provides the appropriate feature and layout based on a predefined set of viewport sizes and other characteristics. Adaptive themes generally decide what to display based on a visitor\'s User-Agent (i.e., OS, device, browser, version). Since this design choice results in multiple versions of a page being served to visitors, based on the device they access the site with, it then becomes important to cache each of those variations separately. That way a visitor on an iPhone isn\'t accidentally shown the cached copy of a page that was originally viewed by another visitor who was on a desktop computer. If your theme uses an Adaptive design, you probably DO want to enable Mobile-Adaptive Mode in %1$s.', 'comet-cache'), esc_html(NAME)).'</p>'."\n";
+
+            echo '      <div class="plugin-menu-page-panel-if-enabled -mobile-adaptive-options"><hr />'."\n";
+            echo '          <h3>'.__('Mobile-Adaptive Tokens', 'comet-cache').'</h3>'."\n";
+            echo '          <p>'.sprintf(__('When %1$s runs in Mobile-Adaptive Mode and it detects that a device is Mobile (e.g., a phone, tablet), it needs to know which factors you\'d like to consider. Mobile-Adaptive Tokens make this easy. In the field below, please configure a list of Mobile-Adaptive Tokens that establish the important factors on your site. Each token must be separated by a <code>+</code> sign. You can use just one, or use them all. <strong>However, it\'s IMPORTANT to note:</strong> With each new token, you add additional permutations that can fragment the cache and eat up a lot of disk space. Enable and monitor Cache Statistics so you can keep an eye on this. See: <strong>%1$s → Plugin Options → Cache-Related Statistics</strong>', 'comet-cache'), esc_html(NAME)).'</p>'."\n";
+            echo '          <p>'.__('The available Tokens are as follows:', 'comet-cache').'</p>'."\n";
+            echo '          <ul style="list-style-type:disc; margin-left: 1.5em;">'."\n";
+            echo '              <li>'.__('<code>os.name</code> <small><em>This token is replaced automatically with: <tt>iOS</tt>, <tt>Android</tt>, etc.</em></small>', 'comet-cache').'</li>'."\n";
+            echo '              <li>'.__('<code>device.type</code> <small><em>This token is replaced with: <tt>Tablet</tt>, <tt>Mobile Device</tt>, <tt>Mobile Phone</tt>, etc.</em></small>', 'comet-cache').'</li>'."\n";
+            echo '              <li>'.__('<code>browser.name</code> <small><em>This token is replaced with: <tt>Safari</tt>, <tt>Mobile Safari UIWebView</tt>, <tt>Chrome</tt>, etc.</small></em>', 'comet-cache').'</li>'."\n";
+            echo '              <li>'.__('<code>browser.version</code> <small><em>Major &amp; minor version. Not recommended, many permutations. Replaced with: <tt>55.0</tt>, <tt>1.3</tt>, <tt>9383242.2392</tt>, etc.</em></small>', 'comet-cache').'</li>'."\n";
+            echo '              <li>'.__('<code>browser.version.major</code> <small><em>Major version only. More feasible, fewer permutations. Replaced with: <tt>55</tt>, <tt>1</tt>, <tt>9383242</tt>, etc.</em></small>', 'comet-cache').'</li>'."\n";
+            echo '          </ul>'."\n";
+            echo '          <p><input type="text" id="'.esc_attr(GLOBAL_NS.'-mobile-adaptive-salt').'" name="'.esc_attr(GLOBAL_NS).'[saveOptions][mobile_adaptive_salt]" value="'.esc_attr($this->plugin->options['mobile_adaptive_salt']).'" /></p>'."\n";
+            echo '          <p>'.sprintf(__('The suggested default value is: <code>%2$s</code><br />However, just: <code>os.name + device.type</code> is better, if that will do.', 'comet-cache'), esc_html(NAME), esc_html($this->plugin->default_options['mobile_adaptive_salt'])).'</p>'."\n";
+            echo '          <p class="info">'.__('The special token: <code>device.is_mobile</code> (i.e., any mobile device, including tablets, excluding laptops) can be used by itself. For example, if you simply want to break the cache down into mobile vs. NOT mobile.', 'comet-cache').'</p>'."\n";
+            echo '          <p><small><em>'.sprintf(__('<strong>Note:</strong> The underlying logic behind mobile detection is accomplished using a faster, precompiled version of <a href="https://cometcache.com/r/browscap/" target="_blank">Browscap Lite</a>, and Browcap data is automatically updated (and recompiled) whenever you save %1$s options and/or when upgrading %1$s to a new version.', 'comet-cache'), esc_html(NAME)).'</em></small></p>'."\n";
+            echo '      </div>'."\n";
+
+            echo '   </div>'."\n";
+            echo '</div>'."\n";
+        }
+        /* ----------------------------------------------------------------------------------------- */
+
+        if (IS_PRO || $this->plugin->isProPreview()) {
+            echo '<div class="plugin-menu-page-panel'.(!IS_PRO ? ' pro-preview' : '').'">'."\n";
+
+            echo '   <a href="#" class="plugin-menu-page-panel-heading" data-pro-version-only="'.(!IS_PRO ? __('pro version only', 'comet-cache') : '').'">'."\n";
             echo '      <i class="si si-octi-versions"></i> '.__('Dynamic Version Salt', 'comet-cache')."\n";
             echo '   </a>'."\n";
 
@@ -1180,11 +1229,11 @@ class MenuPageOptions extends MenuPage
             echo '      <p>'.sprintf(__('<em>Note: Understanding the %1$s <a href="http://cometcache.com/r/kb-branched-cache-structure/" target="_blank">Branched Cache Structure</a> is a prerequisite to understanding how Dynamic Version Salts are added to the mix.</em>', 'comet-cache'), esc_html(NAME)).'</p>'."\n";
             echo '      <p>'.__('A Version Salt gives you the ability to dynamically create multiple variations of the cache, and those dynamic variations will be served on subsequent visits; e.g., if a visitor has a specific cookie (of a certain value) they will see pages which were cached with that version (i.e., w/ that Version Salt: the value of the cookie). A Version Salt can really be anything.', 'comet-cache').'</p>'."\n";
             echo '      <p>'.__('A Version Salt can be a single variable like <code>$_COOKIE[\'my_cookie\']</code>, or it can be a combination of multiple variables, like <code>$_COOKIE[\'my_cookie\'].$_COOKIE[\'my_other_cookie\']</code>. (When using multiple variables, please separate them with a dot, as shown in the example.)', 'comet-cache').'</p>'."\n";
-            echo '      <p>'.__('Experts could even use PHP ternary expressions that evaluate into something. For example: <code>((preg_match(\'/iPhone/i\', $_SERVER[\'HTTP_USER_AGENT\'])) ? \'iPhones\' : \'\')</code>. This would force a separate version of the cache to be created for iPhones (e.g., <code>/cache/PROTOCOL/HOST/REQUEST-URI.v/iPhones.html</code>).', 'comet-cache').'</p>'."\n";
+            echo '      <p>'.__('Experts could even use PHP ternary expressions that evaluate into something. For example: <code>((preg_match(\'/iPhone/i\', $_SERVER[\'HTTP_USER_AGENT\'])) ? \'iPhones\' : \'\')</code>. This would force a separate version of the cache to be created for iPhones (e.g., <code>PROTOCOL.HOST.URI[...]v/iPhones.html</code>).', 'comet-cache').'</p>'."\n";
             echo '      <p>'.__('For more documentation, please see <a href="http://cometcache.com/r/kb-dynamic-version-salts/" target="_blank">Dynamic Version Salts</a>.', 'comet-cache').'</p>'."\n";
             echo '      <hr />'."\n";
             echo '      <h3>'.sprintf(__('Create a Dynamic Version Salt For %1$s? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="font-size:90%%; opacity:0.5;">150%% OPTIONAL</span>', 'comet-cache'), esc_html(NAME)).'</h3>'."\n";
-            echo '      <table style="width:100%;"><tr><td style="width:1px; font-weight:bold; white-space:nowrap;">/cache/PROTOCOL/HOST/REQUEST_URI.</td><td><input type="text" name="'.esc_attr(GLOBAL_NS).'[saveOptions][version_salt]" value="'.esc_attr($this->plugin->options['version_salt']).'" class="monospace" placeholder="$_COOKIE[\'my_cookie\']" /></td><td style="width:1px; font-weight:bold; white-space:nowrap;"></td></tr></table>'."\n";
+            echo '      <table style="width:100%;"><tr><td style="width:1px; font-weight:bold; white-space:nowrap;">PROTOCOL.HOST.URI.v.</td><td><input type="text" name="'.esc_attr(GLOBAL_NS).'[saveOptions][version_salt]" value="'.esc_attr($this->plugin->options['version_salt']).'" class="monospace" placeholder="$_COOKIE[\'my_cookie\']" /></td><td style="width:1px; font-weight:bold; white-space:nowrap;"></td></tr></table>'."\n";
             echo '      <p class="info" style="display:block;">'.__('<a href="http://php.net/manual/en/language.variables.superglobals.php" target="_blank">Super Globals</a> work here; <a href="http://codex.wordpress.org/Editing_wp-config.php#table_prefix" target="_blank"><code>$GLOBALS[\'table_prefix\']</code></a> is a popular one.<br />Or, perhaps a PHP Constant defined in <code>/wp-config.php</code>; such as <code>WPLANG</code> or <code>DB_HOST</code>.', 'comet-cache').'</p>'."\n";
             echo '      <p class="notice" style="display:block;">'.__('<strong>Important:</strong> your Version Salt is scanned for PHP syntax errors via <a href="http://phpcodechecker.com/" target="_blank"><code>phpCodeChecker.com</code></a>. If errors are found, you\'ll receive a notice in the Dashboard.', 'comet-cache').'</p>'."\n";
             echo '      <p class="info" style="display:block;">'.__('If you\'ve enabled a separate cache for each user (optional) that\'s perfectly OK. A Version Salt works with user caching too.', 'comet-cache').'</p>'."\n";
@@ -1217,7 +1266,7 @@ class MenuPageOptions extends MenuPage
         if (IS_PRO || $this->plugin->isProPreview()) {
             echo '<div class="plugin-menu-page-panel'.(!IS_PRO ? ' pro-preview' : '').'">'."\n";
 
-            echo '   <a href="#" class="plugin-menu-page-panel-heading'.(!IS_PRO ? ' pro-preview-feature' : '').'">'."\n";
+            echo '   <a href="#" class="plugin-menu-page-panel-heading" data-pro-version-only="'.(!IS_PRO ? __('pro version only', 'comet-cache') : '').'">'."\n";
             echo '      <i class="si si-arrow-circle-o-up"></i> '.__('Import/Export Options', 'comet-cache')."\n";
             echo '   </a>'."\n";
 
@@ -1230,7 +1279,7 @@ class MenuPageOptions extends MenuPage
             echo '      <h3>'.sprintf(__('Export Existing Options from this %1$s Installation?', 'comet-cache'), esc_html(NAME)).'</h3>'."\n";
             echo '      <button type="button" class="plugin-menu-page-export-options" style="float:right; margin: 0 0 0 25px;"'.// Exports existing options from this installation.
              '         data-action="'.esc_attr(add_query_arg(urlencode_deep(['page' => GLOBAL_NS, '_wpnonce' => wp_create_nonce(), GLOBAL_NS => ['exportOptions' => '1']]), self_admin_url('/admin.php'))).'">'.
-             '         '.sprintf(__('%1$s-options.json', 'comet-cache'), GLOBAL_NS).' <i class="si si-arrow-circle-o-down"></i></button>'."\n";
+             '         '.__('options.json', 'comet-cache').' <i class="si si-arrow-circle-o-down"></i></button>'."\n";
             echo '      <p>'.sprintf(__('Download your existing options and import them all into another %1$s installation; saves time on future installs.', 'comet-cache'), esc_html(NAME)).'</p>'."\n";
             echo '   </div>'."\n";
 

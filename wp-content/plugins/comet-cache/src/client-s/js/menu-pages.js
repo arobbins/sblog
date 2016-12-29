@@ -22,6 +22,12 @@
     $('select[name$="_enable\\]"], select[data-toggle~="enable-disable"]', plugin.$menuPage).not('.-no-if-enabled').on('change', plugin.enableDisable).trigger('change');
 
     
+
+    
+
+    
+
+    
   };
 
   plugin.toggleAllPanelsOpen = function (event) {
@@ -117,6 +123,8 @@
     $ss.attr('src', $ss.attr('src').replace(/ops[0-9]\-ss\.png$/, 'ops' + val + '-ss.png'));
   };
 
+  
+
   plugin.handleCdnHostsChange = function (event) {
     var $cdnHosts = $(this),
       $cdnHost = $('input[name$="\[cdn_host\]"]', plugin.$menuPage);
@@ -134,6 +142,10 @@
       $cdnHosts.val('');
     }
   };
+
+  
+
+  
 
   
 

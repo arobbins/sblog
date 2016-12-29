@@ -704,7 +704,7 @@ p.sw-subtitle.sw-registration-text {
 *********************************************************/
 
 .sw-admin-wrapper[sw-registered="0"] div[premium="1"] {
-	opacity: 0.3;
+	display:none!important;
 }
 
 .sw-admin-wrapper[sw-registered="0"] .sw-option-container {
@@ -712,11 +712,7 @@ p.sw-subtitle.sw-registration-text {
 }
 
 .sw-admin-wrapper[sw-registered="0"] div[premium="1"] .sw-premium-blocker {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	top: 0;
-	left: 0;
+	display:none;
 }
 
 .sw-admin-wrapper[sw-registered="0"] div[premium="1"] .sw-premium-blocker:not(.no-icon):before {

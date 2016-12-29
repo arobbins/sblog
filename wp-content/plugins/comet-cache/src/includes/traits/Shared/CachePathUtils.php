@@ -6,6 +6,41 @@ use WebSharks\CometCache\Classes;
 trait CachePathUtils
 {
     /**
+     * Filter query vars; e.g., remove those we ignore.
+     *
+     * @since 161119 Adding support for ignored GET vars.
+     * @since 161119 Adding support for sorted query vars.
+     *
+     * @param array $_vars Query vars to filter.
+     *
+     * @return array Filtered query vars.
+     */
+    public function filterQueryVars($_vars)
+    {
+        $_vars     = (array) $_vars; // Force array.
+        $cache_key = $_vars === $_GET ? md5(serialize($_vars)) : '';
+
+        if ($cache_key && ($vars = &$this->staticKey(__FUNCTION__, $cache_key)) !== null) {
+            return $vars; // Already cached this.
+        }
+        $vars                          = $_vars; // Copy.
+        $short_name_lc                 = mb_strtolower(SHORT_NAME);
+        $ignore_get_request_vars_regex = defined('COMET_CACHE_IGNORE_GET_REQUEST_VARS') ? COMET_CACHE_IGNORE_GET_REQUEST_VARS : '';
+
+        foreach ($vars as $_key => $_value) {
+            if (!is_string($_key)) {
+                continue; // Not applicable.
+            } elseif ($_key === $short_name_lc.'AC' || $_key === $short_name_lc.'ABC') {
+                unset($vars[$_key]);
+            } elseif ($ignore_get_request_vars_regex && preg_match($ignore_get_request_vars_regex, $_key)) {
+                unset($vars[$_key]);
+            }
+        } // unset($_key, $_value); // Housekeeping.
+
+        return $vars = $vars ? $this->ksortDeep($vars) : [];
+    }
+
+    /**
      * Cache-path suffix frag (regex).
      *
      * @since 151220 Enhancing translation support.
@@ -28,8 +63,6 @@ trait CachePathUtils
      * @since 151220 Enhancing translation support.
      *
      * @return string Default cache-path suffix frag (regex).
-     *
-     * @TODO Use conditional to detect the AMP plugin (e.g., `isAmpInstalled()`) to avoid edge cases with the `|\/amp` regex here
      */
     public function cachePathRegexDefaultSuffixFrag()
     {
@@ -93,11 +126,8 @@ trait CachePathUtils
         $is_url_domain_mapped = $is_multisite && $can_consider_domain_mapping && $this->domainMappingBlogId($url);
         $host_base_dir_tokens = $this->hostBaseDirTokens(false, $is_url_domain_mapped, !empty($url_parts['path']) ? $url_parts['path'] : '/');
 
-        $is_a_multisite_base_dir = $is_multisite && $host_base_dir_tokens && $host_base_dir_tokens !== '/' // Check?
-                                   && mb_stripos(!empty($url_parts['path']) ? rtrim($url_parts['path'], '/').'/' : '/', $host_base_dir_tokens) === 0;
-
-        $is_a_multisite_base_dir_root = $is_multisite && $is_a_multisite_base_dir // Save time by using the previous check here.
-                                        && strcasecmp(trim($host_base_dir_tokens, '/'), trim(!empty($url_parts['path']) ? $url_parts['path'] : '/', '/')) === 0;
+        $is_a_multisite_base_dir      = $is_multisite && $host_base_dir_tokens && $host_base_dir_tokens !== '/' && mb_stripos(!empty($url_parts['path']) ? rtrim($url_parts['path'], '/').'/' : '/', $host_base_dir_tokens) === 0;
+        $is_a_multisite_base_dir_root = $is_multisite && $is_a_multisite_base_dir && strcasecmp(trim($host_base_dir_tokens, '/'), trim(!empty($url_parts['path']) ? $url_parts['path'] : '/', '/')) === 0;
 
         # Build and return the cache path.
 
@@ -106,7 +136,6 @@ trait CachePathUtils
         }
         if (!($flags & $this::CACHE_PATH_NO_HOST)) {
             $cache_path .= $url_parts['host'].'/';
-
             // Put multisite sub-roots into a host directory of their own.
             // e.g., `example-com[[-base]-child1]` instead of `example-com`.
             if ($is_a_multisite_base_dir && $host_base_dir_tokens && $host_base_dir_tokens !== '/') {
@@ -145,15 +174,19 @@ trait CachePathUtils
                 $cache_path .= 'index/';
             }
         }
-        if ($this->isExtensionLoaded('mbstring') && mb_check_encoding($cache_path, 'UTF-8')) {
-            $cache_path = mb_strtolower($cache_path, 'UTF-8');
-        }
         $cache_path = str_replace('.', '-', mb_strtolower($cache_path));
 
         if (!($flags & $this::CACHE_PATH_NO_QUV)) {
             if (!($flags & $this::CACHE_PATH_NO_QUERY)) {
                 if (isset($url_parts['query']) && $url_parts['query'] !== '') {
-                    $cache_path = rtrim($cache_path, '/').'.q/'.md5($url_parts['query']).'/';
+                    // Support for ignored GET vars.
+                    parse_str($url_parts['query'], $_query_vars);
+                    $_query_vars = $this->filterQueryVars($_query_vars);
+                    // ↑ Also sorts query vars for smarter caching.
+
+                    if ($_query_vars) { // If we have cacheable query vars.
+                        $cache_path = rtrim($cache_path, '/').'.q/'.md5(serialize($_query_vars)).'/';
+                    } // unset($_query_vars); // Housekeeping.
                 }
             }
             if (!($flags & $this::CACHE_PATH_NO_USER)) {
@@ -170,11 +203,11 @@ trait CachePathUtils
         $cache_path = trim(preg_replace(['/\/+/u', '/\.+/u'], ['/', '.'], $cache_path), '/');
 
         if ($flags & $this::CACHE_PATH_ALLOW_WD_REGEX) {
-            $cache_path = preg_replace('/[^a-z0-9\/.*\^$]/ui', '-', $cache_path);
+            $cache_path = preg_replace('/[^a-z0-9\/.+*\^$]/ui', '-', $cache_path);
         } elseif ($flags & $this::CACHE_PATH_ALLOW_WILDCARDS) {
-            $cache_path = preg_replace('/[^a-z0-9\/.*]/ui', '-', $cache_path);
+            $cache_path = preg_replace('/[^a-z0-9\/.+*]/ui', '-', $cache_path);
         } else {
-            $cache_path = preg_replace('/[^a-z0-9\/.]/ui', '-', $cache_path);
+            $cache_path = preg_replace('/[^a-z0-9\/.+]/ui', '-', $cache_path);
         }
         if (!($flags & $this::CACHE_PATH_NO_EXT)) {
             $cache_path .= '.html';
@@ -188,7 +221,7 @@ trait CachePathUtils
      * @since 151114 Updated to support an arbitrary URL instead of a regex frag.
      *
      * @param string $url               The input URL to convert. This CAN be left empty when necessary.
-     *                                  If empty, the final regex pattern will be `/^'.$regex_suffix_frag.'/i`.
+     *                                  If empty, the final regex pattern will be `/^'.$regex_suffix_frag.'/ui`.
      *                                  If empty, it's a good idea to start `$regex_suffix_frag` with `.*?`.
      * @param string $regex_suffix_frag Regex fragment to come after the `$regex_frag`.
      *                                  Defaults to: `(?:\/index)?(?:\.|\/(?:page\/[0-9]+|comment\-page\-[0-9]+)[.\/])`.
@@ -209,7 +242,7 @@ trait CachePathUtils
             $cache_path       = $this->buildCachePath($url, '', '', $flags); // Without the scheme.
             $cache_path_regex = isset($cache_path[0]) ? '\/https?\/'.preg_quote($cache_path, '/') : '';
         }
-        return '/^'.$cache_path_regex.$regex_suffix_frag.'/i';
+        return '/^'.$cache_path_regex.$regex_suffix_frag.'/ui';
     }
 
     /**
@@ -218,7 +251,7 @@ trait CachePathUtils
      * @since 150422 Rewrite. Updated 151002 w/ multisite compat. improvements.
      *
      * @param string $url               The input URL to convert. This CAN be left empty when necessary.
-     *                                  If empty, the final regex pattern will be `/^'.$regex_suffix_frag.'/i`.
+     *                                  If empty, the final regex pattern will be `/^'.$regex_suffix_frag.'/ui`.
      *                                  If empty, it's a good idea to start `$regex_suffix_frag` with `.*?`.
      * @param string $regex_suffix_frag Regex fragment to come after the relative cache/path regex frag.
      *                                  Defaults to: `(?:\/index)?(?:\.|\/(?:page\/[0-9]+|comment\-page\-[0-9]+)[.\/])`.
@@ -255,7 +288,7 @@ trait CachePathUtils
                 $abs_relative_cache_path_regex = isset($abs_relative_cache_path[0]) ? preg_quote($abs_relative_cache_path, '/') : '';
             }
         }
-        return '/^'.$abs_relative_cache_path_regex.$regex_suffix_frag.'/i';
+        return '/^'.$abs_relative_cache_path_regex.$regex_suffix_frag.'/ui';
     }
 
     /**
@@ -267,7 +300,7 @@ trait CachePathUtils
      *                    This may also contain watered-down regex; i.e., `*^$` characters are OK here.
      *                    However, `^$` are discarded, as they are unnecessary in this context.
      *
-     *   If empty, the final regex pattern will be `/^'.$regex_suffix_frag.'/i`.
+     *   If empty, the final regex pattern will be `/^'.$regex_suffix_frag.'/ui`.
      *   If empty, it's a good idea to start `$regex_suffix_frag` with `.*?`.
      * @param string $regex_suffix_frag Regex fragment to come after the `$regex_frag`.
      *                                  Defaults to: `(?:\/index)?(?:\.|\/(?:page\/[0-9]+|comment\-page\-[0-9]+)[.\/])`.
@@ -288,7 +321,7 @@ trait CachePathUtils
             $cache_path       = $this->buildCachePath($url, '', '', $flags); // Without the scheme.
             $cache_path_regex = isset($cache_path[0]) ? '\/https?\/'.$this->wdRegexToActualRegexFrag($cache_path) : '';
         }
-        return '/^'.$cache_path_regex.$regex_suffix_frag.'/i';
+        return '/^'.$cache_path_regex.$regex_suffix_frag.'/ui';
     }
 
     /**
@@ -339,7 +372,7 @@ trait CachePathUtils
      * @since 151114 Moving this low-level routine into a method of a different name.
      *
      * @param string $regex_frag        A regex fragment. This CAN be left empty when necessary.
-     *                                  If empty, the final regex pattern will be `/^'.$regex_suffix_frag.'/i`.
+     *                                  If empty, the final regex pattern will be `/^'.$regex_suffix_frag.'/ui`.
      *                                  If empty, it's a good idea to start `$regex_suffix_frag` with `.*?`.
      * @param string $regex_suffix_frag Regex fragment to come after the `$regex_frag`.
      *                                  Defaults to: `(?:\/index)?(?:\.|\/(?:page\/[0-9]+|comment\-page\-[0-9]+)[.\/])`.
@@ -353,6 +386,6 @@ trait CachePathUtils
         $regex_frag        = (string) $regex_frag;
         $regex_suffix_frag = $this->cachePathRegexSuffixFrag($regex_suffix_frag);
 
-        return '/^'.$regex_frag.$regex_suffix_frag.'/i';
+        return '/^'.$regex_frag.$regex_suffix_frag.'/ui';
     }
 }

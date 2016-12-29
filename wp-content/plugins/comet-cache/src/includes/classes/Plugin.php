@@ -51,7 +51,7 @@ class Plugin extends AbsBaseAp
      *
      * @since 150422 Rewrite.
      *
-     * @var bool If `FALSE`, run without hooks.
+     * @type bool If `FALSE`, run without hooks.
      */
     public $enable_hooks = true;
 
@@ -60,7 +60,7 @@ class Plugin extends AbsBaseAp
      *
      * @since 150422 Rewrite.
      *
-     * @var array Pro-only option keys.
+     * @type array Pro-only option keys.
      */
     public $pro_only_option_keys = [];
 
@@ -69,7 +69,7 @@ class Plugin extends AbsBaseAp
      *
      * @since 150422 Rewrite.
      *
-     * @var array Default options.
+     * @type array Default options.
      */
     public $default_options = [];
 
@@ -78,7 +78,7 @@ class Plugin extends AbsBaseAp
      *
      * @since 150422 Rewrite.
      *
-     * @var array Configured options.
+     * @type array Configured options.
      */
     public $options = [];
 
@@ -87,7 +87,7 @@ class Plugin extends AbsBaseAp
      *
      * @since 150422 Rewrite.
      *
-     * @var string WordPress capability.
+     * @type string WordPress capability.
      */
     public $cap = 'activate_plugins';
 
@@ -96,7 +96,7 @@ class Plugin extends AbsBaseAp
      *
      * @since 150422 Rewrite.
      *
-     * @var string WordPress capability.
+     * @type string WordPress capability.
      */
     public $update_cap = 'update_plugins';
 
@@ -105,7 +105,7 @@ class Plugin extends AbsBaseAp
      *
      * @since 150422 Rewrite.
      *
-     * @var string WordPress capability.
+     * @type string WordPress capability.
      */
     public $network_cap = 'manage_network_plugins';
 
@@ -114,7 +114,7 @@ class Plugin extends AbsBaseAp
      *
      * @since 150422 Rewrite.
      *
-     * @var string WordPress capability.
+     * @type string WordPress capability.
      */
     public $uninstall_cap = 'delete_plugins';
 
@@ -127,9 +127,11 @@ class Plugin extends AbsBaseAp
      *
      * @since 150422 Rewrite.
      *
-     * @var string Cache directory; relative to the configured base directory.
+     * @type string Cache directory; relative to the configured base directory.
      */
     public $cache_sub_dir = 'cache';
+
+    
 
     
 
@@ -147,7 +149,7 @@ class Plugin extends AbsBaseAp
         parent::__construct();
 
         /* -------------------------------------------------------------- */
-        if (!($this->enable_hooks = (boolean) $enable_hooks)) {
+        if (!($this->enable_hooks = (bool) $enable_hooks)) {
             return; // Stop here; construct without hooks.
         }
         /* -------------------------------------------------------------- */
@@ -190,10 +192,15 @@ class Plugin extends AbsBaseAp
             'cache_clear_eval_code',
             'cache_clear_urls',
 
+            'ignore_get_request_vars',
+            'cache_nonce_values_when_logged_in',
+
             'when_logged_in',
-            'when_logged_in_admin_bar',
 
             'version_salt',
+            'mobile_adaptive_salt',
+            'mobile_adaptive_salt_enable',
+            'ua_info_last_data_update',
 
             'htmlc_enable',
             'htmlc_css_exclusions',
@@ -208,6 +215,7 @@ class Plugin extends AbsBaseAp
             'htmlc_compress_css_code',
             'htmlc_compress_js_code',
             'htmlc_compress_html_code',
+            'htmlc_amp_exclusions_enable',
             'htmlc_when_logged_in',
 
             'auto_cache_enable',
@@ -251,6 +259,8 @@ class Plugin extends AbsBaseAp
 
             'pro_update_username',
             'pro_update_password',
+
+            'pro_auto_update_enable',
 
             'last_pro_stats_log',
         ];
@@ -317,10 +327,11 @@ class Plugin extends AbsBaseAp
             'allow_client_side_cache'           => '0', // `0|1`.
             'when_logged_in'                    => '0', // `0|1|postload`.
             'get_requests'                      => '0', // `0|1`.
+            'ignore_get_request_vars'           => 'utm_*', // Empty string or line-delimited patterns.
             'feeds_enable'                      => '0', // `0|1`.
             'cache_404_requests'                => '0', // `0|1`.
             'cache_nonce_values'                => '0', // `0|1`.
-            'cache_nonce_values_when_logged_in' => '0', // `0|1`.
+            'cache_nonce_values_when_logged_in' => '1', // `0|1`.
 
             /* Related to exclusions. */
 
@@ -332,12 +343,22 @@ class Plugin extends AbsBaseAp
 
             /* Related to version salt. */
 
-            'version_salt' => '', // Any string value.
+            'version_salt' => '', // Any string value as a cache path component.
+
+            // This should be set to a `+` delimited string containing any of these tokens: `os.name + device.type + browser.name + browser.version.major`.
+            // There is an additional token (`browser.version`) that contains both the major and minor versions, but this token is not recommended due to many permutations.
+            // There is an additional token (`device.is_mobile`) that can be used stand-alone; i.e., to indicate that being mobile is the only factor worth considering.
+            'mobile_adaptive_salt'        => 'os.name + device.type + browser.name',
+            'mobile_adaptive_salt_enable' => '0', // `0|1` Enable the mobile adaptive salt?
+            'ua_info_last_data_update'    => '0', // Timestamp.
 
             /* Related to HTML compressor. */
 
-            'htmlc_enable'                => '0', // Enable HTML compression?
-            'htmlc_css_exclusions'        => '', // Empty string or line-delimited patterns.
+            'htmlc_enable' => '0', // Enable HTML compression?
+
+            'htmlc_css_exclusions' => "id='rs-plugin-settings-inline-css'", // Empty string or line-delimited patterns.
+            // This defaults to an exclusion rule that handles compatibility with RevSlider. See: <https://github.com/websharks/comet-cache/issues/614>
+
             'htmlc_js_exclusions'         => '.php?', // Empty string or line-delimited patterns.
             'htmlc_uri_exclusions'        => '', // Empty string or line-delimited patterns.
             'htmlc_cache_expiration_time' => '14 days', // `strtotime()` compatible.
@@ -350,10 +371,8 @@ class Plugin extends AbsBaseAp
             'htmlc_compress_css_code'              => '1', // `0|1`.
             'htmlc_compress_js_code'               => '1', // `0|1`.
             'htmlc_compress_html_code'             => '1', // `0|1`.
+            'htmlc_amp_exclusions_enable'          => '1', // `0|1`.
             'htmlc_when_logged_in'                 => '0', // `0|1`; enable when logged in?
-
-            /* Related to Logged-In User Caching */
-            'when_logged_in_admin_bar' => '1', // `0|1`; enable when logged in?
 
             /* Related to auto-cache engine. */
 
@@ -424,6 +443,8 @@ class Plugin extends AbsBaseAp
             'pro_update_username' => '', // Username.
             'pro_update_password' => '', // Password or license key.
 
+            'pro_auto_update_enable' => '0', // `0|1`; enable?
+
             /* Related to stats logging. */
 
             'last_pro_stats_log' => '0', // Timestamp.
@@ -459,17 +480,14 @@ class Plugin extends AbsBaseAp
 
         
 
-
         add_action('admin_bar_menu', [$this, 'adminBarMenu']);
         add_action('wp_head', [$this, 'adminBarMetaTags'], 0);
         add_action('wp_enqueue_scripts', [$this, 'adminBarStyles']);
         add_action('wp_enqueue_scripts', [$this, 'adminBarScripts']);
 
-
         add_action('admin_head', [$this, 'adminBarMetaTags'], 0);
         add_action('admin_enqueue_scripts', [$this, 'adminBarStyles']);
         add_action('admin_enqueue_scripts', [$this, 'adminBarScripts']);
-
 
         add_action('admin_enqueue_scripts', [$this, 'enqueueAdminStyles']);
         add_action('admin_enqueue_scripts', [$this, 'enqueueAdminScripts']);
@@ -494,6 +512,7 @@ class Plugin extends AbsBaseAp
         add_action('wp_create_nav_menu', [$this, 'autoClearCache']);
         add_action('wp_update_nav_menu', [$this, 'autoClearCache']);
         add_action('wp_delete_nav_menu', [$this, 'autoClearCache']);
+        add_action('update_option_sidebars_widgets', [$this, 'autoClearCache']);
 
         add_action('save_post', [$this, 'autoClearPostCache']);
         add_action('delete_post', [$this, 'autoClearPostCache']);
@@ -502,6 +521,7 @@ class Plugin extends AbsBaseAp
         add_action('pre_post_update', [$this, 'autoClearPostCacheTransition'], 10, 2);
 
         add_action('woocommerce_product_set_stock', [$this, 'autoClearPostCacheOnWooCommerceSetStock'], 10, 1);
+        add_action('woocommerce_product_set_stock_status', [$this, 'autoClearPostCacheOnWooCommerceSetStockStatus'], 10, 1);
         add_action('update_option_comment_mail_options', [$this, 'autoClearCache']);
 
         add_action('added_term_relationship', [$this, 'autoClearPostTermsCache'], 10, 1);
@@ -522,16 +542,16 @@ class Plugin extends AbsBaseAp
 
         
 
+        add_action('delete_user', [$this, 'autoClearAuthorPageCacheOnUserDeletion'], 10, 2);
+        add_action('remove_user_from_blog', [$this, 'autoClearAuthorPageCacheOnUserDeletion'], 10, 1);
+
         if ($this->options['enable'] && $this->applyWpFilters(GLOBAL_NS.'_disable_akismet_comment_nonce', true)) {
             add_filter('akismet_comment_nonce', function () {
                 return 'disabled-by-'.SLUG_TD; // MUST return a string literal that is not 'true' or '' (an empty string). See <http://bit.ly/1YItpdE>
             }); // See also why the Akismet nonce should be disabled: <http://jas.xyz/1R23f5c>
         }
-
         
-
         
-
         
         /* -------------------------------------------------------------- */
 
